@@ -174,6 +174,28 @@
     flex:none; transform:translateY(-0.6vh);
   }
 
+  /* ---------- 2カラムレイアウト（access等） ---------- */
+  .two-col{
+    display:flex; gap:5vw; width:100%; max-width:80vw; margin-top:3vh; text-align:left;
+  }
+  .two-col .col{ flex:1; }
+  .access-label{ font-size:2.2vh; color:var(--text-soft); margin-bottom:0.6vh; margin-top:2.4vh; }
+  .access-label:first-child{ margin-top:0; }
+  .access-line{ font-size:4vh; color:var(--text); font-weight:700; }
+
+  /* ---------- 番号付きリスト（横浜市の検診等） ---------- */
+  .numbered-list{
+    margin-top:4vh; display:flex; flex-direction:column; gap:2vh; align-items:flex-start;
+  }
+  .numbered-list .n-item{
+    display:flex; align-items:center; gap:1.6vw; font-size:4vh; font-weight:700; color:var(--text);
+  }
+  .numbered-list .n-badge{
+    width:5vh; height:5vh; border-radius:50%; background:var(--accent2); color:#fff;
+    display:flex; align-items:center; justify-content:center;
+    font-size:2.6vh; font-weight:900; flex:none;
+  }
+
   /* ---------- フッター ---------- */
   #footer{
     position:absolute; left:0; right:0; bottom:0; height:8vh; z-index:3;
@@ -216,11 +238,12 @@
 
 <script>
 /* =====================================================================
-   横浜駅前ながしまクリニック デジタルサイネージ v1
+   横浜駅前ながしまクリニック デジタルサイネージ v2
    ---------------------------------------------------------------------
-   編集ポイントはこの2つだけです。
+   編集ポイントは主にこの3つです。
      1) CLINIC  … クリニックの基本情報・診療時間・実績数値
-     2) SLIDES  … スライドの内容・表示月・並び順
+     2) NOTICE  … 臨時休診などの一時的なお知らせ（enabled: true で表示）
+     3) SLIDES  … スライドの内容・表示月・並び順
    README.md にそれぞれの編集例があります。
    ===================================================================== */
 
@@ -274,10 +297,47 @@ const CLINIC = {
 };
 // ▲▲▲ CLINIC ここまで ▲▲▲
 
+// ▼▼▼ ここから NOTICE（臨時お知らせ） ▼▼▼
+// 休診のお知らせ等を一時的に出したいときはここを編集する。
+//   enabled: true にすると、下の SLIDES 内の "notice" スライドが表示されるようになる
+//   （false のままなら何も表示されず、他のスライドには一切影響しない）
+//   title / lines を書き換えれば、そのまま画面に反映される
+// 【使用例】
+//   const NOTICE = {
+//     enabled: true,
+//     title: "臨時休診のお知らせ",
+//     lines: [
+//       "8月15日（土）は都合により休診とさせていただきます",
+//       "ご不便をおかけし、誠に申し訳ございません"
+//     ]
+//   };
+const NOTICE = {
+  enabled: false,
+  title: "臨時休診のお知らせ",
+  lines: [
+    "○月○日（○）は都合により休診とさせていただきます",
+    "ご不便をおかけし、誠に申し訳ございません"
+  ]
+};
+// ▲▲▲ NOTICE ここまで ▲▲▲
+
 // ▼▼▼ ここから SLIDES（スライド本体） ▼▼▼
 // months: "all" または [表示したい月の配列]（例: [6,7,8,9]）
 // duration: 表示秒数（通常は12でOK）
 const SLIDES = [
+  {
+    id: "notice",
+    months: "all",
+    duration: 14,
+    enabled: NOTICE.enabled,
+    render: () => `
+      <div class="kicker">お知らせ</div>
+      <div class="headline small">${NOTICE.title}</div>
+      <div class="point-list">
+        ${NOTICE.lines.map(l => `<div class="point"><span class="dot"></span>${l}</div>`).join("")}
+      </div>
+    `
+  },
   {
     id: "welcome",
     months: "all",
@@ -320,6 +380,20 @@ const SLIDES = [
           <strong>${CLINIC.hoursGyn.closedLabel}</strong><br>
           ${CLINIC.hoursGyn.note1}／${CLINIC.hoursGyn.note2}
         </div>
+      </div>
+    `
+  },
+  {
+    id: "gyn-services",
+    months: "all",
+    duration: 12,
+    render: () => `
+      <div class="kicker">産婦人科診療</div>
+      <div class="headline small">婦人科診療のご案内</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>女性医師（産婦人科専門医）が担当いたします</div>
+        <div class="point"><span class="dot"></span>ピル外来・子宮がん検診・妊婦健診・出生前検査に対応しています</div>
+        <div class="point"><span class="dot"></span>待合室は内科と分けております</div>
       </div>
     `
   },
@@ -370,6 +444,97 @@ const SLIDES = [
     `
   },
   {
+    id: "polyp",
+    months: "all",
+    duration: 12,
+    render: () => `
+      <div class="kicker">内視鏡検査</div>
+      <div class="headline small">日帰り大腸ポリープ切除</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>大腸カメラ検査中にポリープが見つかった場合、その場での切除に対応しています（日帰り）</div>
+        <div class="point"><span class="dot"></span>後日あらためて手術、といった負担を減らせます</div>
+      </div>
+    `
+  },
+  {
+    id: "blood-stool",
+    months: "all",
+    duration: 12,
+    render: () => `
+      <div class="kicker">健診で便潜血陽性だった方へ</div>
+      <div class="headline small">便潜血陽性・血便について</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>便潜血陽性・血便は放置せず、大腸カメラでの精密検査をおすすめします</div>
+        <div class="point"><span class="dot"></span>当院では血便・下血のご相談を毎日受け付けています</div>
+      </div>
+    `
+  },
+  {
+    id: "dock",
+    months: "all",
+    duration: 11,
+    render: () => `
+      <div class="kicker">人間ドック</div>
+      <div class="headline small">人間ドックのご案内</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>胃カメラ・大腸カメラを組み合わせた人間ドックを実施しています</div>
+        <div class="point"><span class="dot"></span>詳しくは受付、または当院ホームページをご覧ください</div>
+      </div>
+    `
+  },
+  {
+    id: "jihi",
+    months: "all",
+    duration: 12,
+    render: () => `
+      <div class="kicker">自費診療</div>
+      <div class="headline small">自費診療のご案内</div>
+      <div class="dept-list">
+        ${["美容注射", "アフターピル", "AGA治療", "ED治療", "肥満外来"].map(d => `<span class="dept-pill">${d}</span>`).join("")}
+      </div>
+      <div class="sub">お気軽にご相談ください</div>
+    `
+  },
+  {
+    id: "yokohama-kenshin",
+    months: "all",
+    duration: 13,
+    render: () => `
+      <div class="kicker">横浜市の検診</div>
+      <div class="headline small">横浜市の検診を実施しています</div>
+      <div class="numbered-list">
+        ${["大腸がん検診", "特定健診", "婦人科検診", "前立腺がん検診（PSA）"].map((d, i) => `
+          <div class="n-item"><span class="n-badge">${i + 1}</span>${d}</div>
+        `).join("")}
+      </div>
+      <div class="sub">対象・受け方は受付までお気軽にお尋ねください</div>
+    `
+  },
+  {
+    id: "access",
+    months: "all",
+    duration: 13,
+    render: () => `
+      <div class="kicker">アクセス</div>
+      <div class="headline small">${CLINIC.name}</div>
+      <div class="two-col">
+        <div class="col">
+          <div class="access-label">住所</div>
+          <div class="access-line">${CLINIC.address}</div>
+          <div class="access-label">電話番号</div>
+          <div class="access-line">${CLINIC.tel}</div>
+        </div>
+        <div class="col">
+          <div class="point-list">
+            <div class="point"><span class="dot"></span>横浜駅きた西口 徒歩3分</div>
+            <div class="point"><span class="dot"></span>横浜モアーズから徒歩2分</div>
+            <div class="point"><span class="dot"></span>土曜も診療しております</div>
+          </div>
+        </div>
+      </div>
+    `
+  },
+  {
     id: "heatstroke",
     months: [6, 7, 8, 9],
     duration: 11,
@@ -384,13 +549,41 @@ const SLIDES = [
     `
   },
   {
-    id: "flu-vaccine",
-    months: [10, 11, 12],
+    id: "shokuchudoku",
+    months: [6, 7, 8],
+    duration: 12,
+    render: () => `
+      <div class="kicker">季節のお知らせ</div>
+      <div class="headline small">食中毒にご注意ください</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>こまめな手洗いを心がけましょう</div>
+        <div class="point"><span class="dot"></span>お肉やお魚はしっかり加熱しましょう</div>
+        <div class="point"><span class="dot"></span>作り置きのお料理は早めに召し上がりましょう</div>
+      </div>
+    `
+  },
+  {
+    id: "autumn-checkup",
+    months: [9, 10, 11],
     duration: 11,
     render: () => `
       <div class="kicker">季節のお知らせ</div>
+      <div class="headline small">秋は健診・検査のチャンスです</div>
+      <div class="sub">気候の良いこの時期に、今年まだ健診を受けていない方はぜひご検討ください。</div>
+    `
+  },
+  {
+    id: "flu-vaccine",
+    months: [10, 11, 12],
+    duration: 12,
+    render: () => `
+      <div class="kicker">季節のお知らせ</div>
       <div class="headline small">インフルエンザワクチンのご案内</div>
-      <div class="sub">接種をご希望の方は、受付・スタッフまでお気軽にお声がけください。</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>10月ごろから接種を開始しています</div>
+        <div class="point"><span class="dot"></span>ご予約・当日の接種については受付までお尋ねください</div>
+        <div class="point"><span class="dot"></span>手洗い・うがいも引き続き心がけましょう</div>
+      </div>
     `
   },
   {
@@ -411,6 +604,29 @@ const SLIDES = [
       <div class="kicker">季節のお知らせ</div>
       <div class="headline small">感染性胃腸炎にご注意ください</div>
       <div class="sub">こまめな手洗いにご協力をお願いいたします。</div>
+    `
+  },
+  {
+    id: "newyear",
+    months: [12, 1],
+    duration: 12,
+    render: () => `
+      <div class="kicker">季節のお知らせ</div>
+      <div class="headline small">年末年始の胃腸をいたわりましょう</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>会食が増える季節です。暴飲暴食にはご注意ください</div>
+        <div class="point"><span class="dot"></span>胃の不調が続くときは、早めにご相談ください</div>
+      </div>
+    `
+  },
+  {
+    id: "spring-checkup",
+    months: [3, 4, 5],
+    duration: 11,
+    render: () => `
+      <div class="kicker">季節のお知らせ</div>
+      <div class="headline small">新年度は健康チェックのタイミングです</div>
+      <div class="sub">新生活のスタートに、一度健康状態を確認してみませんか。</div>
     `
   },
   {
@@ -517,9 +733,10 @@ buildMotifLayer(currentSeason);
 
 // ---------- スライドの絞り込み ----------
 function filterSlides(month){
-  let list = SLIDES.filter(s => s.months === "all" || (Array.isArray(s.months) && s.months.includes(month)));
-  if (list.length === 0) list = SLIDES.filter(s => s.months === "all");
-  if (list.length === 0) list = SLIDES.slice();
+  const isEnabled = s => s.enabled !== false; // enabled:false のスライド（notice等）は非表示にする
+  let list = SLIDES.filter(s => isEnabled(s) && (s.months === "all" || (Array.isArray(s.months) && s.months.includes(month))));
+  if (list.length === 0) list = SLIDES.filter(s => isEnabled(s) && s.months === "all");
+  if (list.length === 0) list = SLIDES.filter(isEnabled);
   return list;
 }
 const activeSlides = filterSlides(effectiveMonth);
