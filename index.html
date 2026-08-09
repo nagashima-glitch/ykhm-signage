@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>横浜駅前ながしまクリニック デジタルサイネージ</title>
+<style>
+  :root{
+    --bg-base:#fdfaf5;
+    --bg-tint:#f4efe6;
+    --text:#2c2a26;
+    --text-soft:#5f5b52;
+    --line:rgba(44,42,38,0.18);
+    --accent:#8a8060;
+    --accent2:#5f6b4f;
+    --motif-color:#cfc7b2;
+    --white:#ffffff;
+  }
+  html[data-season="spring"]{
+    --bg-tint:#fbf1f0; --accent:#c96f88; --accent2:#7fa25e; --motif-color:#eab9c6;
+  }
+  html[data-season="summer"]{
+    --bg-tint:#eff8f6; --accent:#3f8fc0; --accent2:#2c6a4f; --motif-color:#9ecfdc;
+  }
+  html[data-season="autumn"]{
+    --bg-tint:#fbf3e4; --accent:#c9803a; --accent2:#a9852c; --motif-color:#e0b06a;
+  }
+  html[data-season="winter"]{
+    --bg-tint:#f1f5fa; --accent:#3c5c88; --accent2:#7c8a99; --motif-color:#b9c4d1;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html,body{
+    width:100%; height:100%; overflow:hidden;
+    background:var(--bg-base);
+    font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic",sans-serif;
+    color:var(--text);
+    font-feature-settings:"tnum" 1;
+    font-variant-numeric:tabular-nums;
+  }
+  body{
+    background:
+      radial-gradient(ellipse at 15% 10%, var(--bg-tint) 0%, transparent 55%),
+      radial-gradient(ellipse at 85% 90%, var(--bg-tint) 0%, transparent 55%),
+      var(--bg-base);
+    transition:background 1.5s ease;
+  }
+  body.cursor-hidden, body.cursor-hidden *{ cursor:none !important; }
+
+  #app{
+    position:relative; width:100vw; height:100vh; overflow:hidden;
+  }
+
+  /* ---------- 季節の装飾レイヤー ---------- */
+  #motif-layer{
+    position:absolute; inset:0; z-index:0; overflow:hidden; pointer-events:none;
+  }
+  .motif-shape{
+    position:absolute; border-radius:50%;
+    background:var(--motif-color);
+    opacity:0.22;
+  }
+  html[data-season="autumn"] .motif-shape{ border-radius:20% 60% 40% 70%; }
+  html[data-season="winter"] .motif-shape{ border-radius:50%; }
+  @keyframes driftDown{
+    from{ transform:translateY(-10vh) translateX(0) rotate(0deg); }
+    to{ transform:translateY(110vh) translateX(6vw) rotate(180deg); }
+  }
+  @keyframes floatUp{
+    0%{ transform:translateY(10vh) translateX(0); }
+    50%{ transform:translateY(-4vh) translateX(2vw); }
+    100%{ transform:translateY(10vh) translateX(0); }
+  }
+  .motif-drift{ animation-name:driftDown; animation-timing-function:linear; animation-iteration-count:infinite; }
+  .motif-float{ animation-name:floatUp; animation-timing-function:ease-in-out; animation-iteration-count:infinite; }
+
+  .wave-decor{
+    position:absolute; left:-10%; right:-10%; bottom:8vh; height:22vh;
+    background:var(--bg-tint);
+    opacity:0.55;
+    border-radius:50% 50% 0 0 / 100% 100% 0 0;
+    z-index:0;
+  }
+
+  /* ---------- スライド共通 ---------- */
+  #slides{
+    position:absolute; inset:0; top:0; bottom:8vh; z-index:1;
+  }
+  .slide{
+    position:absolute; inset:0;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    padding:4vh 6vw;
+    opacity:0; transform:translateY(3vh);
+    transition:opacity 1s ease, transform 1s ease;
+    text-align:center;
+  }
+  .slide.active{ opacity:1; transform:translateY(0); z-index:2; }
+
+  .kicker{
+    font-size:2.6vh; letter-spacing:0.3em; color:var(--accent);
+    font-weight:700; margin-bottom:1.6vh;
+  }
+  .headline{
+    font-size:9.5vh; font-weight:900; line-height:1.25; letter-spacing:0.02em;
+    color:var(--text);
+  }
+  .headline.small{ font-size:8vh; }
+  .sub{
+    font-size:4vh; color:var(--text-soft); margin-top:2.2vh; line-height:1.6; font-weight:500;
+  }
+  .accent-text{ color:var(--accent2); }
+
+  .dept-list{
+    display:flex; flex-wrap:wrap; justify-content:center; gap:1.6vh 1.6vw;
+    margin-top:4vh;
+  }
+  .dept-pill{
+    font-size:3.6vh; font-weight:700; color:var(--text);
+    border:0.3vh solid var(--accent2); border-radius:100px;
+    padding:1.4vh 3vw; background:rgba(255,255,255,0.6);
+  }
+
+  .motto-bar{
+    margin-top:3vh; font-size:3.2vh; color:var(--accent); font-weight:700; letter-spacing:0.08em;
+  }
+
+  /* ---------- 診療時間表 ---------- */
+  .hours-wrap{ width:100%; max-width:88vw; }
+  table.hours-table{
+    width:100%; border-collapse:collapse; margin-top:2vh;
+  }
+  table.hours-table th, table.hours-table td{
+    border-bottom:0.15vh solid var(--line);
+    padding:1.8vh 0.6vw;
+    font-size:3.4vh;
+    text-align:center;
+  }
+  table.hours-table th{
+    color:var(--text-soft); font-weight:700; font-size:3vh;
+  }
+  table.hours-table td.mark-open{ color:var(--accent2); font-size:4.6vh; font-weight:900; }
+  table.hours-table td.mark-close{ color:var(--text-soft); font-size:3.4vh; }
+  table.hours-table td.day-label{ font-weight:700; color:var(--text); }
+  .hours-note{ margin-top:2.4vh; font-size:2.6vh; color:var(--text-soft); line-height:1.7; }
+  .hours-note strong{ color:var(--accent); }
+
+  /* ---------- 内視鏡実績 ---------- */
+  .huge-number{
+    font-size:22vh; font-weight:900; color:var(--accent2); line-height:1;
+    letter-spacing:0.01em;
+  }
+  .huge-number .unit{ font-size:6vh; margin-left:1vw; color:var(--text); font-weight:700; }
+  .breakdown{
+    display:flex; gap:6vw; margin-top:4vh; justify-content:center;
+  }
+  .breakdown .item{ font-size:3.2vh; color:var(--text-soft); }
+  .breakdown .item b{ display:block; font-size:6vh; color:var(--accent); font-weight:900; }
+  .month-badge{
+    margin-top:4vh; font-size:2.8vh; color:var(--text-soft);
+    background:rgba(255,255,255,0.6); border-radius:14px; padding:2vh 3vw;
+  }
+  .month-badge b{ color:var(--accent2); font-size:4vh; }
+
+  /* ---------- 案内リスト（胃/大腸カメラ等） ---------- */
+  .point-list{
+    margin-top:4vh; display:flex; flex-direction:column; gap:2.2vh; align-items:flex-start;
+  }
+  .point-list .point{
+    font-size:3.8vh; color:var(--text); font-weight:600; text-align:left;
+    display:flex; align-items:baseline; gap:1.4vw;
+  }
+  .point-list .point .dot{
+    width:1.6vh; height:1.6vh; border-radius:50%; background:var(--accent);
+    flex:none; transform:translateY(-0.6vh);
+  }
+
+  /* ---------- フッター ---------- */
+  #footer{
+    position:absolute; left:0; right:0; bottom:0; height:8vh; z-index:3;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:0 3vw;
+    background:rgba(255,255,255,0.75);
+    border-top:0.15vh solid var(--line);
+    backdrop-filter:blur(2px);
+  }
+  #footer .footer-left{ display:flex; align-items:baseline; gap:1.6vw; }
+  #footer .clinic-name{ font-size:2.6vh; font-weight:900; color:var(--text); }
+  #footer .clinic-loc{ font-size:1.9vh; color:var(--text-soft); }
+  #footer .footer-clock{ font-size:2.4vh; font-weight:700; color:var(--text); text-align:center; }
+  #footer .footer-clock .date-part{ font-size:1.9vh; color:var(--text-soft); margin-right:1vw; }
+  #dots{ display:flex; gap:0.8vh; }
+  #dots .dot{
+    width:1.1vh; height:1.1vh; border-radius:50%; background:var(--line);
+    transition:background 0.4s ease, transform 0.4s ease;
+  }
+  #dots .dot.active{ background:var(--accent); transform:scale(1.5); }
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="motif-layer"></div>
+  <div class="wave-decor"></div>
+  <div id="slides"></div>
+  <footer id="footer">
+    <div class="footer-left">
+      <span class="clinic-name" id="footer-name"></span>
+      <span class="clinic-loc" id="footer-loc"></span>
+    </div>
+    <div class="footer-clock">
+      <span class="date-part" id="footer-date"></span>
+      <span id="footer-time"></span>
+    </div>
+    <div id="dots"></div>
+  </footer>
+</div>
+
+<script>
+/* =====================================================================
+   横浜駅前ながしまクリニック デジタルサイネージ v1
+   ---------------------------------------------------------------------
+   編集ポイントはこの2つだけです。
+     1) CLINIC  … クリニックの基本情報・診療時間・実績数値
+     2) SLIDES  … スライドの内容・表示月・並び順
+   README.md にそれぞれの編集例があります。
+   ===================================================================== */
+
+// ▼▼▼ ここから CLINIC（クリニック基本情報） ▼▼▼
+const CLINIC = {
+  name: "横浜駅前ながしまクリニック",
+  address: "神奈川県横浜市神奈川区鶴屋町2-11-8 4階",
+  addressShort: "横浜駅きた西口 徒歩3分",
+  tel: "045-534-8147",
+  departments: ["消化器内科", "内視鏡内科", "肛門内科", "内科", "産婦人科"],
+  motto: "大病を未病に",
+
+  // 内科系（消化器内科・内視鏡内科・肛門内科・内科）の診療時間
+  hoursNaika: {
+    days: ["月", "火", "水", "木", "金", "土", "日"],
+    // true=○ / false=× / "note"=○だが注記あり（土曜午後）
+    am: [true, true, true, true, true, true, false],
+    pm: [true, true, true, true, true, "note", false],
+    amTime: "9:00-12:00",
+    pmTime: "13:00-18:00",
+    pmTimeNote: "13:00-17:00※",
+    closedLabel: "休診：日曜・祝日",
+    receptionEnd: "受付終了　午前 11:30 ／ 午後 17:30",
+    note: "※土曜午後は13:00〜17:00。一般外来は15:00まで、15:00〜17:00は内視鏡検査のみとなります。"
+  },
+
+  // 産婦人科の診療時間
+  hoursGyn: {
+    days: ["月", "火", "水", "木", "金", "土", "日"],
+    am: [true, true, false, true, false, false, false],
+    pm: [true, true, false, true, false, false, false],
+    amTime: "9:00-12:00",
+    pmTime: "13:00-17:00",
+    closedLabel: "休診：水・金・土・日・祝",
+    note1: "女性医師（産婦人科専門医）が診療いたします",
+    note2: "待合室は内科と分けております"
+  },
+
+  // 内視鏡実績（月次で更新）
+  endoscopy: {
+    asOf: "2026年7月時点",
+    totalLabel: "開院からの累計",
+    total: 2013,
+    gastroTotal: 1012,
+    colonoTotal: 1001,
+    monthLabel: "2026年7月の実績",
+    monthTotal: 177,
+    monthGastro: 90,
+    monthColono: 87
+  }
+};
+// ▲▲▲ CLINIC ここまで ▲▲▲
+
+// ▼▼▼ ここから SLIDES（スライド本体） ▼▼▼
+// months: "all" または [表示したい月の配列]（例: [6,7,8,9]）
+// duration: 表示秒数（通常は12でOK）
+const SLIDES = [
+  {
+    id: "welcome",
+    months: "all",
+    duration: 12,
+    render: () => `
+      <div class="kicker">${CLINIC.addressShort}</div>
+      <div class="headline">${CLINIC.name}</div>
+      <div class="motto-bar">「${CLINIC.motto}」</div>
+      <div class="dept-list">
+        ${CLINIC.departments.map(d => `<span class="dept-pill">${d}</span>`).join("")}
+      </div>
+    `
+  },
+  {
+    id: "hours",
+    months: "all",
+    duration: 13,
+    render: () => `
+      <div class="kicker">診療時間のご案内</div>
+      <div class="headline small">内科系診療</div>
+      <div class="hours-wrap">
+        ${renderHoursTable(CLINIC.hoursNaika)}
+        <div class="hours-note">
+          <strong>${CLINIC.hoursNaika.closedLabel}</strong>　／　${CLINIC.hoursNaika.receptionEnd}<br>
+          ${CLINIC.hoursNaika.note}
+        </div>
+      </div>
+    `
+  },
+  {
+    id: "hours-gyn",
+    months: "all",
+    duration: 13,
+    render: () => `
+      <div class="kicker">診療時間のご案内</div>
+      <div class="headline small">産婦人科</div>
+      <div class="hours-wrap">
+        ${renderHoursTable(CLINIC.hoursGyn)}
+        <div class="hours-note">
+          <strong>${CLINIC.hoursGyn.closedLabel}</strong><br>
+          ${CLINIC.hoursGyn.note1}／${CLINIC.hoursGyn.note2}
+        </div>
+      </div>
+    `
+  },
+  {
+    id: "endoscopy-count",
+    months: "all",
+    duration: 12,
+    render: () => `
+      <div class="kicker">内視鏡検査 実績</div>
+      <div class="sub">${CLINIC.endoscopy.totalLabel}（${CLINIC.endoscopy.asOf}）</div>
+      <div class="huge-number">${formatNum(CLINIC.endoscopy.total)}<span class="unit">件</span></div>
+      <div class="breakdown">
+        <div class="item">胃カメラ<b>${formatNum(CLINIC.endoscopy.gastroTotal)}</b>件</div>
+        <div class="item">大腸カメラ<b>${formatNum(CLINIC.endoscopy.colonoTotal)}</b>件</div>
+      </div>
+      <div class="month-badge">
+        ${CLINIC.endoscopy.monthLabel}　<b>${formatNum(CLINIC.endoscopy.monthTotal)}件</b>
+        （胃 ${CLINIC.endoscopy.monthGastro}・大腸 ${CLINIC.endoscopy.monthColono}）
+      </div>
+    `
+  },
+  {
+    id: "gastro",
+    months: "all",
+    duration: 12,
+    render: () => `
+      <div class="kicker">胃カメラ検査</div>
+      <div class="headline small">胃カメラのご案内</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>経鼻・経口、お選びいただけます</div>
+        <div class="point"><span class="dot"></span>鎮静剤を使用した検査にも対応しております</div>
+        <div class="point"><span class="dot"></span>当日の検査についてもお気軽にご相談ください</div>
+      </div>
+    `
+  },
+  {
+    id: "colono",
+    months: "all",
+    duration: 12,
+    render: () => `
+      <div class="kicker">大腸カメラ検査</div>
+      <div class="headline small">大腸カメラのご案内</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>下剤は自宅または院内から選べます</div>
+        <div class="point"><span class="dot"></span>日帰りでのポリープ切除にも対応しております</div>
+        <div class="point"><span class="dot"></span>鎮静剤を使用した検査にも対応しております</div>
+      </div>
+    `
+  },
+  {
+    id: "heatstroke",
+    months: [6, 7, 8, 9],
+    duration: 11,
+    render: () => `
+      <div class="kicker">季節のお知らせ</div>
+      <div class="headline small">熱中症にご注意ください</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>こまめな水分補給を心がけましょう</div>
+        <div class="point"><span class="dot"></span>室内でも冷房を上手にご利用ください</div>
+        <div class="point"><span class="dot"></span>ご高齢の方は特にご注意ください</div>
+      </div>
+    `
+  },
+  {
+    id: "flu-vaccine",
+    months: [10, 11, 12],
+    duration: 11,
+    render: () => `
+      <div class="kicker">季節のお知らせ</div>
+      <div class="headline small">インフルエンザワクチンのご案内</div>
+      <div class="sub">接種をご希望の方は、受付・スタッフまでお気軽にお声がけください。</div>
+    `
+  },
+  {
+    id: "kafun",
+    months: [2, 3, 4],
+    duration: 11,
+    render: () => `
+      <div class="kicker">季節のお知らせ</div>
+      <div class="headline small">花粉症・アレルギーのご相談</div>
+      <div class="sub">つらくなる前に、お早めにご相談ください。</div>
+    `
+  },
+  {
+    id: "norovirus",
+    months: [11, 12, 1, 2],
+    duration: 11,
+    render: () => `
+      <div class="kicker">季節のお知らせ</div>
+      <div class="headline small">感染性胃腸炎にご注意ください</div>
+      <div class="sub">こまめな手洗いにご協力をお願いいたします。</div>
+    `
+  },
+  {
+    id: "web-yoyaku",
+    months: "all",
+    duration: 11,
+    render: () => `
+      <div class="kicker">ご予約について</div>
+      <div class="headline small">次回のご予約は<br>WEB予約が便利です</div>
+    `
+  },
+  {
+    id: "mask",
+    months: "all",
+    duration: 11,
+    render: () => `
+      <div class="kicker">院内でのお願い</div>
+      <div class="headline small">マスクの着用にご協力ください</div>
+      <div class="sub">発熱の患者様もいらっしゃいますので、院内ではマスクの着用にご協力をお願いいたします。</div>
+    `
+  }
+];
+// ▲▲▲ SLIDES ここまで ▲▲▲
+
+
+/* =====================================================================
+   以下はエンジン部分です。通常は編集不要です。
+   ===================================================================== */
+
+// ---------- ユーティリティ ----------
+function formatNum(n){
+  return Number(n).toLocaleString("ja-JP");
+}
+
+function renderHoursTable(h){
+  const cell = (v, timeOpen, timeNote) => {
+    if (v === true) return `<td class="mark-open">○</td>`;
+    if (v === "note") return `<td class="mark-open">○</td>`;
+    return `<td class="mark-close">×</td>`;
+  };
+  return `
+    <table class="hours-table">
+      <thead>
+        <tr>
+          <th></th>
+          ${h.days.map(d => `<th>${d}</th>`).join("")}
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="day-label">午前<br><span style="font-size:1.9vh;color:var(--text-soft);">${h.amTime}</span></td>
+          ${h.am.map(v => cell(v)).join("")}
+        </tr>
+        <tr>
+          <td class="day-label">午後<br><span style="font-size:1.9vh;color:var(--text-soft);">${h.pmTime}</span></td>
+          ${h.pm.map(v => cell(v)).join("")}
+        </tr>
+      </tbody>
+    </table>
+  `;
+}
+
+const WEEKDAY_KANJI = ["日", "月", "火", "水", "木", "金", "土"];
+
+function seasonOf(month){
+  if ([3, 4, 5].includes(month)) return "spring";
+  if ([6, 7, 8, 9].includes(month)) return "summer";
+  if ([10, 11].includes(month)) return "autumn";
+  return "winter"; // 12, 1, 2
+}
+
+// ---------- URLパラメータ ----------
+const params = new URLSearchParams(location.search);
+const monthParamRaw = parseInt(params.get("month"), 10);
+const monthParam = (monthParamRaw >= 1 && monthParamRaw <= 12) ? monthParamRaw : null;
+const speedParam = parseFloat(params.get("speed")) || 1;
+const startSlideParam = params.get("slide");
+
+const now0 = new Date();
+const effectiveMonth = monthParam || (now0.getMonth() + 1);
+const currentSeason = seasonOf(effectiveMonth);
+document.documentElement.setAttribute("data-season", currentSeason);
+
+// ---------- 季節モチーフ生成 ----------
+function buildMotifLayer(season){
+  const layer = document.getElementById("motif-layer");
+  layer.innerHTML = "";
+  const count = 10;
+  for (let i = 0; i < count; i++){
+    const el = document.createElement("div");
+    el.className = "motif-shape " + (season === "summer" ? "motif-float" : "motif-drift");
+    const size = 1.2 + Math.random() * 2.4; // vh
+    el.style.width = size + "vh";
+    el.style.height = size + "vh";
+    el.style.left = (Math.random() * 96) + "vw";
+    el.style.top = (Math.random() * 90) + "vh";
+    const duration = 18 + Math.random() * 22;
+    el.style.animationDuration = duration + "s";
+    el.style.animationDelay = (-Math.random() * duration) + "s";
+    layer.appendChild(el);
+  }
+}
+buildMotifLayer(currentSeason);
+
+// ---------- スライドの絞り込み ----------
+function filterSlides(month){
+  let list = SLIDES.filter(s => s.months === "all" || (Array.isArray(s.months) && s.months.includes(month)));
+  if (list.length === 0) list = SLIDES.filter(s => s.months === "all");
+  if (list.length === 0) list = SLIDES.slice();
+  return list;
+}
+const activeSlides = filterSlides(effectiveMonth);
+
+// ---------- DOM構築 ----------
+const slidesRoot = document.getElementById("slides");
+const dotsRoot = document.getElementById("dots");
+const slideEls = [];
+
+activeSlides.forEach((s, i) => {
+  const el = document.createElement("div");
+  el.className = "slide";
+  el.dataset.id = s.id;
+  try {
+    el.innerHTML = s.render();
+  } catch (e){
+    console.error("スライド描画エラー:", s.id, e);
+    el.innerHTML = `<div class="headline small">${CLINIC.name}</div>`;
+  }
+  slidesRoot.appendChild(el);
+  slideEls.push(el);
+
+  const dot = document.createElement("div");
+  dot.className = "dot";
+  dotsRoot.appendChild(dot);
+});
+
+const dotEls = Array.from(dotsRoot.children);
+
+// フッター固定表示
+document.getElementById("footer-name").textContent = CLINIC.name;
+document.getElementById("footer-loc").textContent = CLINIC.addressShort;
+
+// ---------- ローテーション ----------
+let currentIndex = 0;
+if (startSlideParam){
+  const found = activeSlides.findIndex(s => s.id === startSlideParam);
+  if (found >= 0) currentIndex = found;
+}
+
+let rotationTimer = null;
+
+function showSlide(index){
+  slideEls.forEach((el, i) => el.classList.toggle("active", i === index));
+  dotEls.forEach((d, i) => d.classList.toggle("active", i === index));
+}
+
+function scheduleNext(){
+  let durSec = 12;
+  try {
+    durSec = activeSlides[currentIndex].duration || 12;
+  } catch (e) {
+    console.error("duration取得エラー:", e);
+  }
+  const ms = Math.max(2000, (durSec * 1000) / speedParam);
+  rotationTimer = setTimeout(tick, ms);
+}
+
+function tick(){
+  try {
+    currentIndex = (currentIndex + 1) % Math.max(activeSlides.length, 1);
+    showSlide(currentIndex);
+  } catch (e){
+    console.error("ローテーションエラー:", e);
+  }
+  scheduleNext();
+}
+
+showSlide(currentIndex);
+scheduleNext();
+
+// ---------- フッターのライブ時計 ----------
+function updateClock(){
+  try {
+    const d = new Date();
+    const dateStr = `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日（${WEEKDAY_KANJI[d.getDay()]}）`;
+    const timeStr = [d.getHours(), d.getMinutes(), d.getSeconds()]
+      .map(n => String(n).padStart(2, "0")).join(":");
+    document.getElementById("footer-date").textContent = dateStr;
+    document.getElementById("footer-time").textContent = timeStr;
+  } catch (e){
+    console.error("時計更新エラー:", e);
+  }
+}
+updateClock();
+setInterval(updateClock, 1000);
+
+// ---------- 日付が変わったら自動リロード ----------
+const loadDateKey = new Date().toDateString();
+setInterval(() => {
+  try {
+    if (new Date().toDateString() !== loadDateKey){
+      location.reload();
+    }
+  } catch (e){
+    console.error("日付チェックエラー:", e);
+  }
+}, 60 * 60 * 1000); // 1時間おき
+
+// ---------- マウスカーソルの自動非表示 ----------
+let idleTimer = null;
+function resetIdle(){
+  document.body.classList.remove("cursor-hidden");
+  if (idleTimer) clearTimeout(idleTimer);
+  idleTimer = setTimeout(() => {
+    document.body.classList.add("cursor-hidden");
+  }, 3000);
+}
+window.addEventListener("mousemove", resetIdle);
+window.addEventListener("mousedown", resetIdle);
+resetIdle();
+</script>
+</body>
+</html>
