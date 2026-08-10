@@ -423,6 +423,7 @@ const SLIDES = [
     id: "welcome",
     months: "all",
     duration: 12,
+    weight: 2,
     render: () => `
       <div class="kicker">${CLINIC.addressShort}</div>
       <div class="headline">${CLINIC.name}</div>
@@ -436,6 +437,7 @@ const SLIDES = [
     id: "hours",
     months: "all",
     duration: 13,
+    weight: 2,
     render: () => `
       <div class="kicker">診療時間のご案内</div>
       <div class="headline small">内科系診療</div>
@@ -479,9 +481,40 @@ const SLIDES = [
     `
   },
   {
+    id: "kounenki",
+    months: "all",
+    duration: 11,
+    render: () => `
+      <div class="kicker">更年期のお悩み</div>
+      <div class="headline small">ほてり・イライラ・不眠が続く方へ</div>
+      <div class="sub">女性医師にご相談ください。</div>
+    `
+  },
+  {
+    id: "pill-gairai",
+    months: "all",
+    duration: 11,
+    render: () => `
+      <div class="kicker">婦人科診療</div>
+      <div class="headline small">ピル外来のご案内</div>
+      <div class="sub">生理痛・月経不順のお悩みも、婦人科へご相談ください。</div>
+    `
+  },
+  {
+    id: "ninshin-kenshin",
+    months: "all",
+    duration: 11,
+    render: () => `
+      <div class="kicker">産婦人科診療</div>
+      <div class="headline small">妊婦健診・出生前検査に対応</div>
+      <div class="sub">女性医師（産婦人科専門医）が診療いたします。</div>
+    `
+  },
+  {
     id: "endoscopy-count",
     months: "all",
     duration: 12,
+    weight: 2,
     render: () => `
       <div class="kicker">内視鏡検査 実績</div>
       <div class="sub">${CLINIC.endoscopy.totalLabel}（${CLINIC.endoscopy.asOf}）</div>
@@ -493,6 +526,19 @@ const SLIDES = [
       <div class="month-badge">
         ${CLINIC.endoscopy.monthLabel}　<b>${formatNum(CLINIC.endoscopy.monthTotal)}件</b>
         （胃 ${CLINIC.endoscopy.monthGastro}・大腸 ${CLINIC.endoscopy.monthColono}）
+      </div>
+    `
+  },
+  {
+    id: "ai-endoscopy",
+    months: "all",
+    duration: 12,
+    render: () => `
+      <div class="kicker">内視鏡検査の質へのこだわり</div>
+      <div class="headline small">AI内視鏡診断支援を導入</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>大学病院レベルの検査機器を採用しています</div>
+        <div class="point"><span class="dot"></span>AIが検査を支援し、見落としの少ない検査を目指しています</div>
       </div>
     `
   },
@@ -551,6 +597,94 @@ const SLIDES = [
     `
   },
   {
+    id: "heartburn",
+    months: "all",
+    duration: 11,
+    render: () => `
+      <div class="kicker">胸やけ・げっぷにお悩みの方へ</div>
+      <div class="headline small">胸やけ・げっぷが続く方へ</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>逆流性食道炎などの可能性があります</div>
+        <div class="point"><span class="dot"></span>胃カメラで食道・胃の状態を確認できます</div>
+      </div>
+    `
+  },
+  {
+    id: "stomach-discomfort",
+    months: "all",
+    duration: 11,
+    render: () => `
+      <div class="kicker">胃の不調にお悩みの方へ</div>
+      <div class="headline small">胃の痛み・胃もたれが続く方へ</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>機能性ディスペプシア（FD）などの場合もあります</div>
+        <div class="point"><span class="dot"></span>専門外来があり、胃カメラにも対応しています</div>
+      </div>
+    `
+  },
+  {
+    id: "pylori",
+    months: "all",
+    duration: 11,
+    render: () => `
+      <div class="kicker">胃の健康チェック</div>
+      <div class="headline small">ピロリ菌検査・除菌治療のご案内</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>ピロリ菌検査に対応しています</div>
+        <div class="point"><span class="dot"></span>陽性の場合は除菌治療のご相談も承ります</div>
+      </div>
+    `
+  },
+  {
+    id: "benpi",
+    months: "all",
+    duration: 11,
+    render: () => `
+      <div class="kicker">お腹の不調にお悩みの方へ</div>
+      <div class="headline small">便秘・下痢が続く方へ</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>過敏性腸症候群（IBS）の専門外来があります</div>
+        <div class="point"><span class="dot"></span>お一人で抱え込まずご相談ください</div>
+      </div>
+    `
+  },
+  {
+    id: "bentsu-change",
+    months: "all",
+    duration: 11,
+    render: () => `
+      <div class="kicker">排便の変化が気になる方へ</div>
+      <div class="headline small">便が細くなった・残便感がある方へ</div>
+      <div class="sub">大腸カメラでの確認をおすすめします。</div>
+    `
+  },
+  {
+    id: "hinketsu",
+    months: "all",
+    duration: 11,
+    render: () => `
+      <div class="kicker">健診で貧血を指摘された方へ</div>
+      <div class="headline small">その貧血、放置していませんか</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>消化管からの出血が隠れていることもあります</div>
+        <div class="point"><span class="dot"></span>内視鏡検査でチェックできます</div>
+      </div>
+    `
+  },
+  {
+    id: "ji-soudan",
+    months: "all",
+    duration: 12,
+    render: () => `
+      <div class="kicker">痔のお悩み</div>
+      <div class="headline small">いぼ痔・切れ痔、恥ずかしがらずにご相談を</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>「血便は痔だろう」と思い込まず、一度大腸カメラでの確認を</div>
+        <div class="point"><span class="dot"></span>肛門内科でしっかり診察いたします</div>
+      </div>
+    `
+  },
+  {
     id: "dock",
     months: "all",
     duration: 11,
@@ -561,6 +695,26 @@ const SLIDES = [
         <div class="point"><span class="dot"></span>胃カメラ・大腸カメラを組み合わせた人間ドックを実施しています</div>
         <div class="point"><span class="dot"></span>詳しくは受付、または当院ホームページをご覧ください</div>
       </div>
+    `
+  },
+  {
+    id: "seikatsu-shukan",
+    months: "all",
+    duration: 11,
+    render: () => `
+      <div class="kicker">生活習慣病外来</div>
+      <div class="headline small">血圧・血糖・コレステロールが気になる方へ</div>
+      <div class="sub">継続的な通院でのサポートに対応しています。</div>
+    `
+  },
+  {
+    id: "kenshin-hoochi",
+    months: "all",
+    duration: 11,
+    render: () => `
+      <div class="kicker">健診結果、そのままにしていませんか</div>
+      <div class="headline small">「要精密検査」「要再検査」は早めのご相談を</div>
+      <div class="sub">健診結果を放置せず、お早めにご相談ください。</div>
     `
   },
   {
@@ -658,6 +812,16 @@ const SLIDES = [
     `
   },
   {
+    id: "natsubate",
+    months: [7, 8, 9],
+    duration: 11,
+    render: () => `
+      <div class="kicker">季節のお知らせ</div>
+      <div class="headline small">夏バテ・食欲不振にご注意を</div>
+      <div class="sub">胃腸の不調が続くときはご相談ください。</div>
+    `
+  },
+  {
     id: "autumn-checkup",
     months: [9, 10, 11],
     duration: 11,
@@ -665,6 +829,16 @@ const SLIDES = [
       <div class="kicker">季節のお知らせ</div>
       <div class="headline small">秋は健診・検査のチャンスです</div>
       <div class="sub">気候の良いこの時期に、今年まだ健診を受けていない方はぜひご検討ください。</div>
+    `
+  },
+  {
+    id: "aki-kafun",
+    months: [9, 10],
+    duration: 11,
+    render: () => `
+      <div class="kicker">季節のお知らせ</div>
+      <div class="headline small">秋の花粉にもご注意ください</div>
+      <div class="sub">ブタクサなど、秋にも花粉症はあります。</div>
     `
   },
   {
@@ -742,6 +916,7 @@ const SLIDES = [
     id: "web-yoyaku",
     months: "all",
     duration: 13,
+    weight: 2,
     render: () => `
       <div class="kicker">ご予約について</div>
       <div class="two-col qr-layout">
@@ -876,7 +1051,35 @@ function filterSlides(month){
   if (list.length === 0) list = SLIDES.filter(isEnabled);
   return list;
 }
-const activeSlides = filterSlides(effectiveMonth);
+
+// ---------- 表示頻度の重み（weight）を反映した周回リストを作る ----------
+// weight:2 のスライドは1周の中で2回表示する。同じスライドが連続しないよう、
+// 2回目は「元の位置からおよそ半周ずれた位置」に差し込む。
+function buildWeightedRotation(baseList){
+  const result = baseList.slice(); // まず1回ずつ並べる
+  baseList.forEach(s => {
+    const extraCount = Math.max(1, s.weight || 1) - 1; // weight:2 なら追加1回、weight:1（省略時）なら0回
+    for (let k = 0; k < extraCount; k++){
+      const n = result.length;
+      if (n === 0) continue;
+      const originalPos = result.indexOf(s);
+      let pos = (originalPos + Math.floor(n / 2)) % n;
+      // 直前・直後が同じスライドにならないよう、必要ならずらす
+      let guard = 0;
+      while (
+        guard < n &&
+        (result[(pos - 1 + n) % n] === s || result[pos % n] === s)
+      ){
+        pos = (pos + 1) % n;
+        guard++;
+      }
+      result.splice(pos, 0, s);
+    }
+  });
+  return result;
+}
+
+const activeSlides = buildWeightedRotation(filterSlides(effectiveMonth));
 
 // ---------- DOM構築 ----------
 const slidesRoot = document.getElementById("slides");
