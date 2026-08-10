@@ -260,22 +260,43 @@
   #footer{
     position:absolute; left:0; right:0; bottom:0; height:8vh; z-index:3;
     display:flex; align-items:center; justify-content:space-between;
+    gap:1.6vw;
     padding:0 3vw;
     background:rgba(255,255,255,0.75);
     border-top:0.15vh solid var(--line);
     backdrop-filter:blur(2px);
   }
-  #footer .footer-left{ display:flex; align-items:baseline; gap:1.6vw; }
-  #footer .clinic-name{ font-size:2.6vh; font-weight:900; color:var(--text); }
-  #footer .clinic-loc{ font-size:1.9vh; color:var(--text-soft); }
-  #footer .footer-clock{ font-size:2.4vh; font-weight:700; color:var(--text); text-align:center; }
+  /* 院名・所在地・時計は折り返し禁止＆縮まない。幅が足りない場合は#progress側が縮む */
+  #footer .footer-left{
+    display:flex; align-items:baseline; gap:1.6vw;
+    flex:0 0 auto; min-width:0; white-space:nowrap; overflow:hidden;
+  }
+  #footer .clinic-name{ font-size:2.6vh; font-weight:900; color:var(--text); white-space:nowrap; }
+  #footer .clinic-loc{ font-size:1.9vh; color:var(--text-soft); white-space:nowrap; }
+  #footer .footer-clock{
+    font-size:2.4vh; font-weight:700; color:var(--text); text-align:center;
+    flex:0 0 auto; white-space:nowrap;
+  }
   #footer .footer-clock .date-part{ font-size:1.9vh; color:var(--text-soft); margin-right:1vw; }
-  #dots{ display:flex; gap:0.8vh; }
+  #progress{
+    display:flex; align-items:center; justify-content:flex-end;
+    flex:1 1 auto; min-width:0; overflow:hidden;
+  }
+  #dots{ display:flex; gap:0.8vh; overflow:hidden; }
   #dots .dot{
     width:1.1vh; height:1.1vh; border-radius:50%; background:var(--line);
+    flex:none;
     transition:background 0.4s ease, transform 0.4s ease;
   }
   #dots .dot.active{ background:var(--accent); transform:scale(1.5); }
+  /* スライド枚数が多いとき（17枚以上）はドットの代わりにコンパクトなカウンタ表示にする */
+  #progress-counter{
+    display:none; font-size:2.2vh; font-weight:700; color:var(--text-soft);
+    white-space:nowrap; letter-spacing:0.02em;
+    font-variant-numeric:tabular-nums; font-feature-settings:"tnum" 1;
+  }
+  #progress.counter-mode #dots{ display:none; }
+  #progress.counter-mode #progress-counter{ display:inline-block; }
 </style>
 </head>
 <body>
@@ -294,7 +315,10 @@
       <span class="date-part" id="footer-date"></span>
       <span id="footer-time"></span>
     </div>
-    <div id="dots"></div>
+    <div id="progress">
+      <div id="dots"></div>
+      <span id="progress-counter"></span>
+    </div>
   </footer>
 </div>
 
@@ -481,6 +505,19 @@ const SLIDES = [
     `
   },
   {
+    id: "womens-space",
+    months: "all",
+    duration: 11,
+    render: () => `
+      <div class="kicker">女性も安心して通える空間</div>
+      <div class="headline small">女性にも安心な院内づくり</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>内科と婦人科の待合室を分けています</div>
+        <div class="point"><span class="dot"></span>プライバシーに配慮した院内です</div>
+      </div>
+    `
+  },
+  {
     id: "kounenki",
     months: "all",
     duration: 11,
@@ -543,6 +580,16 @@ const SLIDES = [
     `
   },
   {
+    id: "senmon-i",
+    months: "all",
+    duration: 11,
+    render: () => `
+      <div class="kicker">内視鏡検査を担当する医師</div>
+      <div class="headline small">専門医による内視鏡検査</div>
+      <div class="sub">消化器内視鏡専門医・消化器病専門医・肝臓専門医の資格を持つ医師が内視鏡検査を行います。</div>
+    `
+  },
+  {
     id: "gastro",
     months: "all",
     duration: 12,
@@ -568,6 +615,21 @@ const SLIDES = [
         <div class="point"><span class="dot"></span>日帰りでのポリープ切除にも対応しております</div>
         <div class="point"><span class="dot"></span>鎮静剤を使用した検査にも対応しております</div>
       </div>
+    `
+  },
+  {
+    id: "colono-flow",
+    months: "all",
+    duration: 12,
+    render: () => `
+      <div class="kicker">大腸カメラの流れ</div>
+      <div class="headline small">大腸カメラは2ステップ</div>
+      <div class="numbered-list">
+        ${["事前外来で症状やお薬を確認", "検査日を決めて検査へ"].map((d, i) => `
+          <div class="n-item"><span class="n-badge">${i + 1}</span>${d}</div>
+        `).join("")}
+      </div>
+      <div class="sub">血便・下血など緊急性がある場合は毎日ご相談を受けています</div>
     `
   },
   {
@@ -718,6 +780,16 @@ const SLIDES = [
     `
   },
   {
+    id: "vaccine",
+    months: "all",
+    duration: 11,
+    render: () => `
+      <div class="kicker">予防接種・健診</div>
+      <div class="headline small">予防接種・各種健診に対応しています</div>
+      <div class="sub">詳しくは受付までお声がけください。</div>
+    `
+  },
+  {
     id: "jihi",
     months: "all",
     duration: 12,
@@ -767,6 +839,29 @@ const SLIDES = [
           </div>
         </div>
       </div>
+    `
+  },
+  {
+    id: "saturday-endoscopy",
+    months: "all",
+    duration: 12,
+    render: () => `
+      <div class="kicker">平日お忙しい方へ</div>
+      <div class="headline small">土曜も診療しています</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>土曜午後（15:00〜17:00）は内視鏡検査を行っています</div>
+        <div class="point"><span class="dot"></span>お仕事帰り・お買い物のついでにご相談ください</div>
+      </div>
+    `
+  },
+  {
+    id: "blog-info",
+    months: "all",
+    duration: 11,
+    render: () => `
+      <div class="kicker">医療ブログ</div>
+      <div class="headline small">医療ブログを更新中です</div>
+      <div class="sub">症状や検査について解説しています。当院ホームページからご覧いただけます。</div>
     `
   },
   {
@@ -928,6 +1023,16 @@ const SLIDES = [
           <div class="qr-card"><img class="qr-image" src="${QR_YOYAKU}" alt="WEB予約QRコード"></div>
         </div>
       </div>
+    `
+  },
+  {
+    id: "fever",
+    months: "all",
+    duration: 11,
+    render: () => `
+      <div class="kicker">発熱外来</div>
+      <div class="headline small">発熱・かぜ症状の方もご相談ください</div>
+      <div class="sub">院内ではマスクの着用をお願いしております。</div>
     `
   },
   {
@@ -1112,6 +1217,25 @@ const dotEls = Array.from(dotsRoot.children);
 document.getElementById("footer-name").textContent = CLINIC.name;
 document.getElementById("footer-loc").textContent = CLINIC.addressShort;
 
+// ---------- 進行表示（ドット／カウンタの自動切替） ----------
+// スライド枚数が多いと、ドットの合計幅で院名が折り返してしまうため、
+// 17枚以上のときは「12 / 42」形式のコンパクトなカウンタ表示に切り替える。
+const PROGRESS_DOTS_MAX = 16;
+const progressRoot = document.getElementById("progress");
+const progressCounterEl = document.getElementById("progress-counter");
+const useCounterMode = activeSlides.length > PROGRESS_DOTS_MAX;
+if (useCounterMode){
+  progressRoot.classList.add("counter-mode");
+}
+function updateProgressCounter(index){
+  if (!useCounterMode) return;
+  try {
+    progressCounterEl.textContent = (index + 1) + " / " + activeSlides.length;
+  } catch (e){
+    console.error("進行カウンタ更新エラー:", e);
+  }
+}
+
 // ---------- ローテーション ----------
 let currentIndex = 0;
 if (startSlideParam){
@@ -1124,6 +1248,7 @@ let rotationTimer = null;
 function showSlide(index){
   slideEls.forEach((el, i) => el.classList.toggle("active", i === index));
   dotEls.forEach((d, i) => d.classList.toggle("active", i === index));
+  updateProgressCounter(index);
 }
 
 function scheduleNext(){
