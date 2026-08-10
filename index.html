@@ -18,15 +18,19 @@
   }
   html[data-season="spring"]{
     --bg-tint:#fbf1f0; --accent:#c96f88; --accent2:#7fa25e; --motif-color:#eab9c6;
+    --night-bg:#2b1f26; --night-accent:#e8b6c4;
   }
   html[data-season="summer"]{
     --bg-tint:#eff8f6; --accent:#3f8fc0; --accent2:#2c6a4f; --motif-color:#9ecfdc;
+    --night-bg:#10262a; --night-accent:#7fc4d6;
   }
   html[data-season="autumn"]{
     --bg-tint:#fbf3e4; --accent:#c9803a; --accent2:#a9852c; --motif-color:#e0b06a;
+    --night-bg:#2a2013; --night-accent:#e0b06a;
   }
   html[data-season="winter"]{
     --bg-tint:#f1f5fa; --accent:#3c5c88; --accent2:#7c8a99; --motif-color:#b9c4d1;
+    --night-bg:#131b2b; --night-accent:#9fb3d6;
   }
 
   *{ box-sizing:border-box; margin:0; padding:0; }
@@ -196,6 +200,62 @@
     font-size:2.6vh; font-weight:900; flex:none;
   }
 
+  /* ---------- QRコード（WEB予約） ---------- */
+  .qr-layout{ align-items:center; }
+  .qr-col{ display:flex; align-items:center; justify-content:center; }
+  .qr-card{
+    background:#ffffff; border-radius:1.6vh; padding:2vh;
+    box-shadow:0 0 0 0.15vh var(--line);
+  }
+  .qr-image{ display:block; width:35vh; height:35vh; }
+
+  /* ---------- 背景装飾パターン（スライドごとに3種をローテーション） ---------- */
+  .slide.bg-pattern-a{
+    background-image:radial-gradient(circle, var(--motif-color) 1.4px, transparent 1.4px);
+    background-size:4.5vh 4.5vh;
+  }
+  .slide.bg-pattern-b{
+    background-image:
+      radial-gradient(ellipse 55% 30% at 15% 105%, var(--bg-tint) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 28% at 85% 105%, var(--bg-tint) 0%, transparent 70%);
+  }
+  .slide.bg-pattern-c{
+    background-image:linear-gradient(135deg, var(--bg-tint) 0%, transparent 38%);
+  }
+
+  /* ---------- 日曜の帯 ---------- */
+  #sunday-banner{
+    position:absolute; left:0; right:0; top:0; z-index:4;
+    text-align:center; font-size:2.4vh; font-weight:700; color:#fff;
+    background:var(--accent2); padding:1.2vh 0;
+    opacity:0; pointer-events:none;
+    transition:opacity 0.6s ease;
+  }
+  #sunday-banner.show{ opacity:0.92; }
+
+  /* ---------- 夜間画面 ---------- */
+  #night-screen{
+    position:absolute; inset:0; bottom:8vh; z-index:2;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; padding:4vh 6vw;
+    background:var(--night-bg, #1a1f2b);
+    color:#f4f1ea;
+    opacity:0; visibility:hidden; pointer-events:none;
+    transition:opacity 1s ease, visibility 0s linear 1s, background 1.5s ease;
+  }
+  #night-screen.active{
+    opacity:1; visibility:visible; pointer-events:auto;
+    transition:opacity 1s ease, visibility 0s linear 0s, background 1.5s ease;
+  }
+  #night-screen .kicker{ color:var(--night-accent, #9fb3d6); }
+  #night-screen .headline.small{ color:#f7f4ee; }
+  #night-screen .night-clock{
+    font-size:14vh; font-weight:900; margin-top:2vh; line-height:1;
+    color:var(--night-accent, #9fb3d6); letter-spacing:0.02em;
+  }
+  #night-screen .sub{ color:#d8d4c8; }
+  #night-screen .sub.small-sub{ font-size:2.6vh; margin-top:1.2vh; color:#b9b6ab; }
+
   /* ---------- フッター ---------- */
   #footer{
     position:absolute; left:0; right:0; bottom:0; height:8vh; z-index:3;
@@ -222,7 +282,9 @@
 <div id="app">
   <div id="motif-layer"></div>
   <div class="wave-decor"></div>
+  <div id="sunday-banner">本日は休診日です</div>
   <div id="slides"></div>
+  <div id="night-screen"></div>
   <footer id="footer">
     <div class="footer-left">
       <span class="clinic-name" id="footer-name"></span>
@@ -238,14 +300,27 @@
 
 <script>
 /* =====================================================================
-   横浜駅前ながしまクリニック デジタルサイネージ v2
+   横浜駅前ながしまクリニック デジタルサイネージ v3
    ---------------------------------------------------------------------
-   編集ポイントは主にこの3つです。
-     1) CLINIC  … クリニックの基本情報・診療時間・実績数値
-     2) NOTICE  … 臨時休診などの一時的なお知らせ（enabled: true で表示）
-     3) SLIDES  … スライドの内容・表示月・並び順
+   編集ポイントは主にこの5つです。
+     1) NIGHT_MODE … 夜間画面に切り替わる時刻（診療時間外の案内画面）
+     2) CLINIC     … クリニックの基本情報・診療時間・実績数値
+     3) QR_YOYAKU  … WEB予約QRコードの画像データ（予約システムが変わったら要更新）
+     4) NOTICE     … 臨時休診などの一時的なお知らせ（enabled: true で表示）
+     5) SLIDES     … スライドの内容・表示月・並び順
    README.md にそれぞれの編集例があります。
    ===================================================================== */
+
+// ▼▼▼ ここから NIGHT_MODE（夜間画面の切り替え時刻） ▼▼▼
+// この時間帯は自動ローテーションの代わりに「本日の診療は終了しました」画面を表示する。
+// 日をまたぐ時間帯（19:00〜翌7:30 等）も指定できる。
+const NIGHT_MODE = {
+  startHour: 19,
+  startMinute: 0,
+  endHour: 7,
+  endMinute: 30
+};
+// ▲▲▲ NIGHT_MODE ここまで ▲▲▲
 
 // ▼▼▼ ここから CLINIC（クリニック基本情報） ▼▼▼
 const CLINIC = {
@@ -296,6 +371,12 @@ const CLINIC = {
   }
 };
 // ▲▲▲ CLINIC ここまで ▲▲▲
+
+// ▼▼▼ ここから QR_YOYAKU（WEB予約QRコード画像） ▼▼▼
+// WEB予約システムのURLをQRコード化したPNG画像（データURI埋め込み・外部通信なし）。
+// 予約システムのURLが変わった場合は、新しいQRコード画像を作り直してここを丸ごと差し替えること。
+const QR_YOYAKU = "data:image/png;base64,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";
+// ▲▲▲ QR_YOYAKU ここまで ▲▲▲
 
 // ▼▼▼ ここから NOTICE（臨時お知らせ） ▼▼▼
 // 休診のお知らせ等を一時的に出したいときはここを編集する。
@@ -535,6 +616,20 @@ const SLIDES = [
     `
   },
   {
+    id: "tsuyu",
+    months: [6],
+    duration: 11,
+    render: () => `
+      <div class="kicker">季節のお知らせ</div>
+      <div class="headline small">梅雨時の体調管理</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>気圧や湿度の変化で体調を崩しやすい時期です</div>
+        <div class="point"><span class="dot"></span>だるさ・頭痛が続くときは無理せずご相談ください</div>
+        <div class="point"><span class="dot"></span>食品の傷みにもご注意ください</div>
+      </div>
+    `
+  },
+  {
     id: "heatstroke",
     months: [6, 7, 8, 9],
     duration: 11,
@@ -620,6 +715,20 @@ const SLIDES = [
     `
   },
   {
+    id: "dry-winter",
+    months: [12, 1, 2],
+    duration: 11,
+    render: () => `
+      <div class="kicker">季節のお知らせ</div>
+      <div class="headline small">冬の乾燥対策</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>空気が乾燥する季節、加湿と水分補給を心がけましょう</div>
+        <div class="point"><span class="dot"></span>手洗い・うがいで感染対策をお願いします</div>
+        <div class="point"><span class="dot"></span>肌や喉の乾燥が続く方はご相談ください</div>
+      </div>
+    `
+  },
+  {
     id: "spring-checkup",
     months: [3, 4, 5],
     duration: 11,
@@ -632,10 +741,18 @@ const SLIDES = [
   {
     id: "web-yoyaku",
     months: "all",
-    duration: 11,
+    duration: 13,
     render: () => `
       <div class="kicker">ご予約について</div>
-      <div class="headline small">次回のご予約は<br>WEB予約が便利です</div>
+      <div class="two-col qr-layout">
+        <div class="col">
+          <div class="headline small">次回のご予約は<br>WEB予約が便利です</div>
+          <div class="sub">スマートフォンのカメラでQRコードを読み取ってください</div>
+        </div>
+        <div class="col qr-col">
+          <div class="qr-card"><img class="qr-image" src="${QR_YOYAKU}" alt="WEB予約QRコード"></div>
+        </div>
+      </div>
     `
   },
   {
@@ -698,12 +815,32 @@ function seasonOf(month){
   return "winter"; // 12, 1, 2
 }
 
+// 夜間モードの時間帯（日をまたぐ場合にも対応）かどうかを判定する
+function isWithinNightWindow(hour, minute){
+  const startMin = NIGHT_MODE.startHour * 60 + NIGHT_MODE.startMinute;
+  const endMin = NIGHT_MODE.endHour * 60 + NIGHT_MODE.endMinute;
+  const nowMin = hour * 60 + minute;
+  if (startMin === endMin) return false; // 設定ミス時は夜間モードにしない
+  return nowMin >= startMin || nowMin < endMin;
+}
+
 // ---------- URLパラメータ ----------
 const params = new URLSearchParams(location.search);
 const monthParamRaw = parseInt(params.get("month"), 10);
 const monthParam = (monthParamRaw >= 1 && monthParamRaw <= 12) ? monthParamRaw : null;
 const speedParam = parseFloat(params.get("speed")) || 1;
 const startSlideParam = params.get("slide");
+
+// 整数のみ許可（小数不可）のURLパラメータを読む。範囲外・小数・非数値は null（＝実際の値を使う）
+function parseIntParamStrict(name, min, max){
+  const raw = params.get(name);
+  if (raw === null || raw.includes(".")) return null;
+  const n = parseInt(raw, 10);
+  if (!Number.isFinite(n) || n < min || n > max) return null;
+  return n;
+}
+const hourParam = parseIntParamStrict("hour", 0, 23);   // 夜間モード判定用（検証用）
+const dowParam = parseIntParamStrict("dow", 0, 6);       // 曜日判定用（0=日曜、検証用）
 
 const now0 = new Date();
 const effectiveMonth = monthParam || (now0.getMonth() + 1);
@@ -746,9 +883,11 @@ const slidesRoot = document.getElementById("slides");
 const dotsRoot = document.getElementById("dots");
 const slideEls = [];
 
+const BG_PATTERNS = ["bg-pattern-a", "bg-pattern-b", "bg-pattern-c"];
+
 activeSlides.forEach((s, i) => {
   const el = document.createElement("div");
-  el.className = "slide";
+  el.className = "slide " + BG_PATTERNS[i % BG_PATTERNS.length];
   el.dataset.id = s.id;
   try {
     el.innerHTML = s.render();
@@ -806,9 +945,70 @@ function tick(){
 }
 
 showSlide(currentIndex);
-scheduleNext();
 
-// ---------- フッターのライブ時計 ----------
+// ---------- 夜間モード／日曜帯 ----------
+const nightScreenEl = document.getElementById("night-screen");
+const sundayBannerEl = document.getElementById("sunday-banner");
+
+nightScreenEl.innerHTML = `
+  <div class="kicker">夜間</div>
+  <div class="headline small">${CLINIC.name}</div>
+  <div class="night-clock" id="night-clock">--:--:--</div>
+  <div class="sub">本日の診療は終了しました</div>
+  <div class="sub small-sub">診療時間：月〜土 9:00〜　／　詳しくはホームページへ</div>
+`;
+
+// ?hour= が指定されていれば時のみ偽装（分・秒は常に実時刻）。祝日判定はオフラインでは行わない。
+function getEffectiveHour(){
+  return hourParam !== null ? hourParam : new Date().getHours();
+}
+function getEffectiveDow(){
+  return dowParam !== null ? dowParam : new Date().getDay();
+}
+
+let inNightMode = null; // null = 未確定（起動直後の1回目で必ず反映させるための初期値）
+
+function setNightMode(on){
+  inNightMode = on;
+  if (on){
+    if (rotationTimer) clearTimeout(rotationTimer);
+    slidesRoot.style.display = "none";
+    nightScreenEl.classList.add("active");
+    dotsRoot.style.visibility = "hidden";
+  } else {
+    nightScreenEl.classList.remove("active");
+    slidesRoot.style.display = "";
+    dotsRoot.style.visibility = "";
+  }
+}
+
+function applyDayNightMode(){
+  try {
+    const isSunday = getEffectiveDow() === 0;
+    const minute = new Date().getMinutes();
+    // 日曜は終日、夜間画面にはせず通常ローテーション＋休診帯を表示する（祝日は非対応）
+    const night = !isSunday && isWithinNightWindow(getEffectiveHour(), minute);
+
+    sundayBannerEl.classList.toggle("show", isSunday && !night);
+
+    if (night === inNightMode) return; // 変化なし
+    const wasNight = inNightMode;
+    setNightMode(night);
+    if (!night && wasNight !== null){
+      scheduleNext(); // 夜間→通常に切り替わったタイミングでローテーションを再開
+    }
+  } catch (e){
+    console.error("夜間モード判定エラー:", e);
+  }
+}
+
+applyDayNightMode();
+if (!inNightMode){
+  scheduleNext(); // 起動時が通常モードならローテーションを開始
+}
+setInterval(applyDayNightMode, 60 * 1000); // 1分おきに境界時刻をチェック
+
+// ---------- フッター／夜間画面のライブ時計 ----------
 function updateClock(){
   try {
     const d = new Date();
@@ -817,6 +1017,8 @@ function updateClock(){
       .map(n => String(n).padStart(2, "0")).join(":");
     document.getElementById("footer-date").textContent = dateStr;
     document.getElementById("footer-time").textContent = timeStr;
+    const nightClockEl = document.getElementById("night-clock");
+    if (nightClockEl) nightClockEl.textContent = timeStr;
   } catch (e){
     console.error("時計更新エラー:", e);
   }
