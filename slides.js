@@ -50,7 +50,7 @@ const CLINIC = {
     amTime: "9:00-12:00",
     pmTime: "13:00-18:00",
     pmTimeNote: "13:00-17:00※",
-    closedLabel: "休診：日曜・祝日",
+    closedLabel: "休診：<em>日曜・祝日</em>",
     receptionEnd: "受付終了　午前 11:30 ／ 午後 17:30",
     note: "※土曜午後は13:00〜17:00。一般外来は15:00まで、15:00〜17:00は内視鏡検査のみとなります。"
   },
@@ -139,6 +139,8 @@ const SLIDES = [
     duration: 12,
     weight: 2,
     image: "images/welcome.jpg",
+    theme: "bold",
+    tone: "navy",
     render: () => `
       <div class="kicker">${CLINIC.addressShort}</div>
       <div class="headline">${CLINIC.name}</div>
@@ -197,7 +199,7 @@ const SLIDES = [
       <div class="headline small">婦人科診療のご案内</div>
       <div class="point-list">
         <div class="point"><span class="dot"></span>女性医師（産婦人科専門医）が担当いたします</div>
-        <div class="point"><span class="dot"></span>ピル外来・子宮がん検診に対応しています</div>
+        <div class="point"><span class="dot"></span><em>ピル外来</em>・子宮がん検診に対応しています</div>
         <div class="point"><span class="dot"></span>待合室は内科と分けております</div>
       </div>
     `
@@ -215,7 +217,7 @@ const SLIDES = [
       <div class="headline small">女性にも安心な院内づくり</div>
       <div class="point-list">
         <div class="point"><span class="dot"></span>内科と婦人科の待合室を分けています</div>
-        <div class="point"><span class="dot"></span>プライバシーに配慮した院内です</div>
+        <div class="point"><span class="dot"></span><em>プライバシー</em>に配慮した院内です</div>
       </div>
     `
   },
@@ -226,10 +228,12 @@ const SLIDES = [
     months: "all",
     duration: 12,
     image: "images/kounenki.jpg",
+    theme: "bold",
+    tone: "rose",
     render: () => `
       <div class="series-badge">更年期特集 1/2</div>
       <div class="kicker">こんな症状はありませんか</div>
-      <div class="headline small">更年期のサインかもしれません</div>
+      <div class="headline small"><em>更年期</em>のサインかもしれません</div>
       <div class="point-list">
         <div class="point"><span class="dot"></span>ほてり・のぼせ</div>
         <div class="point"><span class="dot"></span>汗をかきやすい</div>
@@ -246,13 +250,15 @@ const SLIDES = [
     duration: 11,
     image: "images/kounenki.jpg",
     imageReverse: true,
+    theme: "bold",
+    tone: "rose",
     render: () => `
       <div class="series-badge">更年期特集 2/2</div>
       <div class="kicker">我慢しないでご相談を</div>
       <div class="headline small">お一人で抱え込まないでください</div>
       <div class="point-list">
         <div class="point"><span class="dot"></span>治療や付き合い方は人それぞれです</div>
-        <div class="point"><span class="dot"></span>女性医師がお話を伺います</div>
+        <div class="point"><span class="dot"></span><em>女性医師</em>がお話を伺います</div>
       </div>
     `
   },
@@ -263,9 +269,11 @@ const SLIDES = [
     months: "all",
     duration: 12,
     image: "images/pill.jpg",
+    theme: "bold",
+    tone: "rose",
     render: () => `
       <div class="series-badge">ピル外来特集 1/2</div>
-      <div class="kicker">ピル外来で相談できること</div>
+      <div class="kicker"><em>ピル外来</em>で相談できること</div>
       <div class="headline small">こんなことも相談できます</div>
       <div class="point-list">
         <div class="point"><span class="dot"></span>生理痛がつらい</div>
@@ -282,10 +290,12 @@ const SLIDES = [
     duration: 11,
     image: "images/pill.jpg",
     imageReverse: true,
+    theme: "bold",
+    tone: "rose",
     render: () => `
       <div class="series-badge">ピル外来特集 2/2</div>
       <div class="kicker">受診はお気軽に</div>
-      <div class="headline small">まずはご相談ください</div>
+      <div class="headline small">まずは<em>ご相談</em>ください</div>
       <div class="point-list">
         <div class="point"><span class="dot"></span>女性医師（産婦人科専門医）が担当いたします</div>
         <div class="point"><span class="dot"></span>待合室は内科と分けております</div>
@@ -300,6 +310,8 @@ const SLIDES = [
     months: "all",
     duration: 12,
     weight: 2,
+    theme: "bold",
+    tone: "green",
     render: () => `
       <div class="kicker">内視鏡検査 実績</div>
       <div class="sub">${CLINIC.endoscopy.totalLabel}（${CLINIC.endoscopy.asOf}）</div>
@@ -323,7 +335,7 @@ const SLIDES = [
     image: "images/naishikyo.jpg",
     render: () => `
       <div class="kicker">内視鏡検査の質へのこだわり</div>
-      <div class="headline small">AI内視鏡診断支援を導入</div>
+      <div class="headline small"><em>AI内視鏡診断支援</em>を導入</div>
       <div class="point-list">
         <div class="point"><span class="dot"></span>大学病院レベルの検査機器を採用しています</div>
         <div class="point"><span class="dot"></span>AIが検査を支援し、見落としの少ない検査を目指しています</div>
@@ -340,7 +352,7 @@ const SLIDES = [
     imageReverse: true,
     render: () => `
       <div class="kicker">内視鏡検査を担当する医師</div>
-      <div class="headline small">専門医による内視鏡検査</div>
+      <div class="headline small"><em>専門医</em>による内視鏡検査</div>
       <div class="sub">消化器内視鏡専門医・消化器病専門医・肝臓専門医の資格を持つ医師が内視鏡検査を行います。</div>
     `
   },
@@ -353,7 +365,7 @@ const SLIDES = [
     image: "images/gastro.jpg",
     render: () => `
       <div class="kicker">胃カメラ検査</div>
-      <div class="headline small">胃カメラのご案内</div>
+      <div class="headline small"><em>胃カメラ</em>のご案内</div>
       <div class="point-list">
         <div class="point"><span class="dot"></span>経鼻・経口、お選びいただけます</div>
         <div class="point"><span class="dot"></span>鎮静剤を使用した検査にも対応しております</div>
@@ -368,10 +380,12 @@ const SLIDES = [
     months: "all",
     duration: 12,
     image: "images/gastro.jpg",
+    theme: "bold",
+    tone: "green",
     render: () => `
       <div class="series-badge">胃カメラ特集 1/3</div>
       <div class="kicker">こんな症状はありませんか</div>
-      <div class="headline small">胃カメラのご相談を</div>
+      <div class="headline small"><em>胃カメラ</em>のご相談を</div>
       <div class="point-list">
         <div class="point"><span class="dot"></span>胃の痛みが続く</div>
         <div class="point"><span class="dot"></span>胸やけが続く</div>
@@ -388,6 +402,8 @@ const SLIDES = [
     duration: 12,
     image: "images/gastro.jpg",
     imageReverse: true,
+    theme: "bold",
+    tone: "green",
     render: () => `
       <div class="series-badge">胃カメラ特集 2/3</div>
       <div class="kicker">選べる検査方法</div>
@@ -395,7 +411,7 @@ const SLIDES = [
       <div class="point-list">
         <div class="point"><span class="dot"></span>経鼻・経口、お選びいただけます</div>
         <div class="point"><span class="dot"></span>鎮静剤を使用した検査にも対応しております</div>
-        <div class="point"><span class="dot"></span>検査後はリカバリールームでお休みいただけます</div>
+        <div class="point"><span class="dot"></span>検査後は<em>リカバリールーム</em>でお休みいただけます</div>
       </div>
     `
   },
@@ -406,10 +422,12 @@ const SLIDES = [
     months: "all",
     duration: 12,
     image: "images/naishikyo.jpg",
+    theme: "bold",
+    tone: "green",
     render: () => `
       <div class="series-badge">胃カメラ特集 3/3</div>
       <div class="kicker">専門医による検査</div>
-      <div class="headline small">専門医が担当いたします</div>
+      <div class="headline small"><em>専門医</em>が担当いたします</div>
       <div class="point-list">
         <div class="point"><span class="dot"></span>消化器内視鏡専門医が検査を担当します</div>
         <div class="point"><span class="dot"></span>AI内視鏡診断支援を導入しています</div>
@@ -426,7 +444,7 @@ const SLIDES = [
     image: "images/colono.jpg",
     render: () => `
       <div class="kicker">大腸カメラ検査</div>
-      <div class="headline small">大腸カメラのご案内</div>
+      <div class="headline small"><em>大腸カメラ</em>のご案内</div>
       <div class="point-list">
         <div class="point"><span class="dot"></span>下剤は自宅または院内から選べます</div>
         <div class="point"><span class="dot"></span>日帰りでのポリープ切除にも対応しております</div>
@@ -448,7 +466,7 @@ const SLIDES = [
           <div class="n-item"><span class="n-badge">${i + 1}</span>${d}</div>
         `).join("")}
       </div>
-      <div class="sub">血便・下血など緊急性がある場合は毎日ご相談を受けています</div>
+      <div class="sub">血便・下血など緊急性がある場合は<em>毎日ご相談</em>を受けています</div>
     `
   },
   {
@@ -460,7 +478,7 @@ const SLIDES = [
     image: "images/colono.jpg",
     render: () => `
       <div class="kicker">内視鏡検査</div>
-      <div class="headline small">日帰り大腸ポリープ切除</div>
+      <div class="headline small"><em>日帰り</em>大腸ポリープ切除</div>
       <div class="point-list">
         <div class="point"><span class="dot"></span>大腸カメラ検査中にポリープが見つかった場合、その場での切除に対応しています（日帰り）</div>
         <div class="point"><span class="dot"></span>後日あらためて手術、といった負担を減らせます</div>
@@ -475,10 +493,12 @@ const SLIDES = [
     duration: 12,
     image: "images/colono.jpg",
     imageReverse: true,
+    theme: "bold",
+    tone: "green",
     render: () => `
       <div class="series-badge">大腸カメラ特集 1/3</div>
       <div class="kicker">なぜ大腸カメラ？</div>
-      <div class="headline small">早期発見のために</div>
+      <div class="headline small"><em>早期発見</em>のために</div>
       <div class="point-list">
         <div class="point"><span class="dot"></span>大腸がんは日本人に多いがんのひとつです</div>
         <div class="point"><span class="dot"></span>早期には自覚症状がほとんどないことも</div>
@@ -493,10 +513,12 @@ const SLIDES = [
     months: "all",
     duration: 13,
     image: "images/colono.jpg",
+    theme: "bold",
+    tone: "green",
     render: () => `
       <div class="series-badge">大腸カメラ特集 2/3</div>
       <div class="kicker">検査の流れ</div>
-      <div class="headline small">受診はかんたん2ステップ</div>
+      <div class="headline small">受診はかんたん<em>2ステップ</em></div>
       <div class="numbered-list">
         ${["事前外来（症状・お薬の確認）", "検査日を決めて検査へ"].map((d, i) => `
           <div class="n-item"><span class="n-badge">${i + 1}</span>${d}</div>
@@ -516,10 +538,12 @@ const SLIDES = [
     duration: 12,
     image: "images/colono.jpg",
     imageReverse: true,
+    theme: "bold",
+    tone: "green",
     render: () => `
       <div class="series-badge">大腸カメラ特集 3/3</div>
       <div class="kicker">当日その場で</div>
-      <div class="headline small">検査後も安心のサポート</div>
+      <div class="headline small">検査後も<em>安心のサポート</em></div>
       <div class="point-list">
         <div class="point"><span class="dot"></span>ポリープが見つかれば日帰り切除に対応</div>
         <div class="point"><span class="dot"></span>検査後はリカバリールームでお休みいただけます</div>
@@ -537,7 +561,7 @@ const SLIDES = [
       <div class="kicker">健診で便潜血陽性だった方へ</div>
       <div class="headline small">便潜血陽性・血便について</div>
       <div class="point-list">
-        <div class="point"><span class="dot"></span>便潜血陽性・血便は放置せず、大腸カメラでの精密検査をおすすめします</div>
+        <div class="point"><span class="dot"></span>便潜血陽性・血便は放置せず、<em>大腸カメラ</em>での精密検査をおすすめします</div>
         <div class="point"><span class="dot"></span>当院では血便・下血のご相談を毎日受け付けています</div>
       </div>
     `
@@ -553,7 +577,7 @@ const SLIDES = [
       <div class="headline small">胸やけ・げっぷが続く方へ</div>
       <div class="point-list">
         <div class="point"><span class="dot"></span>逆流性食道炎などの可能性があります</div>
-        <div class="point"><span class="dot"></span>胃カメラで食道・胃の状態を確認できます</div>
+        <div class="point"><span class="dot"></span><em>胃カメラ</em>で食道・胃の状態を確認できます</div>
       </div>
     `
   },
@@ -568,7 +592,7 @@ const SLIDES = [
       <div class="headline small">胃の痛み・胃もたれが続く方へ</div>
       <div class="point-list">
         <div class="point"><span class="dot"></span>機能性ディスペプシア（FD）などの場合もあります</div>
-        <div class="point"><span class="dot"></span>専門外来があり、胃カメラにも対応しています</div>
+        <div class="point"><span class="dot"></span><em>専門外来</em>があり、胃カメラにも対応しています</div>
       </div>
     `
   },
@@ -580,7 +604,7 @@ const SLIDES = [
     duration: 11,
     render: () => `
       <div class="kicker">胃の健康チェック</div>
-      <div class="headline small">ピロリ菌検査・除菌治療のご案内</div>
+      <div class="headline small"><em>ピロリ菌検査</em>・除菌治療のご案内</div>
       <div class="point-list">
         <div class="point"><span class="dot"></span>ピロリ菌検査に対応しています</div>
         <div class="point"><span class="dot"></span>陽性の場合は除菌治療のご相談も承ります</div>
@@ -597,7 +621,7 @@ const SLIDES = [
       <div class="kicker">お腹の不調にお悩みの方へ</div>
       <div class="headline small">便秘・下痢が続く方へ</div>
       <div class="point-list">
-        <div class="point"><span class="dot"></span>過敏性腸症候群（IBS）の専門外来があります</div>
+        <div class="point"><span class="dot"></span>過敏性腸症候群（IBS）の<em>専門外来</em>があります</div>
         <div class="point"><span class="dot"></span>お一人で抱え込まずご相談ください</div>
       </div>
     `
@@ -611,7 +635,7 @@ const SLIDES = [
     render: () => `
       <div class="kicker">排便の変化が気になる方へ</div>
       <div class="headline small">便が細くなった・残便感がある方へ</div>
-      <div class="sub">大腸カメラでの確認をおすすめします。</div>
+      <div class="sub"><em>大腸カメラ</em>での確認をおすすめします。</div>
     `
   },
   {
@@ -626,7 +650,7 @@ const SLIDES = [
       <div class="headline small">こまめな水分補給を</div>
       <div class="point-list">
         <div class="point"><span class="dot"></span>少量ずつ・こまめに水分を</div>
-        <div class="point"><span class="dot"></span>経口補水液が役立つこともあります</div>
+        <div class="point"><span class="dot"></span><em>経口補水液</em>が役立つこともあります</div>
         <div class="point"><span class="dot"></span>水分がとれないほどつらいときは受診を</div>
       </div>
     `
@@ -642,7 +666,7 @@ const SLIDES = [
       <div class="headline small">その貧血、放置していませんか</div>
       <div class="point-list">
         <div class="point"><span class="dot"></span>消化管からの出血が隠れていることもあります</div>
-        <div class="point"><span class="dot"></span>内視鏡検査でチェックできます</div>
+        <div class="point"><span class="dot"></span><em>内視鏡検査</em>でチェックできます</div>
       </div>
     `
   },
@@ -658,7 +682,7 @@ const SLIDES = [
       <div class="headline small">いぼ痔・切れ痔、恥ずかしがらずにご相談を</div>
       <div class="point-list">
         <div class="point"><span class="dot"></span>「血便は痔だろう」と思い込まず、一度大腸カメラでの確認を</div>
-        <div class="point"><span class="dot"></span>肛門内科でしっかり診察いたします</div>
+        <div class="point"><span class="dot"></span><em>肛門内科</em>でしっかり診察いたします</div>
       </div>
     `
   },
@@ -671,7 +695,7 @@ const SLIDES = [
     image: "images/dock.jpg",
     render: () => `
       <div class="kicker">人間ドック</div>
-      <div class="headline small">人間ドックのご案内</div>
+      <div class="headline small"><em>人間ドック</em>のご案内</div>
       <div class="point-list">
         <div class="point"><span class="dot"></span>胃カメラ・大腸カメラを組み合わせた人間ドックを実施しています</div>
         <div class="point"><span class="dot"></span>詳しくは受付、または当院ホームページをご覧ください</div>
@@ -686,7 +710,7 @@ const SLIDES = [
     duration: 11,
     image: "images/seikatsu.jpg",
     render: () => `
-      <div class="kicker">生活習慣病外来</div>
+      <div class="kicker"><em>生活習慣病外来</em></div>
       <div class="headline small">血圧・血糖・コレステロールが気になる方へ</div>
       <div class="sub">継続的な通院でのサポートに対応しています。</div>
     `
@@ -701,7 +725,7 @@ const SLIDES = [
     imageReverse: true,
     render: () => `
       <div class="kicker">肥満外来</div>
-      <div class="headline small">肥満外来のご案内</div>
+      <div class="headline small"><em>肥満外来</em>のご案内</div>
       <div class="point-list">
         <div class="point"><span class="dot"></span>肥満は生活習慣病と関わりの深いテーマです</div>
         <div class="point"><span class="dot"></span>当院では肥満外来のご相談に対応しています（自費診療）</div>
@@ -718,7 +742,7 @@ const SLIDES = [
     render: () => `
       <div class="kicker">健診で血圧を指摘された方へ</div>
       <div class="headline small">その血圧、放置せず、まずはご相談を</div>
-      <div class="sub">生活習慣病外来で継続的にサポートいたします。</div>
+      <div class="sub"><em>生活習慣病外来</em>で継続的にサポートいたします。</div>
     `
   },
   {
@@ -730,7 +754,7 @@ const SLIDES = [
     image: "images/seikatsu.jpg",
     imageReverse: true,
     render: () => `
-      <div class="kicker">血糖値・HbA1cが気になる方へ</div>
+      <div class="kicker"><em>血糖値・HbA1c</em>が気になる方へ</div>
       <div class="headline small">放置せず、まずはご相談を</div>
       <div class="sub">生活習慣病外来で継続的にサポートいたします。</div>
     `
@@ -743,7 +767,7 @@ const SLIDES = [
     duration: 11,
     image: "images/seikatsu.jpg",
     render: () => `
-      <div class="kicker">コレステロール・中性脂肪を指摘された方へ</div>
+      <div class="kicker"><em>コレステロール・中性脂肪</em>を指摘された方へ</div>
       <div class="headline small">放置せず、まずはご相談を</div>
       <div class="sub">生活習慣病外来で継続的にサポートいたします。</div>
     `
@@ -758,7 +782,7 @@ const SLIDES = [
       <div class="kicker">当院からのお知らせ</div>
       <div class="headline small">療養計画書について</div>
       <div class="point-list">
-        <div class="point"><span class="dot"></span>高血圧・糖尿病・脂質異常症で通院中の方には、療養計画書をお渡しして治療目標を一緒に決めています</div>
+        <div class="point"><span class="dot"></span>高血圧・糖尿病・脂質異常症で通院中の方には、<em>療養計画書</em>をお渡しして治療目標を一緒に決めています</div>
         <div class="point"><span class="dot"></span>内容のご説明の際、署名をお願いすることがあります</div>
       </div>
     `
@@ -773,7 +797,7 @@ const SLIDES = [
     render: () => `
       <div class="kicker">健診結果、そのままにしていませんか</div>
       <div class="headline small">「要精密検査」「要再検査」は早めのご相談を</div>
-      <div class="sub">健診結果を放置せず、お早めにご相談ください。</div>
+      <div class="sub">健診結果を放置せず、<em>お早めに</em>ご相談ください。</div>
     `
   },
   {
@@ -784,7 +808,7 @@ const SLIDES = [
     duration: 11,
     render: () => `
       <div class="kicker">予防接種・健診</div>
-      <div class="headline small">予防接種・各種健診に対応しています</div>
+      <div class="headline small"><em>予防接種</em>・各種健診に対応しています</div>
       <div class="sub">詳しくは受付までお声がけください。</div>
     `
   },
@@ -796,7 +820,7 @@ const SLIDES = [
     duration: 12,
     render: () => `
       <div class="kicker">自費診療</div>
-      <div class="headline small">自費診療のご案内</div>
+      <div class="headline small"><em>自費診療</em>のご案内</div>
       <div class="dept-list">
         ${["美容注射", "アフターピル", "AGA治療", "ED治療", "肥満外来"].map(d => `<span class="dept-pill">${d}</span>`).join("")}
       </div>
@@ -811,7 +835,7 @@ const SLIDES = [
     duration: 13,
     render: () => `
       <div class="kicker">横浜市の検診</div>
-      <div class="headline small">横浜市の検診を実施しています</div>
+      <div class="headline small"><em>横浜市の検診</em>を実施しています</div>
       <div class="numbered-list">
         ${["大腸がん検診", "特定健診", "婦人科検診", "前立腺がん検診（PSA）"].map((d, i) => `
           <div class="n-item"><span class="n-badge">${i + 1}</span>${d}</div>
@@ -838,7 +862,7 @@ const SLIDES = [
         </div>
         <div class="col">
           <div class="point-list">
-            <div class="point"><span class="dot"></span>横浜駅きた西口 徒歩3分</div>
+            <div class="point"><span class="dot"></span>横浜駅きた西口 <em>徒歩3分</em></div>
             <div class="point"><span class="dot"></span>横浜モアーズから徒歩2分</div>
             <div class="point"><span class="dot"></span>土曜も診療しております</div>
           </div>
@@ -854,7 +878,7 @@ const SLIDES = [
     duration: 12,
     render: () => `
       <div class="kicker">平日お忙しい方へ</div>
-      <div class="headline small">土曜も診療しています</div>
+      <div class="headline small"><em>土曜も診療</em>しています</div>
       <div class="point-list">
         <div class="point"><span class="dot"></span>土曜午後（15:00〜17:00）は内視鏡検査を行っています</div>
         <div class="point"><span class="dot"></span>お仕事帰り・お買い物のついでにご相談ください</div>
@@ -870,7 +894,7 @@ const SLIDES = [
     render: () => `
       <div class="kicker">医療ブログ</div>
       <div class="headline small">医療ブログを更新中です</div>
-      <div class="sub">症状や検査について解説しています。当院ホームページからご覧いただけます。</div>
+      <div class="sub">症状や検査について解説しています。当院<em>ホームページ</em>からご覧いただけます。</div>
     `
   },
   {
@@ -884,7 +908,7 @@ const SLIDES = [
       <div class="headline small">梅雨時の体調管理</div>
       <div class="point-list">
         <div class="point"><span class="dot"></span>気圧や湿度の変化で体調を崩しやすい時期です</div>
-        <div class="point"><span class="dot"></span>だるさ・頭痛が続くときは無理せずご相談ください</div>
+        <div class="point"><span class="dot"></span>だるさ・頭痛が続くときは無理せず<em>ご相談ください</em></div>
         <div class="point"><span class="dot"></span>食品の傷みにもご注意ください</div>
       </div>
     `
@@ -896,11 +920,13 @@ const SLIDES = [
     months: [6, 7, 8, 9],
     duration: 11,
     image: "images/heatstroke.jpg",
+    theme: "bold",
+    tone: "summer",
     render: () => `
       <div class="kicker">季節のお知らせ</div>
       <div class="headline small">熱中症にご注意ください</div>
       <div class="point-list">
-        <div class="point"><span class="dot"></span>こまめな水分補給を心がけましょう</div>
+        <div class="point"><span class="dot"></span>こまめな<em>水分補給</em>を心がけましょう</div>
         <div class="point"><span class="dot"></span>室内でも冷房を上手にご利用ください</div>
         <div class="point"><span class="dot"></span>ご高齢の方は特にご注意ください</div>
       </div>
@@ -917,7 +943,7 @@ const SLIDES = [
       <div class="headline small">食中毒にご注意ください</div>
       <div class="point-list">
         <div class="point"><span class="dot"></span>こまめな手洗いを心がけましょう</div>
-        <div class="point"><span class="dot"></span>お肉やお魚はしっかり加熱しましょう</div>
+        <div class="point"><span class="dot"></span>お肉やお魚はしっかり<em>加熱</em>しましょう</div>
         <div class="point"><span class="dot"></span>作り置きのお料理は早めに召し上がりましょう</div>
       </div>
     `
@@ -931,7 +957,7 @@ const SLIDES = [
     render: () => `
       <div class="kicker">季節のお知らせ</div>
       <div class="headline small">夏バテ・食欲不振にご注意を</div>
-      <div class="sub">胃腸の不調が続くときはご相談ください。</div>
+      <div class="sub">胃腸の不調が続くときは<em>ご相談ください</em>。</div>
     `
   },
   {
@@ -944,7 +970,7 @@ const SLIDES = [
     render: () => `
       <div class="kicker">季節のお知らせ</div>
       <div class="headline small">秋は健診・検査のチャンスです</div>
-      <div class="sub">気候の良いこの時期に、今年まだ健診を受けていない方はぜひご検討ください。</div>
+      <div class="sub">気候の良いこの時期に、今年まだ<em>健診</em>を受けていない方はぜひご検討ください。</div>
     `
   },
   {
@@ -957,7 +983,7 @@ const SLIDES = [
     render: () => `
       <div class="kicker">季節のお知らせ</div>
       <div class="headline small">秋の花粉にもご注意ください</div>
-      <div class="sub">ブタクサなど、秋にも花粉症はあります。</div>
+      <div class="sub">ブタクサなど、秋にも<em>花粉症</em>はあります。</div>
     `
   },
   {
@@ -967,11 +993,13 @@ const SLIDES = [
     months: [10, 11, 12],
     duration: 12,
     image: "images/flu.jpg",
+    theme: "bold",
+    tone: "winter",
     render: () => `
       <div class="kicker">季節のお知らせ</div>
       <div class="headline small">インフルエンザワクチンのご案内</div>
       <div class="point-list">
-        <div class="point"><span class="dot"></span>10月ごろから接種を開始しています</div>
+        <div class="point"><span class="dot"></span>10月ごろから<em>接種</em>を開始しています</div>
         <div class="point"><span class="dot"></span>ご予約・当日の接種については受付までお尋ねください</div>
         <div class="point"><span class="dot"></span>手洗い・うがいも引き続き心がけましょう</div>
       </div>
@@ -986,7 +1014,7 @@ const SLIDES = [
     image: "images/kafun.jpg",
     render: () => `
       <div class="kicker">季節のお知らせ</div>
-      <div class="headline small">花粉症・アレルギーのご相談</div>
+      <div class="headline small"><em>花粉症</em>・アレルギーのご相談</div>
       <div class="sub">つらくなる前に、お早めにご相談ください。</div>
     `
   },
@@ -999,7 +1027,7 @@ const SLIDES = [
     image: "images/tearai.jpg",
     render: () => `
       <div class="kicker">季節のお知らせ</div>
-      <div class="headline small">感染性胃腸炎にご注意ください</div>
+      <div class="headline small"><em>感染性胃腸炎</em>にご注意ください</div>
       <div class="sub">こまめな手洗いにご協力をお願いいたします。</div>
     `
   },
@@ -1013,7 +1041,7 @@ const SLIDES = [
       <div class="kicker">季節のお知らせ</div>
       <div class="headline small">年末年始の胃腸をいたわりましょう</div>
       <div class="point-list">
-        <div class="point"><span class="dot"></span>会食が増える季節です。暴飲暴食にはご注意ください</div>
+        <div class="point"><span class="dot"></span>会食が増える季節です。<em>暴飲暴食</em>にはご注意ください</div>
         <div class="point"><span class="dot"></span>胃の不調が続くときは、早めにご相談ください</div>
       </div>
     `
@@ -1030,7 +1058,7 @@ const SLIDES = [
       <div class="point-list">
         <div class="point"><span class="dot"></span>空気が乾燥する季節、加湿と水分補給を心がけましょう</div>
         <div class="point"><span class="dot"></span>手洗い・うがいで感染対策をお願いします</div>
-        <div class="point"><span class="dot"></span>肌や喉の乾燥が続く方はご相談ください</div>
+        <div class="point"><span class="dot"></span>肌や喉の<em>乾燥</em>が続く方はご相談ください</div>
       </div>
     `
   },
@@ -1044,7 +1072,7 @@ const SLIDES = [
     render: () => `
       <div class="kicker">季節のお知らせ</div>
       <div class="headline small">新年度は健康チェックのタイミングです</div>
-      <div class="sub">新生活のスタートに、一度健康状態を確認してみませんか。</div>
+      <div class="sub">新生活のスタートに、一度<em>健康状態</em>を確認してみませんか。</div>
     `
   },
   {
@@ -1054,11 +1082,13 @@ const SLIDES = [
     months: "all",
     duration: 13,
     weight: 2,
+    theme: "bold",
+    tone: "navy",
     render: () => `
       <div class="kicker">ご予約について</div>
       <div class="two-col qr-layout">
         <div class="col">
-          <div class="headline small">次回のご予約は<br>WEB予約が便利です</div>
+          <div class="headline small">次回のご予約は<br><em>WEB予約</em>が便利です</div>
           <div class="sub">スマートフォンのカメラでQRコードを読み取ってください</div>
         </div>
         <div class="col qr-col">
@@ -1075,7 +1105,7 @@ const SLIDES = [
     duration: 11,
     render: () => `
       <div class="kicker">発熱外来</div>
-      <div class="headline small">発熱・かぜ症状の方もご相談ください</div>
+      <div class="headline small"><em>発熱</em>・かぜ症状の方もご相談ください</div>
       <div class="sub">院内ではマスクの着用をお願いしております。</div>
     `
   },
@@ -1088,7 +1118,7 @@ const SLIDES = [
     image: "images/myna.jpg",
     render: () => `
       <div class="kicker">受付でのお願い</div>
-      <div class="headline small">マイナ保険証をご用意ください</div>
+      <div class="headline small"><em>マイナ保険証</em>をご用意ください</div>
       <div class="sub">受診の際はマイナ保険証（または資格確認書）をご用意ください。ご不明な点は受付までお気軽にどうぞ。</div>
     `
   },
@@ -1100,7 +1130,7 @@ const SLIDES = [
     duration: 11,
     render: () => `
       <div class="kicker">当院からのお知らせ</div>
-      <div class="headline small">医療DXへの取り組み</div>
+      <div class="headline small"><em>医療DX</em>への取り組み</div>
       <div class="point-list">
         <div class="point"><span class="dot"></span>当院は医療DX推進体制を整備しています</div>
         <div class="point"><span class="dot"></span>マイナ保険証の利用促進や、診療情報の活用により、質の高い医療の提供に努めています</div>
@@ -1115,7 +1145,7 @@ const SLIDES = [
     duration: 11,
     render: () => `
       <div class="kicker">当院からのお知らせ</div>
-      <div class="headline small">感染対策・発熱対応について</div>
+      <div class="headline small"><em>感染対策</em>・発熱対応について</div>
       <div class="point-list">
         <div class="point"><span class="dot"></span>当院は院内感染対策を実施し、発熱・感染症症状のある方の受け入れ体制を整えています</div>
         <div class="point"><span class="dot"></span>発熱症状のある方は、受付にお申し出ください</div>
@@ -1132,7 +1162,7 @@ const SLIDES = [
       <div class="kicker">当院からのお知らせ</div>
       <div class="headline small">お薬に関するお知らせ</div>
       <div class="point-list">
-        <div class="point"><span class="dot"></span>後発医薬品（ジェネリック）のある先発医薬品をご希望の場合、特別の料金がかかる場合があります</div>
+        <div class="point"><span class="dot"></span>後発医薬品（<em>ジェネリック</em>）のある先発医薬品をご希望の場合、特別の料金がかかる場合があります</div>
         <div class="point"><span class="dot"></span>症状が安定している方には、医師の判断でリフィル処方箋を発行できる場合があります</div>
         <div class="point"><span class="dot"></span>詳しくは医師・受付にご相談ください</div>
       </div>
@@ -1144,9 +1174,11 @@ const SLIDES = [
     category: "institutional",
     months: "all",
     duration: 11,
+    theme: "bold",
+    tone: "navy",
     render: () => `
       <div class="kicker">皆さまへのお願い</div>
-      <div class="headline small">スタッフへの暴力・暴言・迷惑行為はお断りいたします</div>
+      <div class="headline small">スタッフへの暴力・暴言・<em>迷惑行為</em>はお断りいたします</div>
       <div class="sub">安心して受診いただける環境を守るため、ご理解とご協力をお願いいたします。</div>
     `
   },
@@ -1158,7 +1190,7 @@ const SLIDES = [
     duration: 11,
     render: () => `
       <div class="kicker">院内でのお願い</div>
-      <div class="headline small">マスクの着用にご協力ください</div>
+      <div class="headline small"><em>マスク</em>の着用にご協力ください</div>
       <div class="sub">発熱の患者様もいらっしゃいますので、院内ではマスクの着用にご協力をお願いいたします。</div>
     `
   }

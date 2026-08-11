@@ -172,13 +172,14 @@
     margin-top:calc(4vh * var(--fit)); display:flex; flex-direction:column; gap:calc(2.6vh * var(--fit)); align-items:flex-start;
   }
   .point-list .point{
+    position:relative;
     font-size:calc(4vh * var(--fit)); color:var(--text); font-weight:600; text-align:left;
     line-height:1.4;
-    display:flex; align-items:baseline; gap:calc(1.4vw * var(--fit));
+    padding-left:calc(1.6vh * var(--fit) + 1.4vw * var(--fit));
   }
   .point-list .point .dot{
+    position:absolute; left:0; top:0.5em;
     width:calc(1.6vh * var(--fit)); height:calc(1.6vh * var(--fit)); border-radius:50%; background:var(--accent);
-    flex:none; transform:translateY(-0.6vh);
   }
 
   /* ---------- 2カラムレイアウト（access等） ---------- */
@@ -195,12 +196,16 @@
     margin-top:calc(4vh * var(--fit)); display:flex; flex-direction:column; gap:calc(2.4vh * var(--fit)); align-items:flex-start;
   }
   .numbered-list .n-item{
-    display:flex; align-items:center; gap:calc(1.6vw * var(--fit)); font-size:calc(4vh * var(--fit)); font-weight:700; color:var(--text);
+    position:relative;
+    padding-left:calc(5vh * var(--fit) + 1.6vw * var(--fit));
+    min-height:calc(5vh * var(--fit));
+    font-size:calc(4vh * var(--fit)); font-weight:700; color:var(--text); text-align:left; line-height:calc(5vh * var(--fit));
   }
   .numbered-list .n-badge{
+    position:absolute; left:0; top:50%; transform:translateY(-50%);
     width:calc(5vh * var(--fit)); height:calc(5vh * var(--fit)); border-radius:50%; background:var(--accent2); color:#fff;
     display:flex; align-items:center; justify-content:center;
-    font-size:calc(2.6vh * var(--fit)); font-weight:900; flex:none;
+    font-size:calc(2.6vh * var(--fit)); font-weight:900;
   }
 
   /* ---------- 特集シリーズ（Soko風・連続スライド） ---------- */
@@ -242,6 +247,86 @@
   .img-card img{
     display:block; width:100%; height:auto; border-radius:1.4vh;
     aspect-ratio:16/9; object-fit:cover;
+  }
+
+  /* ---------- キーワード強調（<em>） ---------- */
+  /* light: 蛍光マーカー風（文字下半分に黄色ハイライト） */
+  em{
+    font-style:normal;
+    background-image:linear-gradient(180deg, transparent 58%, rgba(255,214,64,0.55) 58%);
+    padding:0 0.05em;
+  }
+  /* bold: 白帯ボックス（テーマ色文字・角丸・わずかに回転） */
+  .slide.theme-bold em{
+    display:inline-block;
+    background-image:none;
+    background-color:#fff;
+    color:var(--tone-dark, #333);
+    padding:0.05em 0.35em;
+    border-radius:0.25em;
+    transform:rotate(-1deg);
+  }
+
+  /* ---------- Bold（ベタ塗り）テーマ：Sokoの構図を借りたポスター調バリアント ---------- */
+  /* 対象は特集シリーズ・WEB予約・内視鏡実績・一部季節/院内スライドのみ（約1/4）。配色・文言は当院オリジナル。 */
+  .slide.theme-bold{
+    background-image:none !important;
+  }
+  .slide.theme-bold .dept-pill{ background:rgba(255,255,255,0.12); }
+  .slide.theme-bold .month-badge{ background:rgba(255,255,255,0.12); }
+  .slide.theme-bold .series-badge{ background:#fff; color:var(--tone-dark, #333); }
+  .slide.theme-bold .qr-card{ box-shadow:0 1vh 3vh rgba(0,0,0,0.4); }
+  .slide.theme-bold .img-card{
+    border:0.5vh solid #fff;
+    box-shadow:0 1vh 3vh rgba(0,0,0,0.35);
+  }
+  .slide.theme-bold.tone-green{
+    background-color:#2c5f4a; --tone-dark:#2c5f4a;
+    --text:#f4f1ea; --text-soft:#cfe0d3; --accent:#bfe6cf; --accent2:#8fd9b8;
+  }
+  .slide.theme-bold.tone-rose{
+    background-color:#b0526e; --tone-dark:#8a3f56;
+    --text:#faf1f0; --text-soft:#f0d4da; --accent:#f6d9e2; --accent2:#f3b9c9;
+  }
+  .slide.theme-bold.tone-navy{
+    background-color:#2b3a5c; --tone-dark:#2b3a5c;
+    --text:#f2f4f9; --text-soft:#c7d0e2; --accent:#bcd0f0; --accent2:#a9c0e6;
+  }
+  .slide.theme-bold.tone-summer{
+    background-color:#123f38; --tone-dark:#123f38;
+    --text:#eef8f6; --text-soft:#bfe0da; --accent:#bdeee4; --accent2:#8fe0d0;
+  }
+  .slide.theme-bold.tone-winter{
+    background-color:#2a2a5c; --tone-dark:#2a2a5c;
+    --text:#eef0fb; --text-soft:#c7cbe8; --accent:#d3d6f5; --accent2:#b7bdf0;
+  }
+
+  /* ---------- 装飾モチーフ（＋・ハート・カプセル、各スライドの余白に薄く） ---------- */
+  .deco-layer{ position:absolute; inset:0; z-index:-1; pointer-events:none; overflow:hidden; }
+  .deco-icon{ position:absolute; opacity:0.16; }
+  .deco-icon.plus{ width:2.6vh; height:2.6vh; }
+  .deco-icon.plus::before, .deco-icon.plus::after{
+    content:""; position:absolute; background:var(--accent2); border-radius:0.3vh;
+  }
+  .deco-icon.plus::before{ left:42%; right:42%; top:0; bottom:0; }
+  .deco-icon.plus::after{ top:42%; bottom:42%; left:0; right:0; }
+  .deco-icon.heart{ width:2.8vh; height:2.6vh; }
+  .deco-icon.heart::before, .deco-icon.heart::after{
+    content:""; position:absolute; top:0; width:52%; height:80%;
+    background:var(--accent2); border-radius:50% 50% 0 0;
+  }
+  .deco-icon.heart::before{ left:50%; transform:rotate(-45deg); transform-origin:0 100%; }
+  .deco-icon.heart::after{ left:0; transform:rotate(45deg); transform-origin:100% 100%; }
+  .deco-icon.capsule{
+    width:3.6vh; height:1.5vh; border-radius:100px; border:0.12vh solid var(--accent2);
+    background:linear-gradient(90deg, var(--accent2) 50%, transparent 50%);
+  }
+  .slide.theme-bold .deco-icon.plus::before,
+  .slide.theme-bold .deco-icon.plus::after,
+  .slide.theme-bold .deco-icon.heart::before,
+  .slide.theme-bold .deco-icon.heart::after{ background:#fff; }
+  .slide.theme-bold .deco-icon.capsule{
+    border-color:#fff; background:linear-gradient(90deg, #fff 50%, transparent 50%);
   }
 
   /* ---------- 背景装飾パターン（スライドごとに3種をローテーション） ---------- */
@@ -520,15 +605,34 @@ const BG_PATTERNS = ["bg-pattern-a", "bg-pattern-b", "bg-pattern-c"];
 // s.image があれば「左テキスト55%／右イラスト45%」の2カラムに自動で組む
 function buildSlideHTML(s){
   const content = s.render();
+  const deco = (s.category === "seasonal") ? "" : buildDecoLayer(); // 季節スライドは既存の季節モチーフを優先し、装飾アイコンは重ねない
   if (s.image){
-    return `
+    return deco + `
       <div class="img-layout${s.imageReverse ? " img-reverse" : ""}">
         <div class="img-text-col">${content}</div>
         <div class="img-media-col"><div class="img-card"><img src="${s.image}" alt="" loading="lazy"></div></div>
       </div>
     `;
   }
-  return content;
+  return deco + content;
+}
+
+// ---------- 装飾モチーフ（＋・ハート・カプセル） ----------
+// 各スライドの余白（3隅）に薄いアイコンをランダムに配置する。実際の色・不透明度はCSS側（.deco-icon）で管理。
+const DECO_SHAPES = ["plus", "heart", "capsule"];
+const DECO_SLOTS = [
+  { top: "3vh", left: "3vw" },
+  { bottom: "3vh", left: "3vw" },
+  { bottom: "3vh", right: "3vw" }
+];
+function buildDecoLayer(){
+  const icons = DECO_SLOTS.map(pos => {
+    const shape = DECO_SHAPES[Math.floor(Math.random() * DECO_SHAPES.length)];
+    const rot = Math.round(Math.random() * 40 - 20);
+    const style = Object.keys(pos).map(k => `${k}:${pos[k]}`).join(";") + `;transform:rotate(${rot}deg);`;
+    return `<span class="deco-icon ${shape}" style="${style}"></span>`;
+  }).join("");
+  return `<div class="deco-layer">${icons}</div>`;
 }
 
 // ---------- オートフィット（文字サイズの自動調整） ----------
@@ -544,6 +648,7 @@ const FIT_SAFE_MAX = 0.97;     // これを超えたら「はみ出しの危険�
 function unionContentHeight(elements){
   let top = Infinity, bottom = -Infinity;
   elements.forEach(c => {
+    if (c.classList && c.classList.contains("deco-layer")) return; // 装飾レイヤー（inset:0）は計測対象外
     const r = c.getBoundingClientRect();
     if (r.width === 0 && r.height === 0) return; // 非表示要素は無視
     if (r.top < top) top = r.top;
@@ -621,8 +726,12 @@ activeSlides.forEach((s, i) => {
   const el = document.createElement("div");
   el.className = "slide " + BG_PATTERNS[i % BG_PATTERNS.length];
   el.dataset.id = s.id;
+  if (s.image) el.classList.add("has-image");
+  if (s.theme === "bold"){
+    el.classList.add("theme-bold");
+    if (s.tone) el.classList.add("tone-" + s.tone);
+  }
   try {
-    if (s.image) el.classList.add("has-image");
     el.innerHTML = buildSlideHTML(s);
   } catch (e){
     console.error("スライド描画エラー:", s.id, e);
