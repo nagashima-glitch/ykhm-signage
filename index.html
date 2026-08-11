@@ -5,6 +5,32 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>横浜駅前ながしまクリニック デジタルサイネージ</title>
 <style>
+  /* ---------- フォント（Zen Maru Gothic／OFLライセンス、文字サブセット済み） ---------- */
+  /* 同じ font-family 名に太さ違いを3つ登録し、font-weight で自動的に使い分ける。
+     サブセットに無い文字（対応外の漢字等）はグリフが無いため、ブラウザが自動的に
+     次点のヒラギノへフォールバックする（unicode-range指定は不要）。 */
+  @font-face{
+    font-family:"Zen Maru Gothic";
+    src:url("fonts/ZenMaru-Medium.woff2") format("woff2");
+    font-weight:500;
+    font-style:normal;
+    font-display:swap;
+  }
+  @font-face{
+    font-family:"Zen Maru Gothic";
+    src:url("fonts/ZenMaru-Bold.woff2") format("woff2");
+    font-weight:700;
+    font-style:normal;
+    font-display:swap;
+  }
+  @font-face{
+    font-family:"Zen Maru Gothic";
+    src:url("fonts/ZenMaru-Black.woff2") format("woff2");
+    font-weight:900;
+    font-style:normal;
+    font-display:swap;
+  }
+
   :root{
     --bg-base:#fdfaf5;
     --bg-tint:#f4efe6;
@@ -37,7 +63,8 @@
   html,body{
     width:100%; height:100%; overflow:hidden;
     background:var(--bg-base);
-    font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic",sans-serif;
+    font-family:"Zen Maru Gothic","Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic",sans-serif;
+    font-weight:500;
     color:var(--text);
     font-feature-settings:"tnum" 1;
     font-variant-numeric:tabular-nums;
@@ -173,7 +200,7 @@
   }
   .point-list .point{
     position:relative;
-    font-size:calc(4vh * var(--fit)); color:var(--text); font-weight:600; text-align:left;
+    font-size:calc(4vh * var(--fit)); color:var(--text); font-weight:500; text-align:left;
     line-height:1.4;
     padding-left:calc(1.6vh * var(--fit) + 1.4vw * var(--fit));
   }
@@ -256,8 +283,8 @@
     background-image:linear-gradient(180deg, transparent 58%, rgba(255,214,64,0.55) 58%);
     padding:0 0.05em;
   }
-  /* bold: 白帯ボックス（テーマ色文字・角丸・わずかに回転） */
-  .slide.theme-bold em{
+  /* bold・poster共通: 白帯ボックス（テーマ色文字・角丸・わずかに回転） */
+  .slide.theme-bold em, .slide.has-poster em{
     display:inline-block;
     background-image:none;
     background-color:#fff;
@@ -267,43 +294,88 @@
     transform:rotate(-1deg);
   }
 
+  /* ---------- tone（色系統）: --tone-dark はbold/posterどちらでも使うので独立させておく ---------- */
+  .tone-green{ --tone-dark:#2c5f4a; }
+  .tone-rose{ --tone-dark:#8a3f56; }
+  .tone-navy{ --tone-dark:#2b3a5c; }
+  .tone-summer{ --tone-dark:#123f38; }
+  .tone-winter{ --tone-dark:#2a2a5c; }
+
   /* ---------- Bold（ベタ塗り）テーマ：Sokoの構図を借りたポスター調バリアント ---------- */
   /* 対象は特集シリーズ・WEB予約・内視鏡実績・一部季節/院内スライドのみ（約1/4）。配色・文言は当院オリジナル。 */
   .slide.theme-bold{
     background-image:none !important;
   }
-  .slide.theme-bold .dept-pill{ background:rgba(255,255,255,0.12); }
+  .slide.theme-bold .dept-pill, .slide.has-poster .dept-pill{ background:rgba(255,255,255,0.16); }
   .slide.theme-bold .month-badge{ background:rgba(255,255,255,0.12); }
-  .slide.theme-bold .series-badge{ background:#fff; color:var(--tone-dark, #333); }
+  .slide.theme-bold .series-badge, .slide.has-poster .series-badge{ background:#fff; color:var(--tone-dark, #333); }
   .slide.theme-bold .qr-card{ box-shadow:0 1vh 3vh rgba(0,0,0,0.4); }
   .slide.theme-bold .img-card{
     border:0.5vh solid #fff;
     box-shadow:0 1vh 3vh rgba(0,0,0,0.35);
   }
-  .slide.theme-bold.tone-green{
-    background-color:#2c5f4a; --tone-dark:#2c5f4a;
-    --text:#f4f1ea; --text-soft:#cfe0d3; --accent:#bfe6cf; --accent2:#8fd9b8;
+  .slide.theme-bold.tone-green{ background-color:#2c5f4a; --text:#f4f1ea; --text-soft:#cfe0d3; --accent:#bfe6cf; --accent2:#8fd9b8; }
+  .slide.theme-bold.tone-rose{ background-color:#b0526e; --text:#faf1f0; --text-soft:#f0d4da; --accent:#f6d9e2; --accent2:#f3b9c9; }
+  .slide.theme-bold.tone-navy{ background-color:#2b3a5c; --text:#f2f4f9; --text-soft:#c7d0e2; --accent:#bcd0f0; --accent2:#a9c0e6; }
+  .slide.theme-bold.tone-summer{ background-color:#123f38; --text:#eef8f6; --text-soft:#bfe0da; --accent:#bdeee4; --accent2:#8fe0d0; }
+  .slide.theme-bold.tone-winter{ background-color:#2a2a5c; --text:#eef0fb; --text-soft:#c7cbe8; --accent:#d3d6f5; --accent2:#b7bdf0; }
+
+  /* ---------- フルポスタースライド（背景全面に写真・空きスペース側に白文字） ---------- */
+  .slide.has-poster{
+    --text:#fff; --text-soft:rgba(255,255,255,0.86); --accent:#fff; --accent2:rgba(255,255,255,0.92);
+    background-image:none !important;
   }
-  .slide.theme-bold.tone-rose{
-    background-color:#b0526e; --tone-dark:#8a3f56;
-    --text:#faf1f0; --text-soft:#f0d4da; --accent:#f6d9e2; --accent2:#f3b9c9;
+  .poster-bg{
+    position:absolute; inset:0; z-index:-2;
+    background-size:cover; background-position:center;
+    transform:scale(1);
   }
-  .slide.theme-bold.tone-navy{
-    background-color:#2b3a5c; --tone-dark:#2b3a5c;
-    --text:#f2f4f9; --text-soft:#c7d0e2; --accent:#bcd0f0; --accent2:#a9c0e6;
+  @keyframes posterKenBurns{
+    from{ transform:scale(1); }
+    to{ transform:scale(1.06); }
   }
-  .slide.theme-bold.tone-summer{
-    background-color:#123f38; --tone-dark:#123f38;
-    --text:#eef8f6; --text-soft:#bfe0da; --accent:#bdeee4; --accent2:#8fe0d0;
+  .slide.active .poster-bg{ animation:posterKenBurns 20s ease-out forwards; }
+  .poster-scrim{ position:absolute; inset:0; z-index:-1; pointer-events:none; }
+  .poster-scrim.side-left{ background:linear-gradient(90deg, rgba(10,12,14,0.68) 0%, rgba(10,12,14,0.4) 38%, transparent 68%); }
+  .poster-scrim.side-right{ background:linear-gradient(270deg, rgba(10,12,14,0.68) 0%, rgba(10,12,14,0.4) 38%, transparent 68%); }
+  .poster-text-col{
+    /* position:relative にしない: series-badge（.slide基準でposition:absolute）の位置がずれてしまうため。
+       z-indexはflexアイテムなのでpositionを持たなくても有効。 */
+    z-index:1; width:100%; max-width:50%; text-align:left;
   }
-  .slide.theme-bold.tone-winter{
-    background-color:#2a2a5c; --tone-dark:#2a2a5c;
-    --text:#eef0fb; --text-soft:#c7cbe8; --accent:#d3d6f5; --accent2:#b7bdf0;
+  .poster-text-col.side-left{ align-self:flex-start; }
+  .poster-text-col.side-right{ align-self:flex-end; }
+  .poster-text-col .headline{ font-size:calc(6vh * var(--fit)); }
+  .poster-text-col .headline.small{ font-size:calc(5.6vh * var(--fit)); }
+  .poster-text-col .motto-bar{ font-size:calc(3.5vh * var(--fit)); }
+  .poster-text-col .kicker{ margin-bottom:calc(2vh * var(--fit)); }
+  .poster-text-col .sub{ line-height:1.7; }
+  .poster-text-col .point-list{ gap:calc(3vh * var(--fit)); }
+  .poster-text-col .dept-list{ justify-content:flex-start; }
+  /* テキスト3要素は少し遅れて順に入場する（stagger） */
+  .poster-text-col > *{
+    opacity:0; transform:translateY(1.6vh);
+    transition:opacity 0.7s ease, transform 0.7s ease;
   }
+  .slide.active .poster-text-col > *{ opacity:1; transform:translateY(0); }
+  .slide.active .poster-text-col > *:nth-child(1){ transition-delay:0.05s; }
+  .slide.active .poster-text-col > *:nth-child(2){ transition-delay:0.2s; }
+  .slide.active .poster-text-col > *:nth-child(3){ transition-delay:0.35s; }
+  .slide.active .poster-text-col > *:nth-child(n+4){ transition-delay:0.5s; }
 
   /* ---------- 装飾モチーフ（＋・ハート・カプセル、各スライドの余白に薄く） ---------- */
+  /* 浮遊アニメは季節モチーフの floatUp と同じ考え方（ease-in-out・無限ループ）を、
+     隅に固定配置する小さいアイコン向けに振れ幅だけ小さくしたもの。 */
+  @keyframes decoFloat{
+    0%{ transform:translateY(0) rotate(var(--deco-rot, 0deg)); }
+    50%{ transform:translateY(-0.9vh) rotate(var(--deco-rot, 0deg)); }
+    100%{ transform:translateY(0) rotate(var(--deco-rot, 0deg)); }
+  }
   .deco-layer{ position:absolute; inset:0; z-index:-1; pointer-events:none; overflow:hidden; }
-  .deco-icon{ position:absolute; opacity:0.16; }
+  .deco-icon{
+    position:absolute; opacity:0.16;
+    animation-name:decoFloat; animation-timing-function:ease-in-out; animation-iteration-count:infinite;
+  }
   .deco-icon.plus{ width:2.6vh; height:2.6vh; }
   .deco-icon.plus::before, .deco-icon.plus::after{
     content:""; position:absolute; background:var(--accent2); border-radius:0.3vh;
@@ -324,9 +396,17 @@
   .slide.theme-bold .deco-icon.plus::before,
   .slide.theme-bold .deco-icon.plus::after,
   .slide.theme-bold .deco-icon.heart::before,
-  .slide.theme-bold .deco-icon.heart::after{ background:#fff; }
-  .slide.theme-bold .deco-icon.capsule{
+  .slide.theme-bold .deco-icon.heart::after,
+  .slide.has-poster .deco-icon.plus::before,
+  .slide.has-poster .deco-icon.plus::after,
+  .slide.has-poster .deco-icon.heart::before,
+  .slide.has-poster .deco-icon.heart::after{ background:#fff; }
+  .slide.theme-bold .deco-icon.capsule,
+  .slide.has-poster .deco-icon.capsule{
     border-color:#fff; background:linear-gradient(90deg, #fff 50%, transparent 50%);
+  }
+  @media (prefers-reduced-motion: reduce){
+    .deco-icon, .poster-bg{ animation:none !important; }
   }
 
   /* ---------- 背景装飾パターン（スライドごとに3種をローテーション） ---------- */
@@ -602,10 +682,19 @@ const slideEls = [];
 
 const BG_PATTERNS = ["bg-pattern-a", "bg-pattern-b", "bg-pattern-c"];
 
-// s.image があれば「左テキスト55%／右イラスト45%」の2カラムに自動で組む
+// s.poster があれば背景全面ポスター＋空きスペース側に白文字、s.image があれば
+// 「左テキスト55%／右イラスト45%」の2カラムに自動で組む（poster優先）
 function buildSlideHTML(s){
   const content = s.render();
   const deco = (s.category === "seasonal") ? "" : buildDecoLayer(); // 季節スライドは既存の季節モチーフを優先し、装飾アイコンは重ねない
+  if (s.poster){
+    const side = s.posterTextSide === "right" ? "right" : "left";
+    return deco + `
+      <div class="poster-bg" style="background-image:url('${s.poster}')"></div>
+      <div class="poster-scrim side-${side}"></div>
+      <div class="poster-text-col side-${side}">${content}</div>
+    `;
+  }
   if (s.image){
     return deco + `
       <div class="img-layout${s.imageReverse ? " img-reverse" : ""}">
@@ -629,7 +718,10 @@ function buildDecoLayer(){
   const icons = DECO_SLOTS.map(pos => {
     const shape = DECO_SHAPES[Math.floor(Math.random() * DECO_SHAPES.length)];
     const rot = Math.round(Math.random() * 40 - 20);
-    const style = Object.keys(pos).map(k => `${k}:${pos[k]}`).join(";") + `;transform:rotate(${rot}deg);`;
+    const duration = (5 + Math.random() * 3).toFixed(1);
+    const delay = (-Math.random() * 8).toFixed(1);
+    const style = Object.keys(pos).map(k => `${k}:${pos[k]}`).join(";")
+      + `;--deco-rot:${rot}deg;animation-duration:${duration}s;animation-delay:${delay}s;`;
     return `<span class="deco-icon ${shape}" style="${style}"></span>`;
   }).join("");
   return `<div class="deco-layer">${icons}</div>`;
@@ -658,10 +750,10 @@ function unionContentHeight(elements){
   return bottom - top;
 }
 
-// 画像つきスライドはテキスト側（img-text-col）だけを計測し、画像なしスライドは直下の子要素をまとめて計測する
-function measureContentHeight(el, hasImage){
-  if (hasImage){
-    const col = el.querySelector(".img-text-col");
+// 画像つき／ポスタースライドはテキスト側（colSelector）だけを計測し、それ以外は直下の子要素をまとめて計測する
+function measureContentHeight(el, colSelector){
+  if (colSelector){
+    const col = el.querySelector(colSelector);
     if (!col || !col.children.length) return 0;
     return unionContentHeight(Array.from(col.children));
   }
@@ -673,7 +765,7 @@ function getHeadlineHeight(el){
   return h ? h.getBoundingClientRect().height : 0;
 }
 
-function applyAutoFit(el, hasImage){
+function applyAutoFit(el, colSelector){
   try {
     const cs = getComputedStyle(el);
     const padTop = parseFloat(cs.paddingTop) || 0;
@@ -684,7 +776,7 @@ function applyAutoFit(el, hasImage){
     el.style.setProperty("--fit", "1");
     void el.offsetHeight; // 強制リフロー
     let fit = 1;
-    let ratio = measureContentHeight(el, hasImage) / available;
+    let ratio = measureContentHeight(el, colSelector) / available;
     const baseHeadlineH = getHeadlineHeight(el);
 
     if (ratio > FIT_SAFE_MAX){
@@ -693,7 +785,7 @@ function applyAutoFit(el, hasImage){
         fit = Math.max(FIT_MIN, +(fit - FIT_STEP).toFixed(2));
         el.style.setProperty("--fit", String(fit));
         void el.offsetHeight;
-        ratio = measureContentHeight(el, hasImage) / available;
+        ratio = measureContentHeight(el, colSelector) / available;
         if (ratio <= FIT_SAFE_MAX || fit <= FIT_MIN) break;
       }
     } else if (ratio < FIT_TARGET_LOW){
@@ -702,7 +794,7 @@ function applyAutoFit(el, hasImage){
         const nextFit = Math.min(FIT_MAX, +(fit + FIT_STEP).toFixed(2));
         el.style.setProperty("--fit", String(nextFit));
         void el.offsetHeight;
-        const nextRatio = measureContentHeight(el, hasImage) / available;
+        const nextRatio = measureContentHeight(el, colSelector) / available;
         const nextHeadlineH = getHeadlineHeight(el);
         const wrapIncreased = baseHeadlineH > 0 && nextHeadlineH > baseHeadlineH * nextFit * 1.15;
         if (nextRatio > FIT_SAFE_MAX || wrapIncreased){
@@ -727,10 +819,9 @@ activeSlides.forEach((s, i) => {
   el.className = "slide " + BG_PATTERNS[i % BG_PATTERNS.length];
   el.dataset.id = s.id;
   if (s.image) el.classList.add("has-image");
-  if (s.theme === "bold"){
-    el.classList.add("theme-bold");
-    if (s.tone) el.classList.add("tone-" + s.tone);
-  }
+  if (s.poster) el.classList.add("has-poster");
+  if (s.tone) el.classList.add("tone-" + s.tone);
+  if (s.theme === "bold") el.classList.add("theme-bold");
   try {
     el.innerHTML = buildSlideHTML(s);
   } catch (e){
@@ -738,7 +829,8 @@ activeSlides.forEach((s, i) => {
     el.innerHTML = `<div class="headline small">${CLINIC.name}</div>`;
   }
   slidesRoot.appendChild(el);
-  applyAutoFit(el, !!s.image);
+  const colSelector = s.poster ? ".poster-text-col" : (s.image ? ".img-text-col" : null);
+  applyAutoFit(el, colSelector);
   slideEls.push(el);
 
   const dot = document.createElement("div");

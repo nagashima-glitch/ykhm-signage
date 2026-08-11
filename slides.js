@@ -138,9 +138,9 @@ const SLIDES = [
     months: "all",
     duration: 12,
     weight: 2,
-    image: "images/welcome.jpg",
-    theme: "bold",
     tone: "navy",
+    poster: "posters/poster_welcome.jpg",
+    posterTextSide: "left",
     render: () => `
       <div class="kicker">${CLINIC.addressShort}</div>
       <div class="headline">${CLINIC.name}</div>
@@ -227,9 +227,9 @@ const SLIDES = [
     category: "series",
     months: "all",
     duration: 12,
-    image: "images/kounenki.jpg",
-    theme: "bold",
     tone: "rose",
+    poster: "posters/poster_kounenki.jpg",
+    posterTextSide: "left",
     render: () => `
       <div class="series-badge">更年期特集 1/2</div>
       <div class="kicker">こんな症状はありませんか</div>
@@ -268,9 +268,9 @@ const SLIDES = [
     category: "series",
     months: "all",
     duration: 12,
-    image: "images/pill.jpg",
-    theme: "bold",
     tone: "rose",
+    poster: "posters/poster_pill.jpg",
+    posterTextSide: "left",
     render: () => `
       <div class="series-badge">ピル外来特集 1/2</div>
       <div class="kicker"><em>ピル外来</em>で相談できること</div>
@@ -379,9 +379,9 @@ const SLIDES = [
     category: "series",
     months: "all",
     duration: 12,
-    image: "images/gastro.jpg",
-    theme: "bold",
     tone: "green",
+    poster: "posters/poster_gastro.jpg",
+    posterTextSide: "right",
     render: () => `
       <div class="series-badge">胃カメラ特集 1/3</div>
       <div class="kicker">こんな症状はありませんか</div>
@@ -491,10 +491,9 @@ const SLIDES = [
     category: "series",
     months: "all",
     duration: 12,
-    image: "images/colono.jpg",
-    imageReverse: true,
-    theme: "bold",
     tone: "green",
+    poster: "posters/poster_colono.jpg",
+    posterTextSide: "left",
     render: () => `
       <div class="series-badge">大腸カメラ特集 1/3</div>
       <div class="kicker">なぜ大腸カメラ？</div>
@@ -793,7 +792,9 @@ const SLIDES = [
     category: "institutional",
     months: "all",
     duration: 11,
-    image: "images/kenshin.jpg",
+    tone: "navy",
+    poster: "posters/poster_kenshin.jpg",
+    posterTextSide: "left",
     render: () => `
       <div class="kicker">健診結果、そのままにしていませんか</div>
       <div class="headline small">「要精密検査」「要再検査」は早めのご相談を</div>
@@ -919,9 +920,9 @@ const SLIDES = [
     category: "seasonal",
     months: [6, 7, 8, 9],
     duration: 11,
-    image: "images/heatstroke.jpg",
-    theme: "bold",
     tone: "summer",
+    poster: "posters/poster_heatstroke.jpg",
+    posterTextSide: "left",
     render: () => `
       <div class="kicker">季節のお知らせ</div>
       <div class="headline small">熱中症にご注意ください</div>
@@ -992,9 +993,9 @@ const SLIDES = [
     category: "seasonal",
     months: [10, 11, 12],
     duration: 12,
-    image: "images/flu.jpg",
-    theme: "bold",
     tone: "winter",
+    poster: "posters/poster_flu.jpg",
+    posterTextSide: "left",
     render: () => `
       <div class="kicker">季節のお知らせ</div>
       <div class="headline small">インフルエンザワクチンのご案内</div>
@@ -1115,7 +1116,9 @@ const SLIDES = [
     category: "institutional",
     months: "all",
     duration: 11,
-    image: "images/myna.jpg",
+    tone: "navy",
+    poster: "posters/poster_myna.jpg",
+    posterTextSide: "left",
     render: () => `
       <div class="kicker">受付でのお願い</div>
       <div class="headline small"><em>マイナ保険証</em>をご用意ください</div>
@@ -1174,8 +1177,9 @@ const SLIDES = [
     category: "institutional",
     months: "all",
     duration: 11,
-    theme: "bold",
     tone: "navy",
+    poster: "posters/poster_meiwaku.jpg",
+    posterTextSide: "right",
     render: () => `
       <div class="kicker">皆さまへのお願い</div>
       <div class="headline small">スタッフへの暴力・暴言・<em>迷惑行為</em>はお断りいたします</div>
