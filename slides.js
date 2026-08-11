@@ -138,6 +138,7 @@ const SLIDES = [
     months: "all",
     duration: 12,
     weight: 2,
+    image: "images/welcome.jpg",
     render: () => `
       <div class="kicker">${CLINIC.addressShort}</div>
       <div class="headline">${CLINIC.name}</div>
@@ -190,6 +191,7 @@ const SLIDES = [
     category: "all",
     months: "all",
     duration: 12,
+    image: "images/gyn.jpg",
     render: () => `
       <div class="kicker">産婦人科診療</div>
       <div class="headline small">婦人科診療のご案内</div>
@@ -206,6 +208,8 @@ const SLIDES = [
     category: "all",
     months: "all",
     duration: 11,
+    image: "images/gyn.jpg",
+    imageReverse: true,
     render: () => `
       <div class="kicker">女性も安心して通える空間</div>
       <div class="headline small">女性にも安心な院内づくり</div>
@@ -221,6 +225,7 @@ const SLIDES = [
     category: "series",
     months: "all",
     duration: 12,
+    image: "images/kounenki.jpg",
     render: () => `
       <div class="series-badge">更年期特集 1/2</div>
       <div class="kicker">こんな症状はありませんか</div>
@@ -239,6 +244,8 @@ const SLIDES = [
     category: "series",
     months: "all",
     duration: 11,
+    image: "images/kounenki.jpg",
+    imageReverse: true,
     render: () => `
       <div class="series-badge">更年期特集 2/2</div>
       <div class="kicker">我慢しないでご相談を</div>
@@ -255,6 +262,7 @@ const SLIDES = [
     category: "series",
     months: "all",
     duration: 12,
+    image: "images/pill.jpg",
     render: () => `
       <div class="series-badge">ピル外来特集 1/2</div>
       <div class="kicker">ピル外来で相談できること</div>
@@ -272,6 +280,8 @@ const SLIDES = [
     category: "series",
     months: "all",
     duration: 11,
+    image: "images/pill.jpg",
+    imageReverse: true,
     render: () => `
       <div class="series-badge">ピル外来特集 2/2</div>
       <div class="kicker">受診はお気軽に</div>
@@ -310,6 +320,7 @@ const SLIDES = [
     category: "all",
     months: "all",
     duration: 12,
+    image: "images/naishikyo.jpg",
     render: () => `
       <div class="kicker">内視鏡検査の質へのこだわり</div>
       <div class="headline small">AI内視鏡診断支援を導入</div>
@@ -325,6 +336,8 @@ const SLIDES = [
     category: "all",
     months: "all",
     duration: 11,
+    image: "images/naishikyo.jpg",
+    imageReverse: true,
     render: () => `
       <div class="kicker">内視鏡検査を担当する医師</div>
       <div class="headline small">専門医による内視鏡検査</div>
@@ -337,6 +350,7 @@ const SLIDES = [
     category: "all",
     months: "all",
     duration: 12,
+    image: "images/gastro.jpg",
     render: () => `
       <div class="kicker">胃カメラ検査</div>
       <div class="headline small">胃カメラのご案内</div>
@@ -348,11 +362,68 @@ const SLIDES = [
     `
   },
   {
+    id: "tokushu-gastro-1",
+    title: "胃カメラ特集 1/3（こんな症状はありませんか）",
+    category: "series",
+    months: "all",
+    duration: 12,
+    image: "images/gastro.jpg",
+    render: () => `
+      <div class="series-badge">胃カメラ特集 1/3</div>
+      <div class="kicker">こんな症状はありませんか</div>
+      <div class="headline small">胃カメラのご相談を</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>胃の痛みが続く</div>
+        <div class="point"><span class="dot"></span>胸やけが続く</div>
+        <div class="point"><span class="dot"></span>黒っぽい便が出た</div>
+        <div class="point"><span class="dot"></span>食欲不振が続く</div>
+      </div>
+    `
+  },
+  {
+    id: "tokushu-gastro-2",
+    title: "胃カメラ特集 2/3（選べる検査方法）",
+    category: "series",
+    months: "all",
+    duration: 12,
+    image: "images/gastro.jpg",
+    imageReverse: true,
+    render: () => `
+      <div class="series-badge">胃カメラ特集 2/3</div>
+      <div class="kicker">選べる検査方法</div>
+      <div class="headline small">ご希望に合わせた検査を</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>経鼻・経口、お選びいただけます</div>
+        <div class="point"><span class="dot"></span>鎮静剤を使用した検査にも対応しております</div>
+        <div class="point"><span class="dot"></span>検査後はリカバリールームでお休みいただけます</div>
+      </div>
+    `
+  },
+  {
+    id: "tokushu-gastro-3",
+    title: "胃カメラ特集 3/3（専門医による検査）",
+    category: "series",
+    months: "all",
+    duration: 12,
+    image: "images/naishikyo.jpg",
+    render: () => `
+      <div class="series-badge">胃カメラ特集 3/3</div>
+      <div class="kicker">専門医による検査</div>
+      <div class="headline small">専門医が担当いたします</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>消化器内視鏡専門医が検査を担当します</div>
+        <div class="point"><span class="dot"></span>AI内視鏡診断支援を導入しています</div>
+        <div class="point"><span class="dot"></span>当日検査についてもお気軽にご相談ください</div>
+      </div>
+    `
+  },
+  {
     id: "colono",
     title: "大腸カメラのご案内",
     category: "all",
     months: "all",
     duration: 12,
+    image: "images/colono.jpg",
     render: () => `
       <div class="kicker">大腸カメラ検査</div>
       <div class="headline small">大腸カメラのご案内</div>
@@ -386,6 +457,7 @@ const SLIDES = [
     category: "all",
     months: "all",
     duration: 12,
+    image: "images/colono.jpg",
     render: () => `
       <div class="kicker">内視鏡検査</div>
       <div class="headline small">日帰り大腸ポリープ切除</div>
@@ -401,6 +473,8 @@ const SLIDES = [
     category: "series",
     months: "all",
     duration: 12,
+    image: "images/colono.jpg",
+    imageReverse: true,
     render: () => `
       <div class="series-badge">大腸カメラ特集 1/3</div>
       <div class="kicker">なぜ大腸カメラ？</div>
@@ -418,6 +492,7 @@ const SLIDES = [
     category: "series",
     months: "all",
     duration: 13,
+    image: "images/colono.jpg",
     render: () => `
       <div class="series-badge">大腸カメラ特集 2/3</div>
       <div class="kicker">検査の流れ</div>
@@ -439,6 +514,8 @@ const SLIDES = [
     category: "series",
     months: "all",
     duration: 12,
+    image: "images/colono.jpg",
+    imageReverse: true,
     render: () => `
       <div class="series-badge">大腸カメラ特集 3/3</div>
       <div class="kicker">当日その場で</div>
@@ -543,6 +620,7 @@ const SLIDES = [
     category: "all",
     months: "all",
     duration: 11,
+    image: "images/suibun.jpg",
     render: () => `
       <div class="kicker">嘔吐・下痢のときは</div>
       <div class="headline small">こまめな水分補給を</div>
@@ -574,6 +652,7 @@ const SLIDES = [
     category: "all",
     months: "all",
     duration: 12,
+    image: "images/ji.jpg",
     render: () => `
       <div class="kicker">痔のお悩み</div>
       <div class="headline small">いぼ痔・切れ痔、恥ずかしがらずにご相談を</div>
@@ -589,6 +668,7 @@ const SLIDES = [
     category: "all",
     months: "all",
     duration: 11,
+    image: "images/dock.jpg",
     render: () => `
       <div class="kicker">人間ドック</div>
       <div class="headline small">人間ドックのご案内</div>
@@ -604,6 +684,7 @@ const SLIDES = [
     category: "all",
     months: "all",
     duration: 11,
+    image: "images/seikatsu.jpg",
     render: () => `
       <div class="kicker">生活習慣病外来</div>
       <div class="headline small">血圧・血糖・コレステロールが気になる方へ</div>
@@ -616,6 +697,8 @@ const SLIDES = [
     category: "all",
     months: "all",
     duration: 11,
+    image: "images/seikatsu.jpg",
+    imageReverse: true,
     render: () => `
       <div class="kicker">肥満外来</div>
       <div class="headline small">肥満外来のご案内</div>
@@ -623,6 +706,46 @@ const SLIDES = [
         <div class="point"><span class="dot"></span>肥満は生活習慣病と関わりの深いテーマです</div>
         <div class="point"><span class="dot"></span>当院では肥満外来のご相談に対応しています（自費診療）</div>
       </div>
+    `
+  },
+  {
+    id: "kouketsuatsu",
+    title: "健診で血圧を指摘された方へ",
+    category: "all",
+    months: "all",
+    duration: 11,
+    image: "images/seikatsu.jpg",
+    render: () => `
+      <div class="kicker">健診で血圧を指摘された方へ</div>
+      <div class="headline small">その血圧、放置せず、まずはご相談を</div>
+      <div class="sub">生活習慣病外来で継続的にサポートいたします。</div>
+    `
+  },
+  {
+    id: "tounyou",
+    title: "健診で血糖値・HbA1cを指摘された方へ",
+    category: "all",
+    months: "all",
+    duration: 11,
+    image: "images/seikatsu.jpg",
+    imageReverse: true,
+    render: () => `
+      <div class="kicker">血糖値・HbA1cが気になる方へ</div>
+      <div class="headline small">放置せず、まずはご相談を</div>
+      <div class="sub">生活習慣病外来で継続的にサポートいたします。</div>
+    `
+  },
+  {
+    id: "shishitsu",
+    title: "健診でコレステロール・中性脂肪を指摘された方へ",
+    category: "all",
+    months: "all",
+    duration: 11,
+    image: "images/seikatsu.jpg",
+    render: () => `
+      <div class="kicker">コレステロール・中性脂肪を指摘された方へ</div>
+      <div class="headline small">放置せず、まずはご相談を</div>
+      <div class="sub">生活習慣病外来で継続的にサポートいたします。</div>
     `
   },
   {
@@ -646,6 +769,7 @@ const SLIDES = [
     category: "institutional",
     months: "all",
     duration: 11,
+    image: "images/kenshin.jpg",
     render: () => `
       <div class="kicker">健診結果、そのままにしていませんか</div>
       <div class="headline small">「要精密検査」「要再検査」は早めのご相談を</div>
@@ -771,6 +895,7 @@ const SLIDES = [
     category: "seasonal",
     months: [6, 7, 8, 9],
     duration: 11,
+    image: "images/heatstroke.jpg",
     render: () => `
       <div class="kicker">季節のお知らせ</div>
       <div class="headline small">熱中症にご注意ください</div>
@@ -815,6 +940,7 @@ const SLIDES = [
     category: "seasonal",
     months: [9, 10, 11],
     duration: 11,
+    image: "images/kenshin.jpg",
     render: () => `
       <div class="kicker">季節のお知らせ</div>
       <div class="headline small">秋は健診・検査のチャンスです</div>
@@ -827,6 +953,7 @@ const SLIDES = [
     category: "seasonal",
     months: [9, 10],
     duration: 11,
+    image: "images/kafun.jpg",
     render: () => `
       <div class="kicker">季節のお知らせ</div>
       <div class="headline small">秋の花粉にもご注意ください</div>
@@ -839,6 +966,7 @@ const SLIDES = [
     category: "seasonal",
     months: [10, 11, 12],
     duration: 12,
+    image: "images/flu.jpg",
     render: () => `
       <div class="kicker">季節のお知らせ</div>
       <div class="headline small">インフルエンザワクチンのご案内</div>
@@ -855,6 +983,7 @@ const SLIDES = [
     category: "seasonal",
     months: [2, 3, 4],
     duration: 11,
+    image: "images/kafun.jpg",
     render: () => `
       <div class="kicker">季節のお知らせ</div>
       <div class="headline small">花粉症・アレルギーのご相談</div>
@@ -867,6 +996,7 @@ const SLIDES = [
     category: "seasonal",
     months: [11, 12, 1, 2],
     duration: 11,
+    image: "images/tearai.jpg",
     render: () => `
       <div class="kicker">季節のお知らせ</div>
       <div class="headline small">感染性胃腸炎にご注意ください</div>
@@ -910,6 +1040,7 @@ const SLIDES = [
     category: "seasonal",
     months: [3, 4, 5],
     duration: 11,
+    image: "images/kenshin.jpg",
     render: () => `
       <div class="kicker">季節のお知らせ</div>
       <div class="headline small">新年度は健康チェックのタイミングです</div>
@@ -954,6 +1085,7 @@ const SLIDES = [
     category: "institutional",
     months: "all",
     duration: 11,
+    image: "images/myna.jpg",
     render: () => `
       <div class="kicker">受付でのお願い</div>
       <div class="headline small">マイナ保険証をご用意ください</div>

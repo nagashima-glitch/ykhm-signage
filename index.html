@@ -218,6 +218,26 @@
   }
   .qr-image{ display:block; width:35vh; height:35vh; }
 
+  /* ---------- 画像つきスライド（左テキスト55%／右イラスト45%） ---------- */
+  .img-layout{
+    display:flex; align-items:center; gap:4vw; width:100%; max-width:90vw;
+  }
+  .img-layout.img-reverse{ flex-direction:row-reverse; }
+  .img-text-col{ flex:0 0 55%; max-width:55%; text-align:left; }
+  .img-text-col .headline{ font-size:6vh; }
+  .img-text-col .headline.small{ font-size:5.6vh; }
+  .img-text-col .motto-bar{ font-size:3.5vh; }
+  .img-text-col .dept-list{ justify-content:flex-start; }
+  .img-media-col{ flex:0 0 45%; max-width:45%; display:flex; align-items:center; justify-content:center; }
+  .img-card{
+    width:100%; background:var(--white); border-radius:2vh; padding:1.2vh;
+    box-shadow:0 1vh 3vh rgba(44,42,38,0.14);
+  }
+  .img-card img{
+    display:block; width:100%; height:auto; border-radius:1.4vh;
+    aspect-ratio:16/9; object-fit:cover;
+  }
+
   /* ---------- 背景装飾パターン（スライドごとに3種をローテーション） ---------- */
   .slide.bg-pattern-a{
     background-image:radial-gradient(circle, var(--motif-color) 1.4px, transparent 1.4px);
@@ -495,7 +515,18 @@ activeSlides.forEach((s, i) => {
   el.className = "slide " + BG_PATTERNS[i % BG_PATTERNS.length];
   el.dataset.id = s.id;
   try {
-    el.innerHTML = s.render();
+    const content = s.render();
+    if (s.image){
+      el.classList.add("has-image");
+      el.innerHTML = `
+        <div class="img-layout${s.imageReverse ? " img-reverse" : ""}">
+          <div class="img-text-col">${content}</div>
+          <div class="img-media-col"><div class="img-card"><img src="${s.image}" alt="" loading="lazy"></div></div>
+        </div>
+      `;
+    } else {
+      el.innerHTML = content;
+    }
   } catch (e){
     console.error("スライド描画エラー:", s.id, e);
     el.innerHTML = `<div class="headline small">${CLINIC.name}</div>`;
