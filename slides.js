@@ -231,7 +231,7 @@ const SLIDES = [
     poster: "posters/poster_kounenki.jpg",
     posterTextSide: "left",
     render: () => `
-      <div class="series-badge">更年期特集 1/2</div>
+      ${seriesBadge("更年期特集 1/2")}
       <div class="kicker">こんな症状はありませんか</div>
       <div class="headline small"><em>更年期</em>のサインかもしれません</div>
       <div class="point-list">
@@ -253,7 +253,7 @@ const SLIDES = [
     theme: "bold",
     tone: "rose",
     render: () => `
-      <div class="series-badge">更年期特集 2/2</div>
+      ${seriesBadge("更年期特集 2/2")}
       <div class="kicker">我慢しないでご相談を</div>
       <div class="headline small">お一人で抱え込まないでください</div>
       <div class="point-list">
@@ -272,7 +272,7 @@ const SLIDES = [
     poster: "posters/poster_pill.jpg",
     posterTextSide: "left",
     render: () => `
-      <div class="series-badge">ピル外来特集 1/2</div>
+      ${seriesBadge("ピル外来特集 1/2")}
       <div class="kicker"><em>ピル外来</em>で相談できること</div>
       <div class="headline small">こんなことも相談できます</div>
       <div class="point-list">
@@ -293,7 +293,7 @@ const SLIDES = [
     theme: "bold",
     tone: "rose",
     render: () => `
-      <div class="series-badge">ピル外来特集 2/2</div>
+      ${seriesBadge("ピル外来特集 2/2")}
       <div class="kicker">受診はお気軽に</div>
       <div class="headline small">まずは<em>ご相談</em>ください</div>
       <div class="point-list">
@@ -383,7 +383,7 @@ const SLIDES = [
     poster: "posters/poster_gastro.jpg",
     posterTextSide: "right",
     render: () => `
-      <div class="series-badge">胃カメラ特集 1/3</div>
+      ${seriesBadge("胃カメラ特集 1/3")}
       <div class="kicker">こんな症状はありませんか</div>
       <div class="headline small"><em>胃カメラ</em>のご相談を</div>
       <div class="point-list">
@@ -405,7 +405,7 @@ const SLIDES = [
     theme: "bold",
     tone: "green",
     render: () => `
-      <div class="series-badge">胃カメラ特集 2/3</div>
+      ${seriesBadge("胃カメラ特集 2/3")}
       <div class="kicker">選べる検査方法</div>
       <div class="headline small">ご希望に合わせた検査を</div>
       <div class="point-list">
@@ -425,7 +425,7 @@ const SLIDES = [
     theme: "bold",
     tone: "green",
     render: () => `
-      <div class="series-badge">胃カメラ特集 3/3</div>
+      ${seriesBadge("胃カメラ特集 3/3")}
       <div class="kicker">専門医による検査</div>
       <div class="headline small"><em>専門医</em>が担当いたします</div>
       <div class="point-list">
@@ -495,7 +495,7 @@ const SLIDES = [
     poster: "posters/poster_colono.jpg",
     posterTextSide: "left",
     render: () => `
-      <div class="series-badge">大腸カメラ特集 1/3</div>
+      ${seriesBadge("大腸カメラ特集 1/3")}
       <div class="kicker">なぜ大腸カメラ？</div>
       <div class="headline small"><em>早期発見</em>のために</div>
       <div class="point-list">
@@ -515,7 +515,7 @@ const SLIDES = [
     theme: "bold",
     tone: "green",
     render: () => `
-      <div class="series-badge">大腸カメラ特集 2/3</div>
+      ${seriesBadge("大腸カメラ特集 2/3")}
       <div class="kicker">検査の流れ</div>
       <div class="headline small">受診はかんたん<em>2ステップ</em></div>
       <div class="numbered-list">
@@ -540,7 +540,7 @@ const SLIDES = [
     theme: "bold",
     tone: "green",
     render: () => `
-      <div class="series-badge">大腸カメラ特集 3/3</div>
+      ${seriesBadge("大腸カメラ特集 3/3")}
       <div class="kicker">当日その場で</div>
       <div class="headline small">検査後も<em>安心のサポート</em></div>
       <div class="point-list">

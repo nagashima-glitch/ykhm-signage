@@ -5,27 +5,35 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>横浜駅前ながしまクリニック デジタルサイネージ</title>
 <style>
-  /* ---------- フォント（Zen Maru Gothic／OFLライセンス、文字サブセット済み） ---------- */
-  /* 同じ font-family 名に太さ違いを3つ登録し、font-weight で自動的に使い分ける。
+  /* ---------- フォント（Zen Kaku Gothic New／OFLライセンス、文字サブセット済み） ---------- */
+  /* 同じ font-family 名に太さ違いを4つ登録し、font-weight で自動的に使い分ける（v14）。
+     見出し=900(Black)／kicker・ラベル=700(Bold)／本文=500(Medium)／補助=400(Regular)。
      サブセットに無い文字（対応外の漢字等）はグリフが無いため、ブラウザが自動的に
      次点のヒラギノへフォールバックする（unicode-range指定は不要）。 */
   @font-face{
-    font-family:"Zen Maru Gothic";
-    src:url("fonts/ZenMaru-Medium.woff2") format("woff2");
+    font-family:"Zen Kaku Gothic New";
+    src:url("fonts/ZenKaku-Regular.woff2") format("woff2");
+    font-weight:400;
+    font-style:normal;
+    font-display:swap;
+  }
+  @font-face{
+    font-family:"Zen Kaku Gothic New";
+    src:url("fonts/ZenKaku-Medium.woff2") format("woff2");
     font-weight:500;
     font-style:normal;
     font-display:swap;
   }
   @font-face{
-    font-family:"Zen Maru Gothic";
-    src:url("fonts/ZenMaru-Bold.woff2") format("woff2");
+    font-family:"Zen Kaku Gothic New";
+    src:url("fonts/ZenKaku-Bold.woff2") format("woff2");
     font-weight:700;
     font-style:normal;
     font-display:swap;
   }
   @font-face{
-    font-family:"Zen Maru Gothic";
-    src:url("fonts/ZenMaru-Black.woff2") format("woff2");
+    font-family:"Zen Kaku Gothic New";
+    src:url("fonts/ZenKaku-Black.woff2") format("woff2");
     font-weight:900;
     font-style:normal;
     font-display:swap;
@@ -41,6 +49,8 @@
     --accent2:#5f6b4f;
     --motif-color:#cfc7b2;
     --white:#ffffff;
+    --radius:1.1vh;     /* v14: 角丸は12px相当（1.1vh≒1080pで約12px）まで */
+    --radius-sm:0.8vh;
   }
   html[data-season="spring"]{
     --bg-tint:#fbf1f0; --accent:#c96f88; --accent2:#7fa25e; --motif-color:#eab9c6;
@@ -63,7 +73,7 @@
   html,body{
     width:100%; height:100%; overflow:hidden;
     background:var(--bg-base);
-    font-family:"Zen Maru Gothic","Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic",sans-serif;
+    font-family:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic",sans-serif;
     font-weight:500;
     color:var(--text);
     font-feature-settings:"tnum" 1;
@@ -113,44 +123,76 @@
     z-index:0;
   }
 
-  /* ---------- スライド共通 ---------- */
+  /* ---------- スライド共通（v14: 脱・中央揃え／左揃え非対称グリッド） ---------- */
   #slides{
     position:absolute; inset:0; top:0; bottom:8vh; z-index:1;
   }
   .slide{
     --fit:1; /* オートフィット倍率（JSが内容量に応じて調整。既定は等倍） */
     position:absolute; inset:0;
-    display:flex; flex-direction:column; align-items:center; justify-content:center;
-    padding:4vh 6vw;
+    display:flex; flex-direction:column; align-items:flex-start; justify-content:center;
+    padding:6vh 6vw 6vh 8vw; /* 左マージン8vwのコンテンツ軸 */
     opacity:0; transform:translateY(3vh);
     transition:opacity 1s ease, transform 1s ease;
-    text-align:center;
+    text-align:left;
   }
   .slide.active{ opacity:1; transform:translateY(0); z-index:2; }
 
+  /* 診療時間表・内視鏡実績・WEB予約QRは中央揃えのまま維持する */
+  .slide.slide-centered{
+    align-items:center; justify-content:center; text-align:center;
+    padding:4vh 6vw;
+  }
+
+  /* コンテンツ領域の上下に極細罫線（画像・ポスター系／中央維持系は除く） */
+  .slide.theme-bold, .slide.has-poster{ --line:rgba(255,255,255,0.22); }
+  .slide:not(.has-image):not(.has-poster):not(.slide-centered)::before,
+  .slide:not(.has-image):not(.has-poster):not(.slide-centered)::after{
+    content:""; position:absolute; left:8vw; right:6vw; height:1px; background:var(--line);
+  }
+  .slide:not(.has-image):not(.has-poster):not(.slide-centered)::before{ top:5vh; }
+  .slide:not(.has-image):not(.has-poster):not(.slide-centered)::after{ bottom:5vh; }
+
+  /* 画面右端の縦書きセクションラベル（kicker文言を流用、淡色） */
+  .side-label{
+    position:absolute; right:2.6vw; top:50%; transform:translateY(-50%);
+    writing-mode:vertical-rl; text-orientation:mixed;
+    font-size:1.5vh; letter-spacing:0.34em; font-weight:700;
+    color:var(--text-soft); opacity:0.38;
+    pointer-events:none; white-space:nowrap; max-height:70vh; overflow:hidden;
+  }
+
   .kicker{
-    font-size:calc(2.6vh * var(--fit)); letter-spacing:0.3em; color:var(--accent);
-    font-weight:700; margin-bottom:calc(1.6vh * var(--fit));
+    display:inline-flex; align-items:center; gap:calc(0.9vw * var(--fit));
+    font-size:calc(2vh * var(--fit)); letter-spacing:0.24em; color:var(--accent);
+    font-weight:700; margin-bottom:calc(1.8vh * var(--fit));
+  }
+  .kicker::before{
+    content:""; display:inline-block; width:calc(2.2vw * var(--fit)); height:1px; background:var(--accent);
+    flex:none;
   }
   .headline{
-    font-size:calc(9.5vh * var(--fit)); font-weight:900; line-height:1.25; letter-spacing:0.02em;
+    font-size:calc(10vh * var(--fit)); font-weight:900; line-height:1.15; letter-spacing:0.005em;
     color:var(--text);
   }
-  .headline.small{ font-size:calc(8vh * var(--fit)); }
+  .headline.small{ font-size:calc(8.5vh * var(--fit)); }
   .sub{
     font-size:calc(4vh * var(--fit)); color:var(--text-soft); margin-top:calc(2.2vh * var(--fit)); line-height:1.6; font-weight:500;
   }
   .accent-text{ color:var(--accent2); }
 
+  /* dept-pill: 丸ピルを廃止し、細罫線区切りのタイポグラフィリストへ */
   .dept-list{
-    display:flex; flex-wrap:wrap; justify-content:center; gap:calc(1.6vh * var(--fit)) calc(1.6vw * var(--fit));
-    margin-top:calc(4vh * var(--fit));
+    display:flex; flex-wrap:wrap; align-items:baseline; row-gap:calc(1vh * var(--fit));
+    margin-top:calc(3.6vh * var(--fit));
   }
   .dept-pill{
-    font-size:calc(3.6vh * var(--fit)); font-weight:700; color:var(--text);
-    border:0.3vh solid var(--accent2); border-radius:100px;
-    padding:calc(1.4vh * var(--fit)) calc(3vw * var(--fit)); background:rgba(255,255,255,0.6);
+    font-size:calc(3.2vh * var(--fit)); font-weight:700; color:var(--text);
+    border:none; border-left:1px solid var(--line); border-radius:0; background:none;
+    padding:0 calc(1.8vw * var(--fit));
+    line-height:1.3;
   }
+  .dept-pill:first-child{ border-left:none; padding-left:0; }
 
   .motto-bar{
     margin-top:calc(3vh * var(--fit)); font-size:calc(3.2vh * var(--fit)); color:var(--accent); font-weight:700; letter-spacing:0.08em;
@@ -190,7 +232,7 @@
   .breakdown .item b{ display:block; font-size:calc(6vh * var(--fit)); color:var(--accent); font-weight:900; }
   .month-badge{
     margin-top:calc(4vh * var(--fit)); font-size:calc(2.8vh * var(--fit)); color:var(--text-soft);
-    background:rgba(255,255,255,0.6); border-radius:14px; padding:calc(2vh * var(--fit)) calc(3vw * var(--fit));
+    background:rgba(255,255,255,0.6); border-radius:var(--radius-sm); padding:calc(2vh * var(--fit)) calc(3vw * var(--fit));
   }
   .month-badge b{ color:var(--accent2); font-size:calc(4vh * var(--fit)); }
 
@@ -205,8 +247,8 @@
     padding-left:calc(1.6vh * var(--fit) + 1.4vw * var(--fit));
   }
   .point-list .point .dot{
-    position:absolute; left:0; top:0.5em;
-    width:calc(1.6vh * var(--fit)); height:calc(1.6vh * var(--fit)); border-radius:50%; background:var(--accent);
+    position:absolute; left:0; top:0.55em;
+    width:calc(1vh * var(--fit)); height:calc(1vh * var(--fit)); border-radius:0; background:var(--accent);
   }
 
   /* ---------- 2カラムレイアウト（access等） ---------- */
@@ -235,20 +277,28 @@
     font-size:calc(2.6vh * var(--fit)); font-weight:900;
   }
 
-  /* ---------- 特集シリーズ（Soko風・連続スライド） ---------- */
+  /* ---------- 特集シリーズ（右上丸バッジを廃止し、背後の特大ゴースト数字＋小ラベルへ） ---------- */
   .series-badge{
-    position:absolute; top:3.5vh; right:4vw;
-    font-size:2vh; font-weight:700; color:#fff;
-    background:var(--accent2); padding:0.9vh 2vw; border-radius:100px;
-    letter-spacing:0.05em; white-space:nowrap;
-    font-variant-numeric:tabular-nums;
+    position:absolute; top:0; right:0; z-index:0;
+    display:flex; flex-direction:column; align-items:flex-end;
+    text-align:right; pointer-events:none;
+    padding:2.4vh 3.5vw 0 0;
+  }
+  .series-ghost{
+    font-size:20vh; font-weight:900; line-height:0.78;
+    color:var(--text); opacity:0.08;
+    letter-spacing:-0.02em; font-variant-numeric:tabular-nums;
+  }
+  .series-label{
+    margin-top:0.4vh; font-size:1.7vh; font-weight:700; letter-spacing:0.14em;
+    color:var(--accent2); white-space:nowrap;
   }
 
   /* ---------- QRコード（WEB予約） ---------- */
   .qr-layout{ align-items:center; }
   .qr-col{ display:flex; align-items:center; justify-content:center; }
   .qr-card{
-    background:#ffffff; border-radius:1.6vh; padding:2vh;
+    background:#ffffff; border-radius:var(--radius); padding:2vh;
     box-shadow:0 0 0 0.15vh var(--line);
   }
   .qr-image{ display:block; width:35vh; height:35vh; }
@@ -268,35 +318,34 @@
   .img-text-col .dept-list{ justify-content:flex-start; }
   .img-media-col{ flex:0 0 45%; max-width:45%; display:flex; align-items:center; justify-content:center; }
   .img-card{
-    width:100%; background:var(--white); border-radius:2vh; padding:1.2vh;
-    box-shadow:0 1vh 3vh rgba(44,42,38,0.14);
+    width:100%; background:var(--white); border-radius:var(--radius); padding:1.2vh;
+    box-shadow:0 1vh 3vh rgba(44,42,38,0.08);
   }
   .img-card img{
-    display:block; width:100%; height:auto; border-radius:1.4vh;
+    display:block; width:100%; height:auto; border-radius:var(--radius-sm);
     aspect-ratio:16/9; object-fit:cover;
   }
 
   /* ---------- キーワード強調（<em>） ---------- */
-  /* light: 蛍光マーカー風（文字下半分に黄色ハイライト） */
+  /* light: マーカー風（落ち着いた金茶系ハイライト、v14） */
   em{
     font-style:normal;
-    background-image:linear-gradient(180deg, transparent 58%, rgba(255,214,64,0.55) 58%);
+    background-image:linear-gradient(180deg, transparent 58%, rgba(154,111,45,0.32) 58%);
     padding:0 0.05em;
   }
-  /* bold・poster共通: 白帯ボックス（テーマ色文字・角丸・わずかに回転） */
+  /* bold・poster共通: 白帯ボックス（テーマ色文字・角丸・水平のまま、v14で回転をやめた） */
   .slide.theme-bold em, .slide.has-poster em{
     display:inline-block;
     background-image:none;
     background-color:#fff;
     color:var(--tone-dark, #333);
     padding:0.05em 0.35em;
-    border-radius:0.25em;
-    transform:rotate(-1deg);
+    border-radius:0.18em;
   }
 
   /* ---------- tone（色系統）: --tone-dark はbold/posterどちらでも使うので独立させておく ---------- */
   .tone-green{ --tone-dark:#2c5f4a; }
-  .tone-rose{ --tone-dark:#8a3f56; }
+  .tone-rose{ --tone-dark:#7a4a56; } /* v14: スモーキーローズ */
   .tone-navy{ --tone-dark:#2b3a5c; }
   .tone-summer{ --tone-dark:#123f38; }
   .tone-winter{ --tone-dark:#2a2a5c; }
@@ -306,16 +355,14 @@
   .slide.theme-bold{
     background-image:none !important;
   }
-  .slide.theme-bold .dept-pill, .slide.has-poster .dept-pill{ background:rgba(255,255,255,0.16); }
   .slide.theme-bold .month-badge{ background:rgba(255,255,255,0.12); }
-  .slide.theme-bold .series-badge, .slide.has-poster .series-badge{ background:#fff; color:var(--tone-dark, #333); }
-  .slide.theme-bold .qr-card{ box-shadow:0 1vh 3vh rgba(0,0,0,0.4); }
+  .slide.theme-bold .qr-card{ box-shadow:0 1vh 3vh rgba(0,0,0,0.22); }
   .slide.theme-bold .img-card{
-    border:0.5vh solid #fff;
-    box-shadow:0 1vh 3vh rgba(0,0,0,0.35);
+    border:0.3vh solid #fff;
+    box-shadow:0 1vh 3vh rgba(0,0,0,0.2);
   }
   .slide.theme-bold.tone-green{ background-color:#2c5f4a; --text:#f4f1ea; --text-soft:#cfe0d3; --accent:#bfe6cf; --accent2:#8fd9b8; }
-  .slide.theme-bold.tone-rose{ background-color:#b0526e; --text:#faf1f0; --text-soft:#f0d4da; --accent:#f6d9e2; --accent2:#f3b9c9; }
+  .slide.theme-bold.tone-rose{ background-color:#96636c; --text:#faf1f0; --text-soft:#ecdadc; --accent:#f0dde0; --accent2:#e3c1c6; } /* v14: スモーキーローズ */
   .slide.theme-bold.tone-navy{ background-color:#2b3a5c; --text:#f2f4f9; --text-soft:#c7d0e2; --accent:#bcd0f0; --accent2:#a9c0e6; }
   .slide.theme-bold.tone-summer{ background-color:#123f38; --text:#eef8f6; --text-soft:#bfe0da; --accent:#bdeee4; --accent2:#8fe0d0; }
   .slide.theme-bold.tone-winter{ background-color:#2a2a5c; --text:#eef0fb; --text-soft:#c7cbe8; --accent:#d3d6f5; --accent2:#b7bdf0; }
@@ -363,50 +410,16 @@
   .slide.active .poster-text-col > *:nth-child(3){ transition-delay:0.35s; }
   .slide.active .poster-text-col > *:nth-child(n+4){ transition-delay:0.5s; }
 
-  /* ---------- 装飾モチーフ（＋・ハート・カプセル、各スライドの余白に薄く） ---------- */
-  /* 浮遊アニメは季節モチーフの floatUp と同じ考え方（ease-in-out・無限ループ）を、
-     隅に固定配置する小さいアイコン向けに振れ幅だけ小さくしたもの。 */
-  @keyframes decoFloat{
-    0%{ transform:translateY(0) rotate(var(--deco-rot, 0deg)); }
-    50%{ transform:translateY(-0.9vh) rotate(var(--deco-rot, 0deg)); }
-    100%{ transform:translateY(0) rotate(var(--deco-rot, 0deg)); }
-  }
+  /* ---------- 装飾モチーフ（v14: ハート/カプセル/＋を廃止し、極薄の円弧1本のみに） ---------- */
   .deco-layer{ position:absolute; inset:0; z-index:-1; pointer-events:none; overflow:hidden; }
-  .deco-icon{
-    position:absolute; opacity:0.16;
-    animation-name:decoFloat; animation-timing-function:ease-in-out; animation-iteration-count:infinite;
-  }
-  .deco-icon.plus{ width:2.6vh; height:2.6vh; }
-  .deco-icon.plus::before, .deco-icon.plus::after{
-    content:""; position:absolute; background:var(--accent2); border-radius:0.3vh;
-  }
-  .deco-icon.plus::before{ left:42%; right:42%; top:0; bottom:0; }
-  .deco-icon.plus::after{ top:42%; bottom:42%; left:0; right:0; }
-  .deco-icon.heart{ width:2.8vh; height:2.6vh; }
-  .deco-icon.heart::before, .deco-icon.heart::after{
-    content:""; position:absolute; top:0; width:52%; height:80%;
-    background:var(--accent2); border-radius:50% 50% 0 0;
-  }
-  .deco-icon.heart::before{ left:50%; transform:rotate(-45deg); transform-origin:0 100%; }
-  .deco-icon.heart::after{ left:0; transform:rotate(45deg); transform-origin:100% 100%; }
-  .deco-icon.capsule{
-    width:3.6vh; height:1.5vh; border-radius:100px; border:0.12vh solid var(--accent2);
-    background:linear-gradient(90deg, var(--accent2) 50%, transparent 50%);
-  }
-  .slide.theme-bold .deco-icon.plus::before,
-  .slide.theme-bold .deco-icon.plus::after,
-  .slide.theme-bold .deco-icon.heart::before,
-  .slide.theme-bold .deco-icon.heart::after,
-  .slide.has-poster .deco-icon.plus::before,
-  .slide.has-poster .deco-icon.plus::after,
-  .slide.has-poster .deco-icon.heart::before,
-  .slide.has-poster .deco-icon.heart::after{ background:#fff; }
-  .slide.theme-bold .deco-icon.capsule,
-  .slide.has-poster .deco-icon.capsule{
-    border-color:#fff; background:linear-gradient(90deg, #fff 50%, transparent 50%);
+  .deco-arc{
+    position:absolute; right:-20vh; bottom:-20vh;
+    width:58vh; height:58vh; border-radius:50%;
+    border:0.15vh solid var(--line);
+    opacity:0.55;
   }
   @media (prefers-reduced-motion: reduce){
-    .deco-icon, .poster-bg{ animation:none !important; }
+    .poster-bg{ animation:none !important; }
   }
 
   /* ---------- 背景装飾パターン（スライドごとに3種をローテーション） ---------- */
@@ -706,25 +719,19 @@ function buildSlideHTML(s){
   return deco + content;
 }
 
-// ---------- 装飾モチーフ（＋・ハート・カプセル） ----------
-// 各スライドの余白（3隅）に薄いアイコンをランダムに配置する。実際の色・不透明度はCSS側（.deco-icon）で管理。
-const DECO_SHAPES = ["plus", "heart", "capsule"];
-const DECO_SLOTS = [
-  { top: "3vh", left: "3vw" },
-  { bottom: "3vh", left: "3vw" },
-  { bottom: "3vh", right: "3vw" }
-];
+// ---------- 装飾モチーフ（v14: 極薄の円弧1本のみ） ----------
+// 各スライドの右下に、ごく薄い円弧を1つだけ配置する（実際の色・不透明度はCSS側 .deco-arc で管理）。
 function buildDecoLayer(){
-  const icons = DECO_SLOTS.map(pos => {
-    const shape = DECO_SHAPES[Math.floor(Math.random() * DECO_SHAPES.length)];
-    const rot = Math.round(Math.random() * 40 - 20);
-    const duration = (5 + Math.random() * 3).toFixed(1);
-    const delay = (-Math.random() * 8).toFixed(1);
-    const style = Object.keys(pos).map(k => `${k}:${pos[k]}`).join(";")
-      + `;--deco-rot:${rot}deg;animation-duration:${duration}s;animation-delay:${delay}s;`;
-    return `<span class="deco-icon ${shape}" style="${style}"></span>`;
-  }).join("");
-  return `<div class="deco-layer">${icons}</div>`;
+  return `<div class="deco-layer"><span class="deco-arc"></span></div>`;
+}
+
+// ---------- 特集シリーズの背後ゴースト数字（v14: 右上丸バッジを置き換え） ----------
+// slides.js 側は "更年期特集 1/2" のような表示文言だけを渡す（文言は変更しない）。
+// ここでは末尾の "n/m" から現在の回数 n を取り出し、01/02...の特大ゴースト数字を添える。
+function seriesBadge(label){
+  const m = String(label).match(/(\d+)\s*\/\s*\d+\s*$/);
+  const num = m ? m[1].padStart(2, "0") : "";
+  return `<div class="series-badge"><span class="series-ghost">${num}</span><span class="series-label">${label}</span></div>`;
 }
 
 // ---------- オートフィット（文字サイズの自動調整） ----------
@@ -814,6 +821,9 @@ function applyAutoFit(el, colSelector){
   }
 }
 
+// v14: 診療時間表・内視鏡実績・WEB予約QRのみ中央揃えレイアウトを維持する
+const CENTERED_IDS = ["hours", "hours-gyn", "endoscopy-count", "web-yoyaku"];
+
 activeSlides.forEach((s, i) => {
   const el = document.createElement("div");
   el.className = "slide " + BG_PATTERNS[i % BG_PATTERNS.length];
@@ -822,11 +832,22 @@ activeSlides.forEach((s, i) => {
   if (s.poster) el.classList.add("has-poster");
   if (s.tone) el.classList.add("tone-" + s.tone);
   if (s.theme === "bold") el.classList.add("theme-bold");
+  if (CENTERED_IDS.includes(s.id)) el.classList.add("slide-centered");
   try {
     el.innerHTML = buildSlideHTML(s);
   } catch (e){
     console.error("スライド描画エラー:", s.id, e);
     el.innerHTML = `<div class="headline small">${CLINIC.name}</div>`;
+  }
+  // v14: 画面右端の縦書きセクションラベル（画像・ポスター・中央維持系は除く。kicker文言を流用）
+  if (!s.image && !s.poster && !CENTERED_IDS.includes(s.id)){
+    const kickerEl = el.querySelector(".kicker");
+    if (kickerEl && kickerEl.textContent){
+      const label = document.createElement("div");
+      label.className = "side-label";
+      label.textContent = kickerEl.textContent;
+      el.appendChild(label);
+    }
   }
   slidesRoot.appendChild(el);
   const colSelector = s.poster ? ".poster-text-col" : (s.image ? ".img-text-col" : null);
