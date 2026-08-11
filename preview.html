@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>デジタルサイネージ プレビュー一覧</title>
+<style>
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html,body{
+    font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic",sans-serif;
+    background:#f4f1ea; color:#2c2a26; line-height:1.6;
+  }
+  a{ color:#3f6a8f; }
+
+  header.page-header{
+    background:#ffffff; border-bottom:1px solid rgba(44,42,38,0.12);
+    padding:20px 20px 18px;
+  }
+  header.page-header h1{
+    font-size:1.35rem; font-weight:900; margin-bottom:6px;
+  }
+  .notice-box{
+    background:#fbf6e8; border:1px solid #e8dcae; border-radius:10px;
+    padding:12px 14px; font-size:0.92rem; color:#5a4f22; margin-top:10px;
+    max-width:760px;
+  }
+  .notice-box strong{ color:#8a6d1a; }
+  .header-links{ margin-top:10px; font-size:0.92rem; display:flex; gap:16px; flex-wrap:wrap; }
+  .header-links a{ text-decoration:none; font-weight:700; }
+  .header-links a:hover{ text-decoration:underline; }
+
+  .toc{
+    padding:14px 20px; background:#efe9db; display:flex; gap:10px; flex-wrap:wrap;
+    font-size:0.85rem; position:sticky; top:0; z-index:5;
+    border-bottom:1px solid rgba(44,42,38,0.1);
+  }
+  .toc a{
+    background:#fff; border:1px solid rgba(44,42,38,0.15); border-radius:100px;
+    padding:6px 14px; text-decoration:none; color:#2c2a26; font-weight:700;
+    white-space:nowrap;
+  }
+  .toc a:hover{ background:#3f6a8f; color:#fff; border-color:#3f6a8f; }
+
+  main{ padding:24px 20px 60px; max-width:1400px; margin:0 auto; }
+
+  section.slide-section{ margin-bottom:44px; }
+  section.slide-section h2{
+    font-size:1.1rem; font-weight:900; margin-bottom:4px;
+    display:flex; align-items:baseline; gap:8px;
+  }
+  section.slide-section h2 .count{
+    font-size:0.8rem; font-weight:700; color:#7a7264;
+    background:#fff; border-radius:100px; padding:2px 10px;
+  }
+  section.slide-section p.section-desc{
+    font-size:0.85rem; color:#6b6558; margin-bottom:16px;
+  }
+
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(260px, 1fr));
+    gap:18px;
+  }
+
+  .card{
+    background:#fff; border-radius:12px; overflow:hidden;
+    box-shadow:0 1px 3px rgba(44,42,38,0.12);
+    cursor:pointer; border:1px solid rgba(44,42,38,0.08);
+    transition:box-shadow 0.2s ease, transform 0.2s ease;
+  }
+  .card:hover{ box-shadow:0 6px 16px rgba(44,42,38,0.18); transform:translateY(-2px); }
+
+  .thumb-wrap{
+    position:relative; width:100%; aspect-ratio:16/9;
+    background:#eee; overflow:hidden;
+  }
+  .thumb-wrap iframe{
+    position:absolute; top:0; left:0;
+    width:1600px; height:900px;
+    border:0; pointer-events:none;
+    transform-origin:top left;
+  }
+  .thumb-wrap .thumb-loading{
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    font-size:0.78rem; color:#9a9484; background:#f1ede2;
+  }
+  .thumb-wrap .zoom-hint{
+    position:absolute; right:8px; bottom:8px; background:rgba(0,0,0,0.55); color:#fff;
+    font-size:0.7rem; padding:3px 8px; border-radius:100px; pointer-events:none;
+  }
+
+  .card-body{ padding:10px 12px 12px; }
+  .card-title{ font-size:0.92rem; font-weight:700; margin-bottom:4px; }
+  .card-id{
+    font-size:0.72rem; color:#8a8474; font-family:monospace;
+    margin-bottom:6px; word-break:break-all;
+  }
+  .card-meta{ display:flex; gap:6px; flex-wrap:wrap; }
+  .badge{
+    font-size:0.7rem; font-weight:700; border-radius:100px; padding:2px 9px;
+    background:#eee; color:#5a564e;
+  }
+  .badge.month{ background:#e7f1f8; color:#2e5b7a; }
+  .badge.weight{ background:#fbeee9; color:#9a4a2b; }
+  .badge.disabled{ background:#f1e2e2; color:#8a3b3b; }
+
+  /* モーダル */
+  #modal-overlay{
+    position:fixed; inset:0; background:rgba(20,18,14,0.82);
+    display:none; align-items:center; justify-content:center;
+    z-index:100; padding:4vh 4vw;
+  }
+  #modal-overlay.open{ display:flex; }
+  #modal-box{
+    background:#000; border-radius:10px; overflow:hidden;
+    width:min(92vw, 1280px); aspect-ratio:16/9; position:relative;
+    box-shadow:0 20px 60px rgba(0,0,0,0.5);
+  }
+  #modal-box iframe{ width:100%; height:100%; border:0; }
+  #modal-close{
+    position:absolute; top:-42px; right:0; background:none; border:none;
+    color:#fff; font-size:1.6rem; cursor:pointer; line-height:1;
+    padding:6px 10px;
+  }
+  #modal-caption{
+    position:absolute; left:-2px; top:-38px; color:#f1ede2; font-size:0.85rem; font-weight:700;
+  }
+
+  @media (max-width: 600px){
+    .grid{ grid-template-columns:repeat(auto-fill, minmax(150px, 1fr)); gap:12px; }
+    header.page-header h1{ font-size:1.1rem; }
+    #modal-box{ width:94vw; }
+    #modal-caption{ top:-34px; font-size:0.75rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <h1>横浜駅前ながしまクリニック デジタルサイネージ ― 全スライド プレビュー</h1>
+  <div class="notice-box">
+    <strong>これは確認用ページです。</strong> 実際の待合室での放映は <code>index.html</code> が行います。
+    このページはスライドの中身をまとめて確認するための一覧で、待合室のモニターには表示しません。
+  </div>
+  <div class="header-links">
+    <a href="index.html" target="_blank" rel="noopener">本番サイネージ（index.html）を新しいタブで開く</a>
+    <a href="README.md" target="_blank" rel="noopener">README（使い方）を開く</a>
+  </div>
+</header>
+
+<nav class="toc" id="toc"></nav>
+
+<main id="main"></main>
+
+<div id="modal-overlay">
+  <div id="modal-box">
+    <span id="modal-caption"></span>
+    <button id="modal-close" aria-label="閉じる">×</button>
+    <iframe id="modal-iframe" src="about:blank"></iframe>
+  </div>
+</div>
+
+<script src="slides.js"></script>
+<script>
+/* =====================================================================
+   プレビュー一覧ページのロジック。
+   SLIDES（各スライドの id / title / category / months / weight）は
+   slides.js から読み込んでいます。中身の編集は slides.js 側で行ってください。
+   ===================================================================== */
+
+const SECTION_DEFS = [
+  { key: "all",           label: "通年スライド",       desc: "1年を通して表示される、症状・診療のご案内です。" },
+  { key: "seasonal",      label: "季節限定スライド",     desc: "表示される月だけ登場します。バッジの月にご注意ください。" },
+  { key: "series",        label: "特集シリーズ",        desc: "1つのテーマを複数枚に分けて連続表示するスライドです。" },
+  { key: "institutional", label: "院内・制度のご案内",   desc: "受付対応や院内制度など、運用に関するお知らせです。" },
+  { key: "notice",        label: "臨時お知らせ（通常は非表示）", desc: "NOTICE.enabled が true のときだけ本番で表示されます。" }
+];
+
+function formatMonths(months){
+  if (months === "all") return "通年";
+  return months.map(m => m + "月").join("・");
+}
+
+function weightLabel(weight){
+  const w = weight || 1;
+  return w <= 1 ? "通常表示" : ("1周に" + w + "回");
+}
+
+function buildThumbUrl(slide){
+  const params = new URLSearchParams();
+  params.set("slide", slide.id);
+  params.set("freeze", "1");
+  params.set("hour", "10");
+  if (Array.isArray(slide.months) && slide.months.length > 0){
+    params.set("month", String(slide.months[0]));
+  }
+  if (slide.id === "notice"){
+    // notice は enabled:false だと本番では出ないため、プレビュー専用に強制表示する
+    params.set("forcenotice", "1");
+  }
+  return "index.html?" + params.toString();
+}
+
+function buildCard(slide){
+  const card = document.createElement("div");
+  card.className = "card";
+
+  const thumbWrap = document.createElement("div");
+  thumbWrap.className = "thumb-wrap";
+  const loading = document.createElement("div");
+  loading.className = "thumb-loading";
+  loading.textContent = "読み込み待機中…";
+  thumbWrap.appendChild(loading);
+
+  const zoomHint = document.createElement("div");
+  zoomHint.className = "zoom-hint";
+  zoomHint.textContent = "クリックで拡大";
+  thumbWrap.appendChild(zoomHint);
+
+  const url = buildThumbUrl(slide);
+
+  const body = document.createElement("div");
+  body.className = "card-body";
+  const title = document.createElement("div");
+  title.className = "card-title";
+  title.textContent = slide.title || slide.id;
+  const idEl = document.createElement("div");
+  idEl.className = "card-id";
+  idEl.textContent = slide.id;
+  const meta = document.createElement("div");
+  meta.className = "card-meta";
+  const monthBadge = document.createElement("span");
+  monthBadge.className = "badge month";
+  monthBadge.textContent = formatMonths(slide.months);
+  meta.appendChild(monthBadge);
+  const weightBadge = document.createElement("span");
+  weightBadge.className = "badge weight";
+  weightBadge.textContent = weightLabel(slide.weight);
+  meta.appendChild(weightBadge);
+  if (slide.enabled === false){
+    const disabledBadge = document.createElement("span");
+    disabledBadge.className = "badge disabled";
+    disabledBadge.textContent = "現在は非表示";
+    meta.appendChild(disabledBadge);
+  }
+  body.appendChild(title);
+  body.appendChild(idEl);
+  body.appendChild(meta);
+
+  card.appendChild(thumbWrap);
+  card.appendChild(body);
+
+  card.addEventListener("click", () => openModal(url, slide.title || slide.id));
+
+  // IntersectionObserver でスクロールに入ったら iframe を読み込む（60枚まとめて読むと重いため）
+  lazyQueue.push({ thumbWrap, loading, url });
+
+  return card;
+}
+
+let lazyQueue = [];
+let observer = null;
+const loadedThumbFrames = []; // { wrapEl, iframe } のリスト（リサイズ時の再スケール用）
+
+const THUMB_SOURCE_WIDTH = 1600; // index.html 側の基準解像度（本番と同じ16:9基準）
+
+function scaleThumbIframe(wrapEl, iframe){
+  const w = wrapEl.getBoundingClientRect().width;
+  if (w <= 0) return;
+  const scale = w / THUMB_SOURCE_WIDTH;
+  iframe.style.transform = "scale(" + scale + ")";
+}
+
+function setupLazyLoading(){
+  observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const wrapEl = entry.target;
+      const item = wrapEl._lazyItem;
+      if (!item || wrapEl.dataset.loaded === "1") return;
+      wrapEl.dataset.loaded = "1";
+      const iframe = document.createElement("iframe");
+      iframe.src = item.url;
+      iframe.loading = "lazy";
+      wrapEl.insertBefore(iframe, wrapEl.firstChild);
+      scaleThumbIframe(wrapEl, iframe);
+      loadedThumbFrames.push({ wrapEl, iframe });
+      if (item.loading && item.loading.parentNode) item.loading.remove();
+      observer.unobserve(wrapEl);
+    });
+  }, { root: null, rootMargin: "200px 0px", threshold: 0.01 });
+
+  lazyQueue.forEach(item => {
+    item.thumbWrap._lazyItem = item;
+    observer.observe(item.thumbWrap);
+  });
+}
+
+let resizeTimer = null;
+window.addEventListener("resize", () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    loadedThumbFrames.forEach(({ wrapEl, iframe }) => scaleThumbIframe(wrapEl, iframe));
+  }, 150);
+});
+
+function openModal(url, caption){
+  const overlay = document.getElementById("modal-overlay");
+  const iframe = document.getElementById("modal-iframe");
+  const captionEl = document.getElementById("modal-caption");
+  iframe.src = url;
+  captionEl.textContent = caption;
+  overlay.classList.add("open");
+}
+function closeModal(){
+  const overlay = document.getElementById("modal-overlay");
+  const iframe = document.getElementById("modal-iframe");
+  overlay.classList.remove("open");
+  iframe.src = "about:blank";
+}
+document.getElementById("modal-close").addEventListener("click", closeModal);
+document.getElementById("modal-overlay").addEventListener("click", (e) => {
+  if (e.target.id === "modal-overlay") closeModal();
+});
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") closeModal();
+});
+
+function render(){
+  const main = document.getElementById("main");
+  const toc = document.getElementById("toc");
+  main.innerHTML = "";
+  toc.innerHTML = "";
+
+  SECTION_DEFS.forEach(def => {
+    const slides = SLIDES.filter(s => (s.category || "all") === def.key);
+    if (slides.length === 0) return;
+
+    const tocLink = document.createElement("a");
+    tocLink.href = "#section-" + def.key;
+    tocLink.textContent = def.label + "（" + slides.length + "）";
+    toc.appendChild(tocLink);
+
+    const section = document.createElement("section");
+    section.className = "slide-section";
+    section.id = "section-" + def.key;
+
+    const h2 = document.createElement("h2");
+    h2.textContent = def.label;
+    const countSpan = document.createElement("span");
+    countSpan.className = "count";
+    countSpan.textContent = slides.length + "枚";
+    h2.appendChild(countSpan);
+    section.appendChild(h2);
+
+    const desc = document.createElement("p");
+    desc.className = "section-desc";
+    desc.textContent = def.desc;
+    section.appendChild(desc);
+
+    const grid = document.createElement("div");
+    grid.className = "grid";
+    slides.forEach(s => grid.appendChild(buildCard(s)));
+    section.appendChild(grid);
+
+    main.appendChild(section);
+  });
+
+  setupLazyLoading();
+}
+
+try {
+  render();
+} catch (e){
+  console.error("プレビュー描画エラー:", e);
+  document.getElementById("main").textContent = "読み込みに失敗しました（コンソールをご確認ください）。";
+}
+</script>
+</body>
+</html>
