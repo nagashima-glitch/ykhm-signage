@@ -527,23 +527,63 @@ const SLIDES = [
     `
   },
   {
-    id: "kounenki",
+    id: "tokushu-kounenki-1",
     months: "all",
-    duration: 11,
+    duration: 12,
     render: () => `
-      <div class="kicker">更年期のお悩み</div>
-      <div class="headline small">ほてり・イライラ・不眠が続く方へ</div>
-      <div class="sub">女性医師にご相談ください。</div>
+      <div class="series-badge">更年期特集 1/2</div>
+      <div class="kicker">こんな症状はありませんか</div>
+      <div class="headline small">更年期のサインかもしれません</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>ほてり・のぼせ</div>
+        <div class="point"><span class="dot"></span>汗をかきやすい</div>
+        <div class="point"><span class="dot"></span>眠れない</div>
+        <div class="point"><span class="dot"></span>イライラ・気分の落ち込み</div>
+      </div>
     `
   },
   {
-    id: "pill-gairai",
+    id: "tokushu-kounenki-2",
     months: "all",
     duration: 11,
     render: () => `
-      <div class="kicker">婦人科診療</div>
-      <div class="headline small">ピル外来のご案内</div>
-      <div class="sub">生理痛・月経不順のお悩みも、婦人科へご相談ください。</div>
+      <div class="series-badge">更年期特集 2/2</div>
+      <div class="kicker">我慢しないでご相談を</div>
+      <div class="headline small">お一人で抱え込まないでください</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>治療や付き合い方は人それぞれです</div>
+        <div class="point"><span class="dot"></span>女性医師がお話を伺います</div>
+      </div>
+    `
+  },
+  {
+    id: "tokushu-pill-1",
+    months: "all",
+    duration: 12,
+    render: () => `
+      <div class="series-badge">ピル外来特集 1/2</div>
+      <div class="kicker">ピル外来で相談できること</div>
+      <div class="headline small">こんなことも相談できます</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>生理痛がつらい</div>
+        <div class="point"><span class="dot"></span>PMS（月経前のこころ・からだの不調）</div>
+        <div class="point"><span class="dot"></span>生理日の移動・緊急避妊</div>
+      </div>
+    `
+  },
+  {
+    id: "tokushu-pill-2",
+    months: "all",
+    duration: 11,
+    render: () => `
+      <div class="series-badge">ピル外来特集 2/2</div>
+      <div class="kicker">受診はお気軽に</div>
+      <div class="headline small">まずはご相談ください</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>女性医師（産婦人科専門医）が担当いたします</div>
+        <div class="point"><span class="dot"></span>待合室は内科と分けております</div>
+        <div class="point"><span class="dot"></span>ピルは正しく理解して使うことが大切です</div>
+      </div>
     `
   },
   {
@@ -769,6 +809,20 @@ const SLIDES = [
     `
   },
   {
+    id: "geri-suibun",
+    months: "all",
+    duration: 11,
+    render: () => `
+      <div class="kicker">嘔吐・下痢のときは</div>
+      <div class="headline small">こまめな水分補給を</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>少量ずつ・こまめに水分を</div>
+        <div class="point"><span class="dot"></span>経口補水液が役立つこともあります</div>
+        <div class="point"><span class="dot"></span>水分がとれないほどつらいときは受診を</div>
+      </div>
+    `
+  },
+  {
     id: "hinketsu",
     months: "all",
     duration: 11,
@@ -815,6 +869,32 @@ const SLIDES = [
       <div class="kicker">生活習慣病外来</div>
       <div class="headline small">血圧・血糖・コレステロールが気になる方へ</div>
       <div class="sub">継続的な通院でのサポートに対応しています。</div>
+    `
+  },
+  {
+    id: "himan-gairai",
+    months: "all",
+    duration: 11,
+    render: () => `
+      <div class="kicker">肥満外来</div>
+      <div class="headline small">肥満外来のご案内</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>肥満は生活習慣病と関わりの深いテーマです</div>
+        <div class="point"><span class="dot"></span>当院では肥満外来のご相談に対応しています（自費診療）</div>
+      </div>
+    `
+  },
+  {
+    id: "ryoyo-keikaku",
+    months: "all",
+    duration: 12,
+    render: () => `
+      <div class="kicker">当院からのお知らせ</div>
+      <div class="headline small">療養計画書について</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>高血圧・糖尿病・脂質異常症で通院中の方には、療養計画書をお渡しして治療目標を一緒に決めています</div>
+        <div class="point"><span class="dot"></span>内容のご説明の際、署名をお願いすることがあります</div>
+      </div>
     `
   },
   {
@@ -1091,6 +1171,56 @@ const SLIDES = [
       <div class="kicker">受付でのお願い</div>
       <div class="headline small">マイナ保険証をご用意ください</div>
       <div class="sub">受診の際はマイナ保険証（または資格確認書）をご用意ください。ご不明な点は受付までお気軽にどうぞ。</div>
+    `
+  },
+  {
+    id: "dx-taisei",
+    months: "all",
+    duration: 11,
+    render: () => `
+      <div class="kicker">当院からのお知らせ</div>
+      <div class="headline small">医療DXへの取り組み</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>当院は医療DX推進体制を整備しています</div>
+        <div class="point"><span class="dot"></span>マイナ保険証の利用促進や、診療情報の活用により、質の高い医療の提供に努めています</div>
+      </div>
+    `
+  },
+  {
+    id: "kansen-taisaku",
+    months: "all",
+    duration: 11,
+    render: () => `
+      <div class="kicker">当院からのお知らせ</div>
+      <div class="headline small">感染対策・発熱対応について</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>当院は院内感染対策を実施し、発熱・感染症症状のある方の受け入れ体制を整えています</div>
+        <div class="point"><span class="dot"></span>発熱症状のある方は、受付にお申し出ください</div>
+      </div>
+    `
+  },
+  {
+    id: "okusuri-seido",
+    months: "all",
+    duration: 12,
+    render: () => `
+      <div class="kicker">当院からのお知らせ</div>
+      <div class="headline small">お薬に関するお知らせ</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>後発医薬品（ジェネリック）のある先発医薬品をご希望の場合、特別の料金がかかる場合があります</div>
+        <div class="point"><span class="dot"></span>症状が安定している方には、医師の判断でリフィル処方箋を発行できる場合があります</div>
+        <div class="point"><span class="dot"></span>詳しくは医師・受付にご相談ください</div>
+      </div>
+    `
+  },
+  {
+    id: "meiwaku-boushi",
+    months: "all",
+    duration: 11,
+    render: () => `
+      <div class="kicker">皆さまへのお願い</div>
+      <div class="headline small">スタッフへの暴力・暴言・迷惑行為はお断りいたします</div>
+      <div class="sub">安心して受診いただける環境を守るため、ご理解とご協力をお願いいたします。</div>
     `
   },
   {
