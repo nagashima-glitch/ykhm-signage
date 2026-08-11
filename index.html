@@ -91,6 +91,7 @@
     position:absolute; inset:0; top:0; bottom:8vh; z-index:1;
   }
   .slide{
+    --fit:1; /* オートフィット倍率（JSが内容量に応じて調整。既定は等倍） */
     position:absolute; inset:0;
     display:flex; flex-direction:column; align-items:center; justify-content:center;
     padding:4vh 6vw;
@@ -101,103 +102,105 @@
   .slide.active{ opacity:1; transform:translateY(0); z-index:2; }
 
   .kicker{
-    font-size:2.6vh; letter-spacing:0.3em; color:var(--accent);
-    font-weight:700; margin-bottom:1.6vh;
+    font-size:calc(2.6vh * var(--fit)); letter-spacing:0.3em; color:var(--accent);
+    font-weight:700; margin-bottom:calc(1.6vh * var(--fit));
   }
   .headline{
-    font-size:9.5vh; font-weight:900; line-height:1.25; letter-spacing:0.02em;
+    font-size:calc(9.5vh * var(--fit)); font-weight:900; line-height:1.25; letter-spacing:0.02em;
     color:var(--text);
   }
-  .headline.small{ font-size:8vh; }
+  .headline.small{ font-size:calc(8vh * var(--fit)); }
   .sub{
-    font-size:4vh; color:var(--text-soft); margin-top:2.2vh; line-height:1.6; font-weight:500;
+    font-size:calc(4vh * var(--fit)); color:var(--text-soft); margin-top:calc(2.2vh * var(--fit)); line-height:1.6; font-weight:500;
   }
   .accent-text{ color:var(--accent2); }
 
   .dept-list{
-    display:flex; flex-wrap:wrap; justify-content:center; gap:1.6vh 1.6vw;
-    margin-top:4vh;
+    display:flex; flex-wrap:wrap; justify-content:center; gap:calc(1.6vh * var(--fit)) calc(1.6vw * var(--fit));
+    margin-top:calc(4vh * var(--fit));
   }
   .dept-pill{
-    font-size:3.6vh; font-weight:700; color:var(--text);
+    font-size:calc(3.6vh * var(--fit)); font-weight:700; color:var(--text);
     border:0.3vh solid var(--accent2); border-radius:100px;
-    padding:1.4vh 3vw; background:rgba(255,255,255,0.6);
+    padding:calc(1.4vh * var(--fit)) calc(3vw * var(--fit)); background:rgba(255,255,255,0.6);
   }
 
   .motto-bar{
-    margin-top:3vh; font-size:3.2vh; color:var(--accent); font-weight:700; letter-spacing:0.08em;
+    margin-top:calc(3vh * var(--fit)); font-size:calc(3.2vh * var(--fit)); color:var(--accent); font-weight:700; letter-spacing:0.08em;
   }
 
   /* ---------- 診療時間表 ---------- */
   .hours-wrap{ width:100%; max-width:88vw; }
   table.hours-table{
-    width:100%; border-collapse:collapse; margin-top:2vh;
+    width:100%; border-collapse:collapse; margin-top:calc(2vh * var(--fit));
   }
   table.hours-table th, table.hours-table td{
     border-bottom:0.15vh solid var(--line);
-    padding:1.8vh 0.6vw;
-    font-size:3.4vh;
+    padding:calc(1.8vh * var(--fit)) calc(0.6vw * var(--fit));
+    font-size:calc(4vh * var(--fit));
     text-align:center;
   }
   table.hours-table th{
-    color:var(--text-soft); font-weight:700; font-size:3vh;
+    color:var(--text-soft); font-weight:700; font-size:calc(3.4vh * var(--fit));
   }
-  table.hours-table td.mark-open{ color:var(--accent2); font-size:4.6vh; font-weight:900; }
-  table.hours-table td.mark-close{ color:var(--text-soft); font-size:3.4vh; }
+  table.hours-table td.mark-open{ color:var(--accent2); font-size:calc(4.8vh * var(--fit)); font-weight:900; }
+  table.hours-table td.mark-close{ color:var(--text-soft); font-size:calc(4vh * var(--fit)); }
   table.hours-table td.day-label{ font-weight:700; color:var(--text); }
-  .hours-note{ margin-top:2.4vh; font-size:2.6vh; color:var(--text-soft); line-height:1.7; }
+  table.hours-table .time-note{ font-size:calc(2.2vh * var(--fit)); color:var(--text-soft); }
+  .hours-note{ margin-top:calc(2.8vh * var(--fit)); font-size:calc(4vh * var(--fit)); color:var(--text-soft); line-height:1.7; }
   .hours-note strong{ color:var(--accent); }
 
   /* ---------- 内視鏡実績 ---------- */
   .huge-number{
-    font-size:22vh; font-weight:900; color:var(--accent2); line-height:1;
+    font-size:calc(22vh * var(--fit)); font-weight:900; color:var(--accent2); line-height:1;
     letter-spacing:0.01em;
   }
-  .huge-number .unit{ font-size:6vh; margin-left:1vw; color:var(--text); font-weight:700; }
+  .huge-number .unit{ font-size:calc(6vh * var(--fit)); margin-left:1vw; color:var(--text); font-weight:700; }
   .breakdown{
-    display:flex; gap:6vw; margin-top:4vh; justify-content:center;
+    display:flex; gap:6vw; margin-top:calc(4vh * var(--fit)); justify-content:center;
   }
-  .breakdown .item{ font-size:3.2vh; color:var(--text-soft); }
-  .breakdown .item b{ display:block; font-size:6vh; color:var(--accent); font-weight:900; }
+  .breakdown .item{ font-size:calc(3.2vh * var(--fit)); color:var(--text-soft); }
+  .breakdown .item b{ display:block; font-size:calc(6vh * var(--fit)); color:var(--accent); font-weight:900; }
   .month-badge{
-    margin-top:4vh; font-size:2.8vh; color:var(--text-soft);
-    background:rgba(255,255,255,0.6); border-radius:14px; padding:2vh 3vw;
+    margin-top:calc(4vh * var(--fit)); font-size:calc(2.8vh * var(--fit)); color:var(--text-soft);
+    background:rgba(255,255,255,0.6); border-radius:14px; padding:calc(2vh * var(--fit)) calc(3vw * var(--fit));
   }
-  .month-badge b{ color:var(--accent2); font-size:4vh; }
+  .month-badge b{ color:var(--accent2); font-size:calc(4vh * var(--fit)); }
 
   /* ---------- 案内リスト（胃/大腸カメラ等） ---------- */
   .point-list{
-    margin-top:4vh; display:flex; flex-direction:column; gap:2.2vh; align-items:flex-start;
+    margin-top:calc(4vh * var(--fit)); display:flex; flex-direction:column; gap:calc(2.6vh * var(--fit)); align-items:flex-start;
   }
   .point-list .point{
-    font-size:3.8vh; color:var(--text); font-weight:600; text-align:left;
-    display:flex; align-items:baseline; gap:1.4vw;
+    font-size:calc(4vh * var(--fit)); color:var(--text); font-weight:600; text-align:left;
+    line-height:1.4;
+    display:flex; align-items:baseline; gap:calc(1.4vw * var(--fit));
   }
   .point-list .point .dot{
-    width:1.6vh; height:1.6vh; border-radius:50%; background:var(--accent);
+    width:calc(1.6vh * var(--fit)); height:calc(1.6vh * var(--fit)); border-radius:50%; background:var(--accent);
     flex:none; transform:translateY(-0.6vh);
   }
 
   /* ---------- 2カラムレイアウト（access等） ---------- */
   .two-col{
-    display:flex; gap:5vw; width:100%; max-width:80vw; margin-top:3vh; text-align:left;
+    display:flex; gap:5vw; width:100%; max-width:80vw; margin-top:calc(3vh * var(--fit)); text-align:left;
   }
   .two-col .col{ flex:1; }
-  .access-label{ font-size:2.2vh; color:var(--text-soft); margin-bottom:0.6vh; margin-top:2.4vh; }
+  .access-label{ font-size:calc(2.2vh * var(--fit)); color:var(--text-soft); margin-bottom:calc(0.6vh * var(--fit)); margin-top:calc(2.4vh * var(--fit)); }
   .access-label:first-child{ margin-top:0; }
-  .access-line{ font-size:4vh; color:var(--text); font-weight:700; }
+  .access-line{ font-size:calc(4vh * var(--fit)); color:var(--text); font-weight:700; }
 
   /* ---------- 番号付きリスト（横浜市の検診等） ---------- */
   .numbered-list{
-    margin-top:4vh; display:flex; flex-direction:column; gap:2vh; align-items:flex-start;
+    margin-top:calc(4vh * var(--fit)); display:flex; flex-direction:column; gap:calc(2.4vh * var(--fit)); align-items:flex-start;
   }
   .numbered-list .n-item{
-    display:flex; align-items:center; gap:1.6vw; font-size:4vh; font-weight:700; color:var(--text);
+    display:flex; align-items:center; gap:calc(1.6vw * var(--fit)); font-size:calc(4vh * var(--fit)); font-weight:700; color:var(--text);
   }
   .numbered-list .n-badge{
-    width:5vh; height:5vh; border-radius:50%; background:var(--accent2); color:#fff;
+    width:calc(5vh * var(--fit)); height:calc(5vh * var(--fit)); border-radius:50%; background:var(--accent2); color:#fff;
     display:flex; align-items:center; justify-content:center;
-    font-size:2.6vh; font-weight:900; flex:none;
+    font-size:calc(2.6vh * var(--fit)); font-weight:900; flex:none;
   }
 
   /* ---------- 特集シリーズ（Soko風・連続スライド） ---------- */
@@ -224,9 +227,12 @@
   }
   .img-layout.img-reverse{ flex-direction:row-reverse; }
   .img-text-col{ flex:0 0 55%; max-width:55%; text-align:left; }
-  .img-text-col .headline{ font-size:6vh; }
-  .img-text-col .headline.small{ font-size:5.6vh; }
-  .img-text-col .motto-bar{ font-size:3.5vh; }
+  .img-text-col .headline{ font-size:calc(6vh * var(--fit)); }
+  .img-text-col .headline.small{ font-size:calc(5.6vh * var(--fit)); }
+  .img-text-col .motto-bar{ font-size:calc(3.5vh * var(--fit)); }
+  .img-text-col .kicker{ margin-bottom:calc(2vh * var(--fit)); }
+  .img-text-col .sub{ line-height:1.7; }
+  .img-text-col .point-list{ gap:calc(3vh * var(--fit)); }
   .img-text-col .dept-list{ justify-content:flex-start; }
   .img-media-col{ flex:0 0 45%; max-width:45%; display:flex; align-items:center; justify-content:center; }
   .img-card{
@@ -264,6 +270,7 @@
 
   /* ---------- 夜間画面 ---------- */
   #night-screen{
+    --fit:1;
     position:absolute; inset:0; bottom:8vh; z-index:2;
     display:flex; flex-direction:column; align-items:center; justify-content:center;
     text-align:center; padding:4vh 6vw;
@@ -279,11 +286,11 @@
   #night-screen .kicker{ color:var(--night-accent, #9fb3d6); }
   #night-screen .headline.small{ color:#f7f4ee; }
   #night-screen .night-clock{
-    font-size:14vh; font-weight:900; margin-top:2vh; line-height:1;
+    font-size:calc(14vh * var(--fit)); font-weight:900; margin-top:calc(2vh * var(--fit)); line-height:1;
     color:var(--night-accent, #9fb3d6); letter-spacing:0.02em;
   }
   #night-screen .sub{ color:#d8d4c8; }
-  #night-screen .sub.small-sub{ font-size:2.6vh; margin-top:1.2vh; color:#b9b6ab; }
+  #night-screen .sub.small-sub{ font-size:calc(2.6vh * var(--fit)); margin-top:calc(1.2vh * var(--fit)); color:#b9b6ab; }
 
   /* ---------- フッター ---------- */
   #footer{
@@ -389,11 +396,11 @@ function renderHoursTable(h){
       </thead>
       <tbody>
         <tr>
-          <td class="day-label">午前<br><span style="font-size:1.9vh;color:var(--text-soft);">${h.amTime}</span></td>
+          <td class="day-label">午前<br><span class="time-note">${h.amTime}</span></td>
           ${h.am.map(v => cell(v)).join("")}
         </tr>
         <tr>
-          <td class="day-label">午後<br><span style="font-size:1.9vh;color:var(--text-soft);">${h.pmTime}</span></td>
+          <td class="day-label">午後<br><span class="time-note">${h.pmTime}</span></td>
           ${h.pm.map(v => cell(v)).join("")}
         </tr>
       </tbody>
@@ -510,28 +517,119 @@ const slideEls = [];
 
 const BG_PATTERNS = ["bg-pattern-a", "bg-pattern-b", "bg-pattern-c"];
 
+// s.image があれば「左テキスト55%／右イラスト45%」の2カラムに自動で組む
+function buildSlideHTML(s){
+  const content = s.render();
+  if (s.image){
+    return `
+      <div class="img-layout${s.imageReverse ? " img-reverse" : ""}">
+        <div class="img-text-col">${content}</div>
+        <div class="img-media-col"><div class="img-card"><img src="${s.image}" alt="" loading="lazy"></div></div>
+      </div>
+    `;
+  }
+  return content;
+}
+
+// ---------- オートフィット（文字サイズの自動調整） ----------
+// スライドの内容量（実際のコンテンツ高さ）と利用可能な高さ（フッターを除く表示領域）を比較し、
+// 余白が目立つ（内容が少ない）スライドは --fit（font-size倍率）を上げて拡大表示する。
+// 逆にはみ出しそうなときは縮小して収める。見出しの折返しが増える場合はそこで打ち切る。
+const FIT_MIN = 0.7;
+const FIT_MAX = 1.5;
+const FIT_STEP = 0.05;
+const FIT_TARGET_LOW = 0.75;   // これ未満なら「余白が目立つ」とみなして拡大を試みる
+const FIT_SAFE_MAX = 0.97;     // これを超えたら「はみ出しの危険あり」とみなして一段戻す
+
+function unionContentHeight(elements){
+  let top = Infinity, bottom = -Infinity;
+  elements.forEach(c => {
+    const r = c.getBoundingClientRect();
+    if (r.width === 0 && r.height === 0) return; // 非表示要素は無視
+    if (r.top < top) top = r.top;
+    if (r.bottom > bottom) bottom = r.bottom;
+  });
+  if (top === Infinity) return 0;
+  return bottom - top;
+}
+
+// 画像つきスライドはテキスト側（img-text-col）だけを計測し、画像なしスライドは直下の子要素をまとめて計測する
+function measureContentHeight(el, hasImage){
+  if (hasImage){
+    const col = el.querySelector(".img-text-col");
+    if (!col || !col.children.length) return 0;
+    return unionContentHeight(Array.from(col.children));
+  }
+  return unionContentHeight(Array.from(el.children));
+}
+
+function getHeadlineHeight(el){
+  const h = el.querySelector(".headline");
+  return h ? h.getBoundingClientRect().height : 0;
+}
+
+function applyAutoFit(el, hasImage){
+  try {
+    const cs = getComputedStyle(el);
+    const padTop = parseFloat(cs.paddingTop) || 0;
+    const padBottom = parseFloat(cs.paddingBottom) || 0;
+    const available = el.clientHeight - padTop - padBottom;
+    if (!(available > 0)) return;
+
+    el.style.setProperty("--fit", "1");
+    void el.offsetHeight; // 強制リフロー
+    let fit = 1;
+    let ratio = measureContentHeight(el, hasImage) / available;
+    const baseHeadlineH = getHeadlineHeight(el);
+
+    if (ratio > FIT_SAFE_MAX){
+      // はみ出し気味 → 収まるまで縮小
+      while (fit > FIT_MIN){
+        fit = Math.max(FIT_MIN, +(fit - FIT_STEP).toFixed(2));
+        el.style.setProperty("--fit", String(fit));
+        void el.offsetHeight;
+        ratio = measureContentHeight(el, hasImage) / available;
+        if (ratio <= FIT_SAFE_MAX || fit <= FIT_MIN) break;
+      }
+    } else if (ratio < FIT_TARGET_LOW){
+      // 余白が目立つ → 収まる範囲で拡大（見出しの折返しが増えたら一段戻して打ち切り）
+      while (fit < FIT_MAX){
+        const nextFit = Math.min(FIT_MAX, +(fit + FIT_STEP).toFixed(2));
+        el.style.setProperty("--fit", String(nextFit));
+        void el.offsetHeight;
+        const nextRatio = measureContentHeight(el, hasImage) / available;
+        const nextHeadlineH = getHeadlineHeight(el);
+        const wrapIncreased = baseHeadlineH > 0 && nextHeadlineH > baseHeadlineH * nextFit * 1.15;
+        if (nextRatio > FIT_SAFE_MAX || wrapIncreased){
+          el.style.setProperty("--fit", String(fit)); // 一段戻す
+          void el.offsetHeight;
+          break;
+        }
+        fit = nextFit;
+        ratio = nextRatio;
+        if (ratio >= FIT_TARGET_LOW) break;
+      }
+    }
+    el.dataset.fit = String(fit);
+  } catch (e){
+    console.error("オートフィット計算エラー:", el.dataset.id || "(unknown)", e);
+    el.style.setProperty("--fit", "1");
+  }
+}
+
 activeSlides.forEach((s, i) => {
   const el = document.createElement("div");
   el.className = "slide " + BG_PATTERNS[i % BG_PATTERNS.length];
   el.dataset.id = s.id;
   try {
-    const content = s.render();
-    if (s.image){
-      el.classList.add("has-image");
-      el.innerHTML = `
-        <div class="img-layout${s.imageReverse ? " img-reverse" : ""}">
-          <div class="img-text-col">${content}</div>
-          <div class="img-media-col"><div class="img-card"><img src="${s.image}" alt="" loading="lazy"></div></div>
-        </div>
-      `;
-    } else {
-      el.innerHTML = content;
-    }
+    if (s.image) el.classList.add("has-image");
+    el.innerHTML = buildSlideHTML(s);
   } catch (e){
     console.error("スライド描画エラー:", s.id, e);
     el.innerHTML = `<div class="headline small">${CLINIC.name}</div>`;
   }
   slidesRoot.appendChild(el);
+  applyAutoFit(el, !!s.image);
   slideEls.push(el);
 
   const dot = document.createElement("div");
@@ -614,6 +712,7 @@ nightScreenEl.innerHTML = `
   <div class="sub">本日の診療は終了しました</div>
   <div class="sub small-sub">診療時間：月〜土 9:00〜　／　詳しくはホームページへ</div>
 `;
+applyAutoFit(nightScreenEl, false);
 
 // ?hour= が指定されていれば時のみ偽装（分・秒は常に実時刻）。祝日判定はオフラインでは行わない。
 function getEffectiveHour(){
