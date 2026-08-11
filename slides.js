@@ -254,12 +254,16 @@ const SLIDES = [
     tone: "rose",
     render: () => `
       ${seriesBadge("更年期特集 2/2")}
-      <div class="kicker">我慢しないでご相談を</div>
-      <div class="headline small">お一人で抱え込まないでください</div>
-      <div class="point-list">
-        <div class="point"><span class="dot"></span>治療や付き合い方は人それぞれです</div>
-        <div class="point"><span class="dot"></span><em>女性医師</em>がお話を伺います</div>
-      </div>
+      ${diseaseCard({
+        kicker: "更年期の症状について",
+        headline: "お一人で抱え込まないでください",
+        rows: [
+          { label: "症状", text: "症状の感じ方は人それぞれです" },
+          { label: "検査", text: "問診やホルモンの状態の確認など" },
+          { label: "治療", text: "お薬や<em>漢方薬</em>など選択肢があります" }
+        ],
+        cta: "女性医師がお話を伺います"
+      })}
     `
   },
   {
@@ -431,7 +435,7 @@ const SLIDES = [
       <div class="point-list">
         <div class="point"><span class="dot"></span>消化器内視鏡専門医が検査を担当します</div>
         <div class="point"><span class="dot"></span>AI内視鏡診断支援を導入しています</div>
-        <div class="point"><span class="dot"></span>当日検査についてもお気軽にご相談ください</div>
+        <div class="point"><span class="dot"></span>当日検査のご相談もお気軽にどうぞ</div>
       </div>
     `
   },
@@ -556,14 +560,16 @@ const SLIDES = [
     category: "all",
     months: "all",
     duration: 12,
-    render: () => `
-      <div class="kicker">健診で便潜血陽性だった方へ</div>
-      <div class="headline small">便潜血陽性・血便について</div>
-      <div class="point-list">
-        <div class="point"><span class="dot"></span>便潜血陽性・血便は放置せず、<em>大腸カメラ</em>での精密検査をおすすめします</div>
-        <div class="point"><span class="dot"></span>当院では血便・下血のご相談を毎日受け付けています</div>
-      </div>
-    `
+    render: () => diseaseCard({
+      kicker: "健診で便潜血陽性だった方へ",
+      headline: "便潜血陽性・血便について",
+      rows: [
+        { label: "症状", text: "便に血が混じる・健診で便潜血陽性" },
+        { label: "検査", text: "<em>大腸カメラ</em>で出血の原因を調べます" },
+        { label: "治療", text: "原因に応じて対応します（ポリープはその場で日帰り切除も）" }
+      ],
+      cta: "血便・下血のご相談は毎日受付"
+    })
   },
   {
     id: "heartburn",
@@ -571,14 +577,16 @@ const SLIDES = [
     category: "all",
     months: "all",
     duration: 11,
-    render: () => `
-      <div class="kicker">胸やけ・げっぷにお悩みの方へ</div>
-      <div class="headline small">胸やけ・げっぷが続く方へ</div>
-      <div class="point-list">
-        <div class="point"><span class="dot"></span>逆流性食道炎などの可能性があります</div>
-        <div class="point"><span class="dot"></span><em>胃カメラ</em>で食道・胃の状態を確認できます</div>
-      </div>
-    `
+    render: () => diseaseCard({
+      kicker: "胸やけ・げっぷにお悩みの方へ",
+      headline: "胸やけ・げっぷが続く方へ",
+      rows: [
+        { label: "症状", text: "胸やけ・げっぷ・酸っぱいものが上がる・のどの違和感" },
+        { label: "検査", text: "<em>胃カメラ</em>で食道や胃の状態を確認できます" },
+        { label: "治療", text: "お薬による治療や生活習慣の工夫があります" }
+      ],
+      cta: "つらい症状が続く方は消化器内科へ"
+    })
   },
   {
     id: "stomach-discomfort",
@@ -586,14 +594,16 @@ const SLIDES = [
     category: "all",
     months: "all",
     duration: 11,
-    render: () => `
-      <div class="kicker">胃の不調にお悩みの方へ</div>
-      <div class="headline small">胃の痛み・胃もたれが続く方へ</div>
-      <div class="point-list">
-        <div class="point"><span class="dot"></span>機能性ディスペプシア（FD）などの場合もあります</div>
-        <div class="point"><span class="dot"></span><em>専門外来</em>があり、胃カメラにも対応しています</div>
-      </div>
-    `
+    render: () => diseaseCard({
+      kicker: "胃の不調にお悩みの方へ",
+      headline: "胃の痛み・胃もたれが続く方へ",
+      rows: [
+        { label: "症状", text: "胃の痛み・胃もたれ・すぐお腹いっぱいになる" },
+        { label: "検査", text: "<em>胃カメラ</em>でほかの病気がないかを確認します" },
+        { label: "治療", text: "お薬や生活習慣の見直しで改善を目指します（IBS・FD専門外来あり）" }
+      ],
+      cta: "気になる症状は消化器内科でご相談を"
+    })
   },
   {
     id: "pylori",
@@ -601,14 +611,16 @@ const SLIDES = [
     category: "all",
     months: "all",
     duration: 11,
-    render: () => `
-      <div class="kicker">胃の健康チェック</div>
-      <div class="headline small"><em>ピロリ菌検査</em>・除菌治療のご案内</div>
-      <div class="point-list">
-        <div class="point"><span class="dot"></span>ピロリ菌検査に対応しています</div>
-        <div class="point"><span class="dot"></span>陽性の場合は除菌治療のご相談も承ります</div>
-      </div>
-    `
+    render: () => diseaseCard({
+      kicker: "胃の健康チェック",
+      headline: "ピロリ菌検査・除菌治療のご案内",
+      rows: [
+        { label: "症状", text: "自覚症状がないことも多い菌です" },
+        { label: "検査", text: "検査で感染の有無を調べられます" },
+        { label: "治療", text: "お薬による<em>除菌治療</em>があります" }
+      ],
+      cta: "胃の健康が気になる方はご相談を"
+    })
   },
   {
     id: "benpi",
@@ -616,14 +628,16 @@ const SLIDES = [
     category: "all",
     months: "all",
     duration: 11,
-    render: () => `
-      <div class="kicker">お腹の不調にお悩みの方へ</div>
-      <div class="headline small">便秘・下痢が続く方へ</div>
-      <div class="point-list">
-        <div class="point"><span class="dot"></span>過敏性腸症候群（IBS）の<em>専門外来</em>があります</div>
-        <div class="point"><span class="dot"></span>お一人で抱え込まずご相談ください</div>
-      </div>
-    `
+    render: () => diseaseCard({
+      kicker: "お腹の不調にお悩みの方へ",
+      headline: "便秘・下痢が続く方へ",
+      rows: [
+        { label: "症状", text: "くり返す便秘・下痢・お腹の張りや痛み" },
+        { label: "検査", text: "<em>大腸カメラ</em>でほかの病気がないかを確認します" },
+        { label: "治療", text: "食事・生活の工夫やお薬による治療があります（専門外来あり）" }
+      ],
+      cta: "お一人で抱え込まずにご相談ください"
+    })
   },
   {
     id: "bentsu-change",
@@ -660,14 +674,16 @@ const SLIDES = [
     category: "all",
     months: "all",
     duration: 11,
-    render: () => `
-      <div class="kicker">健診で貧血を指摘された方へ</div>
-      <div class="headline small">その貧血、放置していませんか</div>
-      <div class="point-list">
-        <div class="point"><span class="dot"></span>消化管からの出血が隠れていることもあります</div>
-        <div class="point"><span class="dot"></span><em>内視鏡検査</em>でチェックできます</div>
-      </div>
-    `
+    render: () => diseaseCard({
+      kicker: "健診で貧血を指摘された方へ",
+      headline: "だるさ・立ちくらみが続く方へ",
+      rows: [
+        { label: "症状", text: "だるさ・立ちくらみ・息切れ" },
+        { label: "検査", text: "血液検査に加え、<em>胃カメラ・大腸カメラ</em>で出血源を確認することも" },
+        { label: "治療", text: "原因に応じた治療を行います" }
+      ],
+      cta: "健診で指摘された方はご相談を"
+    })
   },
   {
     id: "ji-soudan",
@@ -676,14 +692,16 @@ const SLIDES = [
     months: "all",
     duration: 12,
     image: "images/ji.jpg",
-    render: () => `
-      <div class="kicker">痔のお悩み</div>
-      <div class="headline small">いぼ痔・切れ痔、恥ずかしがらずにご相談を</div>
-      <div class="point-list">
-        <div class="point"><span class="dot"></span>「血便は痔だろう」と思い込まず、一度大腸カメラでの確認を</div>
-        <div class="point"><span class="dot"></span><em>肛門内科</em>でしっかり診察いたします</div>
-      </div>
-    `
+    render: () => diseaseCard({
+      kicker: "痔のお悩み",
+      headline: "いぼ痔・切れ痔でお悩みの方へ",
+      rows: [
+        { label: "症状", text: "出血・痛み・かゆみ・脱出感" },
+        { label: "検査", text: "診察のほか、血便は<em>大腸カメラ</em>での確認も" },
+        { label: "治療", text: "お薬による治療から対応します" }
+      ],
+      cta: "恥ずかしがらずに肛門内科へ"
+    })
   },
   {
     id: "dock",
@@ -738,11 +756,16 @@ const SLIDES = [
     months: "all",
     duration: 11,
     image: "images/seikatsu.jpg",
-    render: () => `
-      <div class="kicker">健診で血圧を指摘された方へ</div>
-      <div class="headline small">その血圧、放置せず、まずはご相談を</div>
-      <div class="sub"><em>生活習慣病外来</em>で継続的にサポートいたします。</div>
-    `
+    render: () => diseaseCard({
+      kicker: "健診で指摘された方へ",
+      headline: "血圧が気になる方へ",
+      rows: [
+        { label: "症状", text: "自覚症状がほとんどありません" },
+        { label: "検査", text: "健診・<em>血液検査</em>で状態を確認します" },
+        { label: "治療", text: "生活習慣の見直しと、必要に応じたお薬で管理します" }
+      ],
+      cta: "生活習慣病外来で継続的にサポートいたします"
+    })
   },
   {
     id: "tounyou",
@@ -752,11 +775,16 @@ const SLIDES = [
     duration: 11,
     image: "images/seikatsu.jpg",
     imageReverse: true,
-    render: () => `
-      <div class="kicker"><em>血糖値・HbA1c</em>が気になる方へ</div>
-      <div class="headline small">放置せず、まずはご相談を</div>
-      <div class="sub">生活習慣病外来で継続的にサポートいたします。</div>
-    `
+    render: () => diseaseCard({
+      kicker: "健診で指摘された方へ",
+      headline: "血糖値・HbA1cが気になる方へ",
+      rows: [
+        { label: "症状", text: "自覚症状がほとんどありません" },
+        { label: "検査", text: "健診・<em>血液検査</em>で状態を確認します" },
+        { label: "治療", text: "生活習慣の見直しと、必要に応じたお薬で管理します" }
+      ],
+      cta: "気になる方は生活習慣病外来へ"
+    })
   },
   {
     id: "shishitsu",
@@ -765,11 +793,16 @@ const SLIDES = [
     months: "all",
     duration: 11,
     image: "images/seikatsu.jpg",
-    render: () => `
-      <div class="kicker"><em>コレステロール・中性脂肪</em>を指摘された方へ</div>
-      <div class="headline small">放置せず、まずはご相談を</div>
-      <div class="sub">生活習慣病外来で継続的にサポートいたします。</div>
-    `
+    render: () => diseaseCard({
+      kicker: "健診で指摘された方へ",
+      headline: "コレステロール・中性脂肪が気になる方へ",
+      rows: [
+        { label: "症状", text: "自覚症状がほとんどありません" },
+        { label: "検査", text: "健診・<em>血液検査</em>で状態を確認します" },
+        { label: "治療", text: "生活習慣の見直しと、必要に応じたお薬で管理します" }
+      ],
+      cta: "生活習慣病外来で経過を見ていきます"
+    })
   },
   {
     id: "ryoyo-keikaku",
@@ -798,7 +831,7 @@ const SLIDES = [
     render: () => `
       <div class="kicker">健診結果、そのままにしていませんか</div>
       <div class="headline small">「要精密検査」「要再検査」は早めのご相談を</div>
-      <div class="sub">健診結果を放置せず、<em>お早めに</em>ご相談ください。</div>
+      <div class="sub">健診結果はそのままにせず、<em>お早めに</em>ご相談ください。</div>
     `
   },
   {

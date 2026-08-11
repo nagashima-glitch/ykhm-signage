@@ -198,6 +198,31 @@
     margin-top:calc(3vh * var(--fit)); font-size:calc(3.2vh * var(--fit)); color:var(--accent); font-weight:700; letter-spacing:0.08em;
   }
 
+  /* ---------- 疾患解説カード（v15: 症状→検査→治療→CTAの3段構成） ---------- */
+  .disease-card{
+    margin-top:calc(3.2vh * var(--fit));
+    display:flex; flex-direction:column; gap:calc(2vh * var(--fit));
+  }
+  .dc-row{
+    display:flex; align-items:flex-start; gap:calc(1.6vw * var(--fit));
+  }
+  .dc-tag{
+    flex:none; margin-top:0.2em;
+    display:inline-block; min-width:calc(5.4vh * var(--fit)); text-align:center;
+    font-size:calc(1.9vh * var(--fit)); font-weight:700; letter-spacing:0.06em;
+    color:var(--accent2); border:1px solid var(--accent2); border-radius:0;
+    padding:calc(0.4vh * var(--fit)) calc(0.3vw * var(--fit));
+  }
+  .dc-text{
+    font-size:calc(3.6vh * var(--fit)); color:var(--text); font-weight:500; line-height:1.5;
+  }
+  .dc-cta{
+    margin-top:calc(2.6vh * var(--fit)); padding-top:calc(1.8vh * var(--fit));
+    border-top:1px solid var(--line);
+    font-size:calc(3vh * var(--fit)); font-weight:700; color:var(--accent);
+    letter-spacing:0.02em;
+  }
+
   /* ---------- 診療時間表 ---------- */
   .hours-wrap{ width:100%; max-width:88vw; }
   table.hours-table{
@@ -732,6 +757,21 @@ function seriesBadge(label){
   const m = String(label).match(/(\d+)\s*\/\s*\d+\s*$/);
   const num = m ? m[1].padStart(2, "0") : "";
   return `<div class="series-badge"><span class="series-ghost">${num}</span><span class="series-label">${label}</span></div>`;
+}
+
+// ---------- 疾患解説カード（v15: 症状→検査→治療→CTAの3段構成） ----------
+// o = { kicker, headline, rows:[{label,text}, ...], cta }
+// 画像つきスライド（image/imageReverse）はこの戻り値がそのまま .img-text-col の中身になる。
+function diseaseCard(o){
+  const rows = o.rows.map(r => `
+    <div class="dc-row"><span class="dc-tag">${r.label}</span><div class="dc-text">${r.text}</div></div>
+  `).join("");
+  return `
+    <div class="kicker">${o.kicker}</div>
+    <div class="headline small">${o.headline}</div>
+    <div class="disease-card">${rows}</div>
+    <div class="dc-cta">${o.cta}</div>
+  `;
 }
 
 // ---------- オートフィット（文字サイズの自動調整） ----------
