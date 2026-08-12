@@ -162,7 +162,7 @@ const SLIDES = [
     duration: 12,
     weight: 2,
     tone: "navy",
-    poster: "posters/poster_welcome.jpg",
+    poster: "photos/photo_uketsuke.jpg",
     posterTextSide: "left",
     render: () => `
       <div class="kicker">${CLINIC.addressShort}</div>
@@ -216,7 +216,7 @@ const SLIDES = [
     category: "all",
     months: "all",
     duration: 12,
-    image: "images/gyn.jpg",
+    image: "photos/photo_gyn_shinsatsu.jpg",
     render: () => `
       <div class="kicker">産婦人科診療</div>
       <div class="headline small">婦人科診療のご案内</div>
@@ -233,7 +233,7 @@ const SLIDES = [
     category: "all",
     months: "all",
     duration: 11,
-    image: "images/gyn.jpg",
+    image: "photos/photo_machiai.jpg",
     imageReverse: true,
     render: () => `
       <div class="kicker">女性も安心して通える空間</div>
@@ -351,6 +351,7 @@ const SLIDES = [
         ${CLINIC.endoscopy.monthLabel}　<b>${formatNum(CLINIC.endoscopy.monthTotal)}件</b>
         （胃 ${CLINIC.endoscopy.monthGastro}・大腸 ${CLINIC.endoscopy.monthColono}）
       </div>
+      <div class="mini-photo-card"><img src="photos/photo_naishikyo_room.jpg" alt=""></div>
     `
   },
   {
@@ -359,7 +360,7 @@ const SLIDES = [
     category: "all",
     months: "all",
     duration: 12,
-    image: "images/naishikyo.jpg",
+    image: "photos/photo_naishikyo_room.jpg",
     render: () => `
       <div class="kicker">内視鏡検査の質へのこだわり</div>
       <div class="headline small"><em>AI内視鏡診断支援</em>を導入</div>
@@ -375,7 +376,7 @@ const SLIDES = [
     category: "all",
     months: "all",
     duration: 11,
-    image: "images/naishikyo.jpg",
+    image: "photos/photo_scope.jpg",
     imageReverse: true,
     render: () => `
       <div class="kicker">内視鏡検査を担当する医師</div>
@@ -534,7 +535,7 @@ const SLIDES = [
     duration: 10,
     theme: "bold",
     tone: "green",
-    image: "images/step_recovery.jpg",
+    image: "photos/photo_recovery.jpg",
     render: () => singleStepSlide(
       "胃カメラ特集",
       "胃カメラ特集 9/11",
@@ -778,7 +779,7 @@ const SLIDES = [
     duration: 10,
     theme: "bold",
     tone: "green",
-    image: "images/step_recovery.jpg",
+    image: "photos/photo_recovery.jpg",
     render: () => singleStepSlide(
       "大腸カメラ特集",
       "大腸カメラ特集 11/13",
@@ -1015,7 +1016,7 @@ const SLIDES = [
     category: "all",
     months: "all",
     duration: 11,
-    image: "images/dock.jpg",
+    image: "photos/photo_echo.jpg",
     render: () => `
       <div class="kicker">人間ドック</div>
       <div class="headline small"><em>人間ドック</em>のご案内</div>
@@ -1210,6 +1211,9 @@ const SLIDES = [
     category: "institutional",
     months: "all",
     duration: 13,
+    tone: "navy",
+    poster: "photos/photo_gaikan.jpg",
+    posterTextSide: "left",
     render: () => `
       <div class="kicker">アクセス</div>
       <div class="headline small">${CLINIC.name}</div>

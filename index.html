@@ -360,6 +360,16 @@
     background:rgba(255,255,255,0.6); border-radius:var(--radius-sm); padding:calc(2vh * var(--fit)) calc(3vw * var(--fit));
   }
   .month-badge b{ color:var(--accent2); font-size:calc(4vh * var(--fit)); }
+  .mini-photo-card{
+    position:absolute; right:6vw; top:18vh; width:28vw; max-width:50vh;
+    background:#fff; border-radius:var(--radius); padding:1vh;
+    box-shadow:0 1.2vh 3vh rgba(0,0,0,0.2);
+  }
+  .mini-photo-card img{
+    display:block; width:100%; aspect-ratio:16/9; object-fit:cover;
+    border-radius:var(--radius-sm);
+  }
+  .mini-photo-card + *{ position:relative; }
 
   /* ---------- 案内リスト（胃/大腸カメラ等） ---------- */
   .point-list{
