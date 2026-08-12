@@ -1007,7 +1007,7 @@ const SLIDES = [
   },
   {
     id: "benketsu-series-1",
-    title: "便潜血特集 1/3（陽性のサイン）",
+    title: "便潜血特集 1/6（陽性のサイン）",
     category: "series",
     months: "all",
     duration: 10,
@@ -1015,7 +1015,7 @@ const SLIDES = [
     poster: "posters/poster_kenshin.jpg",
     posterTextSide: "left",
     render: () => `
-      ${seriesBadge("便潜血特集 1/3")}
+      ${seriesBadge("便潜血特集 1/6")}
       <div class="kicker">便潜血特集</div>
       <div class="headline small">健診で便潜血「陽性」、そのままにしていませんか？</div>
       <div class="sub">精密検査が必要というサインです</div>
@@ -1023,51 +1023,97 @@ const SLIDES = [
   },
   {
     id: "benketsu-series-2",
-    title: "便潜血特集 2/3（自己判断は禁物）",
+    title: "便潜血特集 2/6（章扉：便潜血検査とは）",
     category: "series",
     months: "all",
-    duration: 10,
+    duration: 5,
     theme: "bold",
     tone: "navy",
-    render: () => `
-      ${seriesBadge("便潜血特集 2/3")}
-      ${diseaseCard({
-        kicker: "便潜血特集",
-        headline: "「痔だろう」の自己判断は禁物です",
-        rows: [
-          { label: "放置すると", text: "<em>大腸がん</em>やポリープが隠れていることがあります", emphasis: true }
-        ]
-      })}
-    `
+    centered: true,
+    render: () => chapterSlide("便潜血特集", "便潜血検査とは")
   },
   {
     id: "benketsu-series-3",
-    title: "便潜血特集 3/3（大腸カメラで確認）",
+    title: "便潜血特集 3/6（便潜血検査とは）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    image: "images/benketsu_kit.jpg",
+    tone: "navy",
+    render: () => `
+      ${seriesBadge("便潜血特集 3/6")}
+      <div class="kicker">便潜血特集</div>
+      <div class="headline small">大腸からの小さな出血を調べる検査です</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>健診や横浜市大腸がん検診で広く行われています</div>
+        <div class="point"><span class="dot"></span>目に見えない出血もとらえることができます</div>
+      </div>
+    `
+  },
+  {
+    id: "benketsu-series-4",
+    title: "便潜血特集 4/6（精密検査が必要なサイン）",
     category: "series",
     months: "all",
     duration: 10,
     theme: "bold",
     tone: "navy",
     render: () => `
-      ${seriesBadge("便潜血特集 3/3")}
+      ${seriesBadge("便潜血特集 4/6")}
       <div class="kicker">便潜血特集</div>
-      <div class="headline small"><em>大腸カメラ</em>で、原因を調べられます</div>
+      <div class="headline small">「陽性」は、精密検査が必要というサインです</div>
       <div class="point-list">
-        <div class="point"><span class="dot"></span>ポリープはその場で日帰り切除も</div>
-        <div class="point"><span class="dot"></span>横浜市大腸がん検診も実施しています</div>
+        <div class="point"><span class="dot"></span>「痔だろう」の自己判断は禁物です</div>
+        <div class="point"><span class="dot"></span>【放置すると】大腸がんやポリープが隠れていることがあります</div>
       </div>
-      <div class="dc-cta">精密検査はお早めに。血便の相談は毎日受付</div>
+    `
+  },
+  {
+    id: "benketsu-series-5",
+    title: "便潜血特集 5/6（精密検査は大腸カメラで）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    image: "images/colono.jpg",
+    tone: "navy",
+    render: () => `
+      ${seriesBadge("便潜血特集 5/6")}
+      <div class="kicker">便潜血特集</div>
+      <div class="headline small">精密検査は、大腸カメラで</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>出血の原因を直接確認できます</div>
+        <div class="point"><span class="dot"></span>ポリープが見つかれば、その場で日帰り切除も</div>
+      </div>
+    `
+  },
+  {
+    id: "benketsu-series-6",
+    title: "便潜血特集 6/6（陽性と言われたら）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    image: "photos/photo_naishikyo_room.jpg",
+    tone: "navy",
+    render: () => `
+      ${seriesBadge("便潜血特集 6/6")}
+      <div class="kicker">便潜血特集</div>
+      <div class="headline small">陽性と言われたら、お早めに</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>血便・下血のご相談は毎日受け付けています</div>
+      </div>
+      <div class="dc-cta">まずは事前外来へ。ご予約は受付・WEBで</div>
     `
   },
   {
     id: "onaka-series-1",
-    title: "おなかの不調特集 1/3（くり返す不調）",
+    title: "おなかの不調特集 1/6（くり返す不調）",
     category: "series",
     months: "all",
     duration: 10,
+    image: "images/ibs_stress.jpg",
     tone: "green",
     render: () => `
-      ${seriesBadge("おなかの不調特集 1/3")}
+      ${seriesBadge("おなかの不調特集 1/6")}
       <div class="kicker">おなかの不調特集</div>
       <div class="headline small">通勤中にお腹が痛くなる。会議の前に、下痢をする。</div>
       <div class="sub">くり返す便秘・下痢・お腹の張りや痛み</div>
@@ -1075,32 +1121,78 @@ const SLIDES = [
   },
   {
     id: "onaka-series-2",
-    title: "おなかの不調特集 2/3（IBSかもしれません）",
+    title: "おなかの不調特集 2/6（章扉：過敏性腸症候群（IBS）とは）",
+    category: "series",
+    months: "all",
+    duration: 5,
+    theme: "bold",
+    tone: "green",
+    centered: true,
+    render: () => chapterSlide("おなかの不調特集", "過敏性腸症候群（IBS）とは")
+  },
+  {
+    id: "onaka-series-3",
+    title: "おなかの不調特集 3/6（IBSとは）",
     category: "series",
     months: "all",
     duration: 10,
     tone: "green",
     render: () => `
-      ${seriesBadge("おなかの不調特集 2/3")}
+      ${seriesBadge("おなかの不調特集 3/6")}
       <div class="kicker">おなかの不調特集</div>
-      <div class="headline small">それ、過敏性腸症候群（IBS）かもしれません</div>
+      <div class="headline small">検査では異常がないのに、症状がくり返す状態です</div>
       <div class="point-list">
-        <div class="point"><span class="dot"></span>「体質だから」と我慢する必要はありません</div>
-        <div class="point"><span class="dot"></span><em>大腸カメラ</em>でほかの病気がないかの確認も大切です</div>
+        <div class="point"><span class="dot"></span>腸の動きや知覚が敏感になることで起こると考えられています</div>
+        <div class="point"><span class="dot"></span>ストレスや生活リズムと関わりがあるとされています</div>
       </div>
     `
   },
   {
-    id: "onaka-series-3",
-    title: "おなかの不調特集 3/3（IBS・FD専門外来）",
+    id: "onaka-series-4",
+    title: "おなかの不調特集 4/6（タイプはさまざま）",
     category: "series",
     months: "all",
     duration: 10,
     tone: "green",
     render: () => `
-      ${seriesBadge("おなかの不調特集 3/3")}
+      ${seriesBadge("おなかの不調特集 4/6")}
       <div class="kicker">おなかの不調特集</div>
-      <div class="headline small"><em>IBS・FD専門外来</em>があります</div>
+      <div class="headline small">タイプはさまざまです</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>下痢が続くタイプ</div>
+        <div class="point"><span class="dot"></span>便秘が続くタイプ</div>
+        <div class="point"><span class="dot"></span>下痢と便秘をくり返すタイプ</div>
+      </div>
+    `
+  },
+  {
+    id: "onaka-series-5",
+    title: "おなかの不調特集 5/6（ほかの病気の確認）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    image: "images/colono.jpg",
+    tone: "green",
+    render: () => `
+      ${seriesBadge("おなかの不調特集 5/6")}
+      <div class="kicker">おなかの不調特集</div>
+      <div class="headline small">大切なのは、ほかの病気がないかの確認です</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>大腸カメラで炎症やポリープなどがないかを調べられます</div>
+      </div>
+    `
+  },
+  {
+    id: "onaka-series-6",
+    title: "おなかの不調特集 6/6（IBS・FD専門外来）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    tone: "green",
+    render: () => `
+      ${seriesBadge("おなかの不調特集 6/6")}
+      <div class="kicker">おなかの不調特集</div>
+      <div class="headline small">IBS・FD専門外来があります</div>
       <div class="point-list">
         <div class="point"><span class="dot"></span>食事・生活の工夫とお薬で改善を目指します</div>
       </div>
@@ -1143,14 +1235,14 @@ const SLIDES = [
   },
   {
     id: "ji-series-1",
-    title: "痔のお悩み特集 1/3（座るとつらい）",
+    title: "痔のお悩み特集 1/6（座るとつらい）",
     category: "series",
     months: "all",
     duration: 10,
     image: "images/ji.jpg",
     tone: "green",
     render: () => `
-      ${seriesBadge("痔のお悩み特集 1/3")}
+      ${seriesBadge("痔のお悩み特集 1/6")}
       <div class="kicker">痔のお悩み特集</div>
       <div class="headline small">座るとつらい。拭くと血がつく。</div>
       <div class="sub">出血・痛み・かゆみ・脱出感</div>
@@ -1158,37 +1250,81 @@ const SLIDES = [
   },
   {
     id: "ji-series-2",
-    title: "痔のお悩み特集 2/3（別の病気のことも）",
+    title: "痔のお悩み特集 2/6（章扉：痔とは）",
     category: "series",
     months: "all",
-    duration: 10,
+    duration: 5,
+    theme: "bold",
     tone: "green",
-    render: () => `
-      ${seriesBadge("痔のお悩み特集 2/3")}
-      ${diseaseCard({
-        kicker: "痔のお悩み特集",
-        headline: "「痔だろう」と思っていたら、別の病気だったことも",
-        rows: [
-          { label: "放置すると", text: "血便の原因が痔とは限りません。<em>大腸カメラ</em>での確認が安心です", emphasis: true }
-        ]
-      })}
-    `
+    centered: true,
+    render: () => chapterSlide("痔のお悩み特集", "痔とは")
   },
   {
     id: "ji-series-3",
-    title: "痔のお悩み特集 3/3（肛門内科へ）",
+    title: "痔のお悩み特集 3/6（痔のタイプ）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    image: "images/ji_types.jpg",
+    tone: "green",
+    render: () => `
+      ${seriesBadge("痔のお悩み特集 3/6")}
+      <div class="kicker">痔のお悩み特集</div>
+      <div class="headline small">いぼ痔と切れ痔、タイプがあります</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>いぼ痔（痔核）: 肛門のまわりの血流のうっ滞などでできます</div>
+        <div class="point"><span class="dot"></span>切れ痔（裂肛）: 硬い便などで肛門が切れて起こります</div>
+      </div>
+    `
+  },
+  {
+    id: "ji-series-4",
+    title: "痔のお悩み特集 4/6（別の病気だったことも）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    theme: "bold",
+    tone: "green",
+    render: () => `
+      ${seriesBadge("痔のお悩み特集 4/6")}
+      <div class="kicker">痔のお悩み特集</div>
+      <div class="headline small">「痔だろう」と思っていたら、別の病気だったことも</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>【放置すると】血便の原因が痔とは限りません。大腸カメラでの確認が安心です</div>
+      </div>
+    `
+  },
+  {
+    id: "ji-series-5",
+    title: "痔のお悩み特集 5/6（お薬と生活習慣）",
     category: "series",
     months: "all",
     duration: 10,
     tone: "green",
     render: () => `
-      ${seriesBadge("痔のお悩み特集 3/3")}
+      ${seriesBadge("痔のお悩み特集 5/6")}
       <div class="kicker">痔のお悩み特集</div>
-      <div class="headline small">お薬による治療から対応します</div>
+      <div class="headline small">治療は、お薬と生活習慣の見直しから</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>便通を整えることも大切な治療のひとつです</div>
+      </div>
+    `
+  },
+  {
+    id: "ji-series-6",
+    title: "痔のお悩み特集 6/6（肛門内科へ）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    tone: "green",
+    render: () => `
+      ${seriesBadge("痔のお悩み特集 6/6")}
+      <div class="kicker">痔のお悩み特集</div>
+      <div class="headline small">恥ずかしがらずに、肛門内科へ</div>
       <div class="point-list">
         <div class="point"><span class="dot"></span>待合室のプライバシーにも配慮しています</div>
       </div>
-      <div class="dc-cta">恥ずかしがらずに、肛門内科へ</div>
+      <div class="dc-cta">診察は数分です。まずはご相談を</div>
     `
   },
   {
@@ -1239,14 +1375,14 @@ const SLIDES = [
   },
   {
     id: "seikatsu-series-1",
-    title: "生活習慣病特集 1/4（健診の数値チェック）",
+    title: "生活習慣病特集 1/8（健診の数値チェック）",
     category: "series",
     months: "all",
     duration: 10,
     theme: "bold",
     tone: "navy",
     render: () => `
-      ${seriesBadge("生活習慣病特集 1/4")}
+      ${seriesBadge("生活習慣病特集 1/8")}
       <div class="kicker">生活習慣病特集</div>
       <div class="headline small">健診の数値、見なかったことにしていませんか？</div>
       <div class="point-list">
@@ -1258,15 +1394,24 @@ const SLIDES = [
   },
   {
     id: "seikatsu-series-2",
-    title: "生活習慣病特集 2/4（サイレントキラー）",
+    title: "生活習慣病特集 2/8（章扉：生活習慣病とは）",
+    category: "series",
+    months: "all",
+    duration: 5,
+    theme: "bold",
+    tone: "navy",
+    centered: true,
+    render: () => chapterSlide("生活習慣病特集", "生活習慣病とは")
+  },
+  {
+    id: "seikatsu-series-3",
+    title: "生活習慣病特集 3/8（サイレントキラー）",
     category: "series",
     months: "all",
     duration: 10,
-    image: "images/seikatsu.jpg",
-    theme: "bold",
     tone: "navy",
     render: () => `
-      ${seriesBadge("生活習慣病特集 2/4")}
+      ${seriesBadge("生活習慣病特集 3/8")}
       <div class="kicker">生活習慣病特集</div>
       <div class="headline small">生活習慣病は「サイレントキラー」とも呼ばれます</div>
       <div class="point-list">
@@ -1275,39 +1420,88 @@ const SLIDES = [
     `
   },
   {
-    id: "seikatsu-series-3",
-    title: "生活習慣病特集 3/4（放置するとどうなる）",
+    id: "seikatsu-series-4",
+    title: "生活習慣病特集 4/8（血圧）",
     category: "series",
     months: "all",
     duration: 10,
-    theme: "bold",
+    image: "images/seikatsu.jpg",
     tone: "navy",
     render: () => `
-      ${seriesBadge("生活習慣病特集 3/4")}
-      ${diseaseCard({
-        kicker: "生活習慣病特集",
-        headline: "そのままにしておくと…",
-        rows: [
-          { label: "放置すると", text: "脳卒中・心筋梗塞・腎臓の病気などのリスクが高まるとされています", emphasis: true }
-        ]
-      })}
+      ${seriesBadge("生活習慣病特集 4/8")}
+      <div class="kicker">血圧</div>
+      <div class="headline small">健診で血圧を指摘された方へ</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>自覚症状がほとんどありません</div>
+        <div class="point"><span class="dot"></span>生活習慣の見直しと、必要に応じたお薬で管理します</div>
+      </div>
     `
   },
   {
-    id: "seikatsu-series-4",
-    title: "生活習慣病特集 4/4（数値は変えていける）",
+    id: "seikatsu-series-5",
+    title: "生活習慣病特集 5/8（血糖値）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    tone: "navy",
+    render: () => `
+      ${seriesBadge("生活習慣病特集 5/8")}
+      <div class="kicker">血糖値</div>
+      <div class="headline small">血糖値・HbA1cが気になる方へ</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>のどが渇く・疲れやすいなどのサインが出ることもあります</div>
+        <div class="point"><span class="dot"></span>早めの対策で合併症を防ぐことが大切です</div>
+      </div>
+    `
+  },
+  {
+    id: "seikatsu-series-6",
+    title: "生活習慣病特集 6/8（コレステロール）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    tone: "navy",
+    render: () => `
+      ${seriesBadge("生活習慣病特集 6/8")}
+      <div class="kicker">コレステロール</div>
+      <div class="headline small">コレステロール・中性脂肪が気になる方へ</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>血管の中で、静かに動脈硬化が進むことがあります</div>
+      </div>
+    `
+  },
+  {
+    id: "seikatsu-series-7",
+    title: "生活習慣病特集 7/8（そのままにしておくと）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    image: "images/seikatsu_kessen.jpg",
+    tone: "navy",
+    render: () => `
+      ${seriesBadge("生活習慣病特集 7/8")}
+      <div class="kicker">生活習慣病特集</div>
+      <div class="headline small">そのままにしておくと…</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>【放置すると】脳卒中・心筋梗塞・腎臓の病気などのリスクが高まるとされています</div>
+      </div>
+    `
+  },
+  {
+    id: "seikatsu-series-8",
+    title: "生活習慣病特集 8/8（数値は変えていける）",
     category: "series",
     months: "all",
     duration: 10,
     theme: "bold",
     tone: "navy",
     render: () => `
-      ${seriesBadge("生活習慣病特集 4/4")}
+      ${seriesBadge("生活習慣病特集 8/8")}
       <div class="kicker">生活習慣病特集</div>
       <div class="headline small">数値は、変えていけます</div>
       <div class="point-list">
         <div class="point"><span class="dot"></span>生活習慣の見直しと、必要に応じたお薬で管理します</div>
-        <div class="point"><span class="dot"></span><em>療養計画書</em>で治療目標を一緒に決めます</div>
+        <div class="point"><span class="dot"></span>療養計画書で治療目標を一緒に決めます</div>
       </div>
       <div class="dc-cta">生活習慣病外来で継続サポート</div>
     `
