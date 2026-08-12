@@ -379,7 +379,7 @@ const SLIDES = [
   },
   {
     id: "gastro-series-1",
-    title: "胃カメラ特集 1/5（こんな症状ありませんか）",
+    title: "胃カメラ特集 1/8（こんな症状ありませんか）",
     category: "series",
     months: "all",
     duration: 10,
@@ -387,7 +387,7 @@ const SLIDES = [
     poster: "posters/poster_gastro.jpg",
     posterTextSide: "right",
     render: () => `
-      ${seriesBadge("胃カメラ特集 1/5")}
+      ${seriesBadge("胃カメラ特集 1/8")}
       <div class="kicker">胃カメラ特集</div>
       <div class="headline small">こんな症状、ありませんか？</div>
       <div class="point-list">
@@ -400,45 +400,18 @@ const SLIDES = [
   },
   {
     id: "gastro-series-2",
-    title: "胃カメラ特集 2/5（症状の見分け方）",
+    title: "胃カメラ特集 2/8（章扉：胃カメラとは）",
     category: "series",
     months: "all",
-    duration: 10,
+    duration: 5,
     theme: "bold",
     tone: "green",
-    render: () => `
-      ${seriesBadge("胃カメラ特集 2/5")}
-      <div class="kicker">胃カメラ特集</div>
-      <div class="headline small">その症状、胃や食道からのサインかも</div>
-      <div class="point-list">
-        <div class="point"><span class="dot"></span>逆流性食道炎や機能性ディスペプシア（FD）などの可能性があります</div>
-        <div class="point"><span class="dot"></span>自覚症状だけでは区別がつきません</div>
-      </div>
-    `
+    centered: true,
+    render: () => chapterSlide("胃カメラ特集", "胃カメラとは")
   },
   {
     id: "gastro-series-3",
-    title: "胃カメラ特集 3/5（ピロリ菌）",
-    category: "series",
-    months: "all",
-    duration: 10,
-    theme: "bold",
-    tone: "green",
-    render: () => `
-      ${seriesBadge("胃カメラ特集 3/5")}
-      ${diseaseCard({
-        kicker: "胃カメラ特集",
-        headline: "ピロリ菌、調べたことはありますか？",
-        rows: [
-          { label: "放置すると", text: "胃潰瘍や胃がんのリスク要因とされています", emphasis: true },
-          { label: "当院でできること", text: "検査と、お薬による<em>除菌治療</em>" }
-        ]
-      })}
-    `
-  },
-  {
-    id: "gastro-series-4",
-    title: "胃カメラ特集 4/5（つらさに配慮した検査）",
+    title: "胃カメラ特集 3/8（胃カメラとは：直接確認する検査）",
     category: "series",
     months: "all",
     duration: 10,
@@ -446,32 +419,96 @@ const SLIDES = [
     theme: "bold",
     tone: "green",
     render: () => `
-      ${seriesBadge("胃カメラ特集 4/5")}
+      ${seriesBadge("胃カメラ特集 3/8")}
       <div class="kicker">胃カメラ特集</div>
-      <div class="headline small">つらさに配慮した<em>胃カメラ</em></div>
+      <div class="headline small">食道・胃・十二指腸を、直接確認する検査です</div>
       <div class="point-list">
-        <div class="point"><span class="dot"></span>経鼻・経口を選べます</div>
-        <div class="point"><span class="dot"></span>鎮静剤を使った検査に対応</div>
-        <div class="point"><span class="dot"></span>検査後はリカバリールームへ</div>
+        <div class="point"><span class="dot"></span>のど、または鼻からカメラを入れて粘膜を直接観察します</div>
+        <div class="point"><span class="dot"></span>逆流性食道炎・胃潰瘍・ピロリ菌感染などの発見につながります</div>
       </div>
     `
   },
   {
+    id: "gastro-series-4",
+    title: "胃カメラ特集 4/8（章扉：検査の目的）",
+    category: "series",
+    months: "all",
+    duration: 5,
+    theme: "bold",
+    tone: "green",
+    centered: true,
+    render: () => chapterSlide("胃カメラ特集", "検査の目的")
+  },
+  {
     id: "gastro-series-5",
-    title: "胃カメラ特集 5/5（当日検査もご相談を）",
+    title: "胃カメラ特集 5/8（調べる・見つける）",
     category: "series",
     months: "all",
     duration: 10,
     theme: "bold",
     tone: "green",
     render: () => `
-      ${seriesBadge("胃カメラ特集 5/5")}
+      ${seriesBadge("胃カメラ特集 5/8")}
+      ${diseaseCard({
+        kicker: "胃カメラ特集",
+        rows: [
+          { label: "調べる", text: "胸やけ・胃痛などの原因を確認します" },
+          { label: "見つける", text: "ピロリ菌は胃潰瘍や胃がんのリスク要因とされ、お薬による除菌治療につなげられます" }
+        ]
+      })}
+      <div class="sub">健診のバリウム検査で異常を指摘された方の精密検査としても行われます</div>
+    `
+  },
+  {
+    id: "gastro-series-6",
+    title: "胃カメラ特集 6/8（検査の流れ：ステップ①〜③）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    theme: "bold",
+    tone: "green",
+    render: () => `
+      ${seriesBadge("胃カメラ特集 6/8")}
+      ${diseaseCard({
+        kicker: "検査の流れ",
+        rows: [
+          { step: 1, text: "検査前の飲食はお控えいただきます（ご予約時に詳しくご案内します）" },
+          { step: 2, text: "経鼻・経口、鎮静剤の使用をお選びいただけます" },
+          { step: 3, text: "観察後はリカバリールームで休憩し、結果のご説明を聞いてご帰宅です" }
+        ]
+      })}
+    `
+  },
+  {
+    id: "gastro-series-7",
+    title: "胃カメラ特集 7/8（検査の注意点）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    theme: "bold",
+    tone: "green",
+    render: () => `
+      ${seriesBadge("胃カメラ特集 7/8")}
+      <div class="kicker">検査の注意点</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>鎮静剤を使用した場合、当日はお車の運転はできません</div>
+        <div class="point"><span class="dot"></span>組織検査を行った場合、結果のご説明まで少しお時間をいただきます</div>
+      </div>
+    `
+  },
+  {
+    id: "gastro-series-8",
+    title: "胃カメラ特集 8/8（思い立った日が検査日和・CTA）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    theme: "bold",
+    tone: "green",
+    render: () => `
+      ${seriesBadge("胃カメラ特集 8/8")}
       <div class="kicker">胃カメラ特集</div>
       <div class="headline small">思い立った日が、検査日和</div>
-      <div class="point-list">
-        <div class="point"><span class="dot"></span>当日検査のご相談もできます</div>
-        <div class="point"><span class="dot"></span>土曜午後も内視鏡検査を行っています</div>
-      </div>
+      <div class="sub">当日検査のご相談もできます。土曜午後も内視鏡検査を行っています</div>
       <div class="dc-cta">専門医＋AI支援の内視鏡。ご予約は受付・WEBで</div>
     `
   },
@@ -511,7 +548,7 @@ const SLIDES = [
   },
   {
     id: "colono-series-1",
-    title: "大腸カメラ特集 1/5（こんなサインありませんか）",
+    title: "大腸カメラ特集 1/10（こんなサインありませんか）",
     category: "series",
     months: "all",
     duration: 10,
@@ -519,7 +556,7 @@ const SLIDES = [
     poster: "posters/poster_colono.jpg",
     posterTextSide: "left",
     render: () => `
-      ${seriesBadge("大腸カメラ特集 1/5")}
+      ${seriesBadge("大腸カメラ特集 1/10")}
       <div class="kicker">大腸カメラ特集</div>
       <div class="headline small">こんなサイン、ありませんか？</div>
       <div class="point-list">
@@ -528,50 +565,23 @@ const SLIDES = [
         <div class="point"><span class="dot"></span>残便感がある</div>
         <div class="point"><span class="dot"></span>便秘や下痢をくり返す</div>
       </div>
-      <div class="dc-cta">ひとつでも当てはまる方は、この後の3枚を</div>
+      <div class="dc-cta">ひとつでも当てはまる方は、この続きをご覧ください</div>
     `
   },
   {
     id: "colono-series-2",
-    title: "大腸カメラ特集 2/5（大腸がんについて）",
+    title: "大腸カメラ特集 2/10（章扉：大腸カメラとは）",
     category: "series",
     months: "all",
-    duration: 10,
+    duration: 5,
     theme: "bold",
     tone: "green",
-    render: () => `
-      ${seriesBadge("大腸カメラ特集 2/5")}
-      <div class="kicker">大腸カメラ特集</div>
-      <div class="headline small">大腸がんは、日本人に多いがんです</div>
-      <div class="point-list">
-        <div class="point"><span class="dot"></span>早期にはほとんど自覚症状がありません</div>
-        <div class="point"><span class="dot"></span>だからこそ検査での早期発見が大切です</div>
-      </div>
-    `
+    centered: true,
+    render: () => chapterSlide("大腸カメラ特集", "大腸カメラとは")
   },
   {
     id: "colono-series-3",
-    title: "大腸カメラ特集 3/5（放置するとどうなる）",
-    category: "series",
-    months: "all",
-    duration: 10,
-    theme: "bold",
-    tone: "green",
-    render: () => `
-      ${seriesBadge("大腸カメラ特集 3/5")}
-      ${diseaseCard({
-        kicker: "大腸カメラ特集",
-        headline: "「様子見」の間に、進行することも",
-        rows: [
-          { label: "放置すると", text: "ポリープの一部は、大きくなるとがん化することがあります", emphasis: true },
-          { label: "放置すると", text: "便潜血陽性のままにすると、発見が遅れることがあります", emphasis: true }
-        ]
-      })}
-    `
-  },
-  {
-    id: "colono-series-4",
-    title: "大腸カメラ特集 4/5（当院の大腸カメラ）",
+    title: "大腸カメラ特集 3/10（大腸カメラとは：直接確認する検査）",
     category: "series",
     months: "all",
     duration: 10,
@@ -579,34 +589,130 @@ const SLIDES = [
     theme: "bold",
     tone: "green",
     render: () => `
-      ${seriesBadge("大腸カメラ特集 4/5")}
+      ${seriesBadge("大腸カメラ特集 3/10")}
       <div class="kicker">大腸カメラ特集</div>
-      <div class="headline small">当院の<em>大腸カメラ</em></div>
+      <div class="headline small">大腸の中を、直接確認する検査です</div>
       <div class="point-list">
-        <div class="point"><span class="dot"></span>①事前外来 → ②検査日、の2ステップ</div>
-        <div class="point"><span class="dot"></span>下剤は自宅・院内から選べます</div>
-        <div class="point"><span class="dot"></span>鎮静剤・AI内視鏡診断支援に対応</div>
+        <div class="point"><span class="dot"></span>カメラのついた細い管で、大腸の粘膜を直接観察します</div>
+        <div class="point"><span class="dot"></span>大腸がんは日本人に多いがん。早期はほとんど自覚症状がありません</div>
       </div>
     `
   },
   {
+    id: "colono-series-4",
+    title: "大腸カメラ特集 4/10（章扉：検査の目的）",
+    category: "series",
+    months: "all",
+    duration: 5,
+    theme: "bold",
+    tone: "green",
+    centered: true,
+    render: () => chapterSlide("大腸カメラ特集", "検査の目的")
+  },
+  {
     id: "colono-series-5",
-    title: "大腸カメラ特集 5/5（その場で切除）",
+    title: "大腸カメラ特集 5/10（調べる・見つける・治す）",
     category: "series",
     months: "all",
     duration: 10,
     theme: "bold",
     tone: "green",
     render: () => `
-      ${seriesBadge("大腸カメラ特集 5/5")}
-      <div class="kicker">大腸カメラ特集</div>
-      <div class="headline small">ポリープが見つかったら、その場で切除</div>
+      ${seriesBadge("大腸カメラ特集 5/10")}
+      ${diseaseCard({
+        kicker: "大腸カメラ特集",
+        headline: "調べる・見つける・その場で治す",
+        rows: [
+          { label: "調べる", text: "大腸に病変がないかを確認します" },
+          { label: "見つける", text: "必要に応じて組織を採取し、詳しく調べます" },
+          { label: "治す", text: "小さなポリープは、その場で日帰り切除できます" }
+        ]
+      })}
+      <div class="sub">便潜血陽性の精密検査としても行われます</div>
+    `
+  },
+  {
+    id: "colono-series-6",
+    title: "大腸カメラ特集 6/10（章扉：検査の流れ）",
+    category: "series",
+    months: "all",
+    duration: 5,
+    theme: "bold",
+    tone: "green",
+    centered: true,
+    render: () => chapterSlide("大腸カメラ特集", "検査の流れ")
+  },
+  {
+    id: "colono-series-7",
+    title: "大腸カメラ特集 7/10（検査の流れ：ステップ①②）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    theme: "bold",
+    tone: "green",
+    render: () => `
+      ${seriesBadge("大腸カメラ特集 7/10")}
+      ${diseaseCard({
+        kicker: "大腸カメラ特集",
+        rows: [
+          { step: 1, text: "事前外来で、症状やお薬を確認し検査のご説明をします" },
+          { step: 2, text: "検査当日、腸管洗浄液で大腸をきれいにします（ご自宅・院内から選べます）" }
+        ]
+      })}
+    `
+  },
+  {
+    id: "colono-series-8",
+    title: "大腸カメラ特集 8/10（検査の流れ：ステップ③④⑤）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    theme: "bold",
+    tone: "green",
+    render: () => `
+      ${seriesBadge("大腸カメラ特集 8/10")}
+      ${diseaseCard({
+        kicker: "大腸カメラ特集",
+        rows: [
+          { step: 3, text: "ご希望に応じて、鎮静剤を使ってうとうとしている間に検査します" },
+          { step: 4, text: "ポリープが見つかれば、その場で切除します" },
+          { step: 5, text: "リカバリールームで休憩し、結果のご説明を聞いてご帰宅です" }
+        ]
+      })}
+    `
+  },
+  {
+    id: "colono-series-9",
+    title: "大腸カメラ特集 9/10（検査の注意点）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    theme: "bold",
+    tone: "green",
+    render: () => `
+      ${seriesBadge("大腸カメラ特集 9/10")}
+      <div class="kicker">検査の注意点</div>
       <div class="point-list">
-        <div class="point"><span class="dot"></span>日帰りポリープ切除に対応しています</div>
-        <div class="point"><span class="dot"></span>検査後はリカバリールームでお休みいただけます</div>
-        <div class="point"><span class="dot"></span>血便・下血のご相談は毎日受付</div>
+        <div class="point"><span class="dot"></span>検査前は食事の注意があります（事前外来で詳しくご案内します）</div>
+        <div class="point"><span class="dot"></span>検査後、お腹の張りを感じることがありますが、しばらくすると落ち着きます</div>
+        <div class="point"><span class="dot"></span>鎮静剤を使用した場合、当日はお車の運転はできません</div>
       </div>
-      <div class="dc-cta">まずは事前外来へ。ご予約は受付・WEBで</div>
+    `
+  },
+  {
+    id: "colono-series-10",
+    title: "大腸カメラ特集 10/10（早期発見・CTA）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    theme: "bold",
+    tone: "green",
+    render: () => `
+      ${seriesBadge("大腸カメラ特集 10/10")}
+      <div class="kicker">大腸カメラ特集</div>
+      <div class="headline small">大腸カメラは、大腸がんの早期発見に役立ちます</div>
+      <div class="sub">血便がある方・便潜血陽性の方・35歳を過ぎた方は、一度ご相談ください</div>
+      <div class="dc-cta">当院で行っています。ご予約は受付・WEBで</div>
     `
   },
   {

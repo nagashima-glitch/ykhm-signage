@@ -232,6 +232,55 @@
     letter-spacing:0.02em;
   }
 
+  /* ---------- 番号ステップ行（v18: diseaseCardのrowsに{step,text}を渡すと丸数字バッジになる） ---------- */
+  .dc-step{
+    flex:none; margin-top:0.1em;
+    width:calc(4.6vh * var(--fit)); height:calc(4.6vh * var(--fit)); border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    background:var(--accent2); color:#fff;
+    font-size:calc(2.3vh * var(--fit)); font-weight:900;
+    font-variant-numeric:tabular-nums;
+  }
+  /* bold/poster（濃色背景）ではaccent2が淡色のため、dc-tag--filledと同じ考え方で白丸＋tone-dark文字に切り替える */
+  .slide.theme-bold .dc-step, .slide.has-poster .dc-step{
+    background:#fff; color:var(--tone-dark, #333);
+  }
+
+  /* ---------- ビルドアップアニメ（v18: スライドがactiveになったら .dc-row／.point が0.4秒間隔で順にフェードイン） ---------- */
+  .disease-card .dc-row,
+  .point-list .point{
+    opacity:0; transform:translateY(1.2vh);
+    transition:opacity 0.5s ease, transform 0.5s ease;
+  }
+  .slide.active .disease-card .dc-row,
+  .slide.active .point-list .point{
+    opacity:1; transform:translateY(0);
+  }
+  .slide.active .disease-card .dc-row:nth-child(1), .slide.active .point-list .point:nth-child(1){ transition-delay:0.05s; }
+  .slide.active .disease-card .dc-row:nth-child(2), .slide.active .point-list .point:nth-child(2){ transition-delay:0.45s; }
+  .slide.active .disease-card .dc-row:nth-child(3), .slide.active .point-list .point:nth-child(3){ transition-delay:0.85s; }
+  .slide.active .disease-card .dc-row:nth-child(4), .slide.active .point-list .point:nth-child(4){ transition-delay:1.25s; }
+  .slide.active .disease-card .dc-row:nth-child(5), .slide.active .point-list .point:nth-child(5){ transition-delay:1.65s; }
+  .slide.active .disease-card .dc-row:nth-child(6), .slide.active .point-list .point:nth-child(6){ transition-delay:2.05s; }
+  @media (prefers-reduced-motion: reduce){
+    .disease-card .dc-row, .point-list .point{ opacity:1 !important; transform:none !important; transition:none !important; }
+  }
+
+  /* ---------- 章扉スライド（v18: chapterSlide()ヘルパー。「◯◯とは／検査の目的／検査の流れ」等の見出しだけの5秒画面） ---------- */
+  .chapter-wrap{
+    width:100%; display:flex; flex-direction:column; align-items:center; text-align:center;
+  }
+  .chapter-wrap .kicker{ justify-content:center; }
+  .chapter-title{
+    font-size:calc(12vh * var(--fit));
+    position:relative; display:inline-block;
+    padding-bottom:calc(2.2vh * var(--fit));
+  }
+  .chapter-title::after{
+    content:""; position:absolute; left:50%; bottom:0; transform:translateX(-50%);
+    width:7vh; height:0.6vh; border-radius:999px; background:var(--accent);
+  }
+
   /* ---------- 診療時間表 ---------- */
   .hours-wrap{ width:100%; max-width:88vw; }
   table.hours-table{
@@ -768,21 +817,40 @@ function seriesBadge(label){
   return `<div class="series-badge"><span class="series-ghost">${num}</span><span class="series-label">${label}</span></div>`;
 }
 
-// ---------- 疾患解説カード（v15: 3段構成 → v16: 行数可変・強調タグ対応 → v17: cta省略可） ----------
-// o = { kicker, headline, rows:[{label,text,emphasis?}, ...], cta? }
+// ---------- 疾患解説カード（v15: 3段構成 → v16: 行数可変・強調タグ対応 → v17: cta省略可 → v18: headline省略可・番号ステップ行対応） ----------
+// o = { kicker, headline?, rows:[{label,text,emphasis?} または {step,text}, ...], cta? }
 // rows は3〜4行など可変。emphasis:true の行だけタグを塗り（.dc-tag--filled）にしてメリハリを付ける。
+// rows の各行に label の代わりに step（数値）を渡すと、タグの代わりに丸数字バッジ（.dc-step）になる
+// （「検査の流れ」のようなステップ紹介スライドで使う。①②③...は step:1,2,3 のように渡す）。
+// headline は省略可（キーを渡さなければ見出しなしで、kicker＋rowsだけのスライドになる）。
 // cta は省略可（シリーズ物の中間スライドなど、結びの1行が不要なときはキーを渡さなければ表示されない）。
 // 画像つきスライド（image/imageReverse）はこの戻り値がそのまま .img-text-col の中身になる。
 function diseaseCard(o){
-  const rows = o.rows.map(r => `
-    <div class="dc-row"><span class="dc-tag${r.emphasis ? " dc-tag--filled" : ""}">${r.label}</span><div class="dc-text">${r.text}</div></div>
-  `).join("");
+  const rows = o.rows.map(r => {
+    if (r.step !== undefined){
+      return `<div class="dc-row"><span class="dc-step">${r.step}</span><div class="dc-text">${r.text}</div></div>`;
+    }
+    return `<div class="dc-row"><span class="dc-tag${r.emphasis ? " dc-tag--filled" : ""}">${r.label}</span><div class="dc-text">${r.text}</div></div>`;
+  }).join("");
+  const headlineHtml = o.headline ? `<div class="headline small">${o.headline}</div>` : "";
   const ctaHtml = o.cta ? `<div class="dc-cta">${o.cta}</div>` : "";
   return `
     <div class="kicker">${o.kicker}</div>
-    <div class="headline small">${o.headline}</div>
+    ${headlineHtml}
     <div class="disease-card">${rows}</div>
     ${ctaHtml}
+  `;
+}
+
+// ---------- 章扉スライド（v18: 「◯◯とは／検査の目的／検査の流れ」等、見出しだけを見せる区切り画面） ----------
+// seriesLabel は画面左上と同じ位置に出す小さなラベル（kickerと同じ役割）、title が中央に特大表示される章タイトル。
+// ghost数字（seriesBadge）は使わない。呼び出し側のスライド定義では duration:5・theme:"bold"・tone・centered:true を指定すること。
+function chapterSlide(seriesLabel, title){
+  return `
+    <div class="chapter-wrap">
+      <div class="kicker">${seriesLabel}</div>
+      <div class="headline chapter-title">${title}</div>
+    </div>
   `;
 }
 
@@ -875,6 +943,8 @@ function applyAutoFit(el, colSelector){
 
 // v14: 診療時間表・内視鏡実績・WEB予約QRのみ中央揃えレイアウトを維持する
 const CENTERED_IDS = ["hours", "hours-gyn", "endoscopy-count", "web-yoyaku"];
+// v18: 上記の固定id一覧に加え、スライド定義側で centered:true を指定したもの（章扉スライド等）も中央揃えにする
+function isCentered(s){ return CENTERED_IDS.includes(s.id) || s.centered === true; }
 
 activeSlides.forEach((s, i) => {
   const el = document.createElement("div");
@@ -884,7 +954,7 @@ activeSlides.forEach((s, i) => {
   if (s.poster) el.classList.add("has-poster");
   if (s.tone) el.classList.add("tone-" + s.tone);
   if (s.theme === "bold") el.classList.add("theme-bold");
-  if (CENTERED_IDS.includes(s.id)) el.classList.add("slide-centered");
+  if (isCentered(s)) el.classList.add("slide-centered");
   try {
     el.innerHTML = buildSlideHTML(s);
   } catch (e){
@@ -892,7 +962,7 @@ activeSlides.forEach((s, i) => {
     el.innerHTML = `<div class="headline small">${CLINIC.name}</div>`;
   }
   // v14: 画面右端の縦書きセクションラベル（画像・ポスター・中央維持系は除く。kicker文言を流用）
-  if (!s.image && !s.poster && !CENTERED_IDS.includes(s.id)){
+  if (!s.image && !s.poster && !isCentered(s)){
     const kickerEl = el.querySelector(".kicker");
     if (kickerEl && kickerEl.textContent){
       const label = document.createElement("div");
