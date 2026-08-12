@@ -256,11 +256,11 @@ const SLIDES = [
       ${seriesBadge("更年期特集 2/2")}
       ${diseaseCard({
         kicker: "更年期の症状について",
-        headline: "お一人で抱え込まないでください",
+        headline: "その不調、我慢し続けなくていいんです",
         rows: [
-          { label: "症状", text: "症状の感じ方は人それぞれです" },
-          { label: "検査", text: "問診やホルモンの状態の確認など" },
-          { label: "治療", text: "お薬や<em>漢方薬</em>など選択肢があります" }
+          { label: "こんな症状", text: "ほてり・不眠・イライラなど、感じ方は人それぞれ" },
+          { label: "我慢すると", text: "日々のつらさが続き、生活の質を下げてしまいます", emphasis: true },
+          { label: "当院でできること", text: "問診やホルモン状態の確認、お薬や<em>漢方薬</em>などの選択肢があります" }
         ],
         cta: "女性医師がお話を伺います"
       })}
@@ -480,14 +480,16 @@ const SLIDES = [
     months: "all",
     duration: 12,
     image: "images/colono.jpg",
-    render: () => `
-      <div class="kicker">内視鏡検査</div>
-      <div class="headline small"><em>日帰り</em>大腸ポリープ切除</div>
-      <div class="point-list">
-        <div class="point"><span class="dot"></span>大腸カメラ検査中にポリープが見つかった場合、その場での切除に対応しています（日帰り）</div>
-        <div class="point"><span class="dot"></span>後日あらためて手術、といった負担を減らせます</div>
-      </div>
-    `
+    render: () => diseaseCard({
+      kicker: "内視鏡検査",
+      headline: "大腸ポリープ、見つけたらその場で切除",
+      rows: [
+        { label: "こんな症状", text: "多くは自覚症状がありません" },
+        { label: "放置すると", text: "ポリープの一部は、大きくなると<em>がん化</em>することがあります", emphasis: true },
+        { label: "当院でできること", text: "大腸カメラ検査中に見つかれば、日帰りでその場で切除できます" }
+      ],
+      cta: "検査で「見つけて、その場で治す」ができます"
+    })
   },
   {
     id: "tokushu-colono-1",
@@ -562,13 +564,13 @@ const SLIDES = [
     duration: 12,
     render: () => diseaseCard({
       kicker: "健診で便潜血陽性だった方へ",
-      headline: "便潜血陽性・血便について",
+      headline: "便潜血「陽性」、そのままにしていませんか？",
       rows: [
-        { label: "症状", text: "便に血が混じる・健診で便潜血陽性" },
-        { label: "検査", text: "<em>大腸カメラ</em>で出血の原因を調べます" },
-        { label: "治療", text: "原因に応じて対応します（ポリープはその場で日帰り切除も）" }
+        { label: "健診で", text: "便潜血陽性・便に血が混じる" },
+        { label: "放置すると", text: "<em>大腸がん</em>やポリープが隠れていることがあります", emphasis: true },
+        { label: "当院でできること", text: "大腸カメラで原因を調べ、ポリープはその場で日帰り切除も" }
       ],
-      cta: "血便・下血のご相談は毎日受付"
+      cta: "精密検査はお早めに。血便の相談は毎日受付"
     })
   },
   {
@@ -579,13 +581,13 @@ const SLIDES = [
     duration: 11,
     render: () => diseaseCard({
       kicker: "胸やけ・げっぷにお悩みの方へ",
-      headline: "胸やけ・げっぷが続く方へ",
+      headline: "その胸やけ、続いていませんか？",
       rows: [
-        { label: "症状", text: "胸やけ・げっぷ・酸っぱいものが上がる・のどの違和感" },
-        { label: "検査", text: "<em>胃カメラ</em>で食道や胃の状態を確認できます" },
-        { label: "治療", text: "お薬による治療や生活習慣の工夫があります" }
+        { label: "こんな症状", text: "胸やけ・げっぷ・酸っぱいものが上がる・のどの違和感" },
+        { label: "放置すると", text: "食道の炎症が続き、悪化することがあります", emphasis: true },
+        { label: "当院でできること", text: "<em>胃カメラ</em>で確認し、お薬や生活習慣の工夫で治療します" }
       ],
-      cta: "つらい症状が続く方は消化器内科へ"
+      cta: "つらい症状は我慢せず、消化器内科へ"
     })
   },
   {
@@ -596,13 +598,13 @@ const SLIDES = [
     duration: 11,
     render: () => diseaseCard({
       kicker: "胃の不調にお悩みの方へ",
-      headline: "胃の痛み・胃もたれが続く方へ",
+      headline: "胃の不調、「いつものこと」にしていませんか？",
       rows: [
-        { label: "症状", text: "胃の痛み・胃もたれ・すぐお腹いっぱいになる" },
-        { label: "検査", text: "<em>胃カメラ</em>でほかの病気がないかを確認します" },
-        { label: "治療", text: "お薬や生活習慣の見直しで改善を目指します（IBS・FD専門外来あり）" }
+        { label: "こんな症状", text: "胃の痛み・胃もたれ・すぐお腹いっぱいになる" },
+        { label: "放置すると", text: "別の病気が隠れていることもあり、自己判断は禁物です", emphasis: true },
+        { label: "当院でできること", text: "<em>胃カメラ</em>で確認し、お薬や生活改善で治療します（IBS・FD専門外来）" }
       ],
-      cta: "気になる症状は消化器内科でご相談を"
+      cta: "長引く胃の不調はご相談ください"
     })
   },
   {
@@ -613,13 +615,13 @@ const SLIDES = [
     duration: 11,
     render: () => diseaseCard({
       kicker: "胃の健康チェック",
-      headline: "ピロリ菌検査・除菌治療のご案内",
+      headline: "ピロリ菌、調べたことはありますか？",
       rows: [
-        { label: "症状", text: "自覚症状がないことも多い菌です" },
-        { label: "検査", text: "検査で感染の有無を調べられます" },
-        { label: "治療", text: "お薬による<em>除菌治療</em>があります" }
+        { label: "こんな症状", text: "自覚症状がないまま胃炎が進むことがあります" },
+        { label: "放置すると", text: "胃潰瘍や<em>胃がんのリスク要因</em>とされています", emphasis: true },
+        { label: "当院でできること", text: "検査で感染を確認し、お薬で除菌治療ができます" }
       ],
-      cta: "胃の健康が気になる方はご相談を"
+      cta: "一度も調べたことがない方はぜひご相談を"
     })
   },
   {
@@ -630,13 +632,13 @@ const SLIDES = [
     duration: 11,
     render: () => diseaseCard({
       kicker: "お腹の不調にお悩みの方へ",
-      headline: "便秘・下痢が続く方へ",
+      headline: "くり返す便秘・下痢に悩んでいませんか？",
       rows: [
-        { label: "症状", text: "くり返す便秘・下痢・お腹の張りや痛み" },
-        { label: "検査", text: "<em>大腸カメラ</em>でほかの病気がないかを確認します" },
-        { label: "治療", text: "食事・生活の工夫やお薬による治療があります（専門外来あり）" }
+        { label: "こんな症状", text: "便秘と下痢をくり返す・お腹の張りや痛み" },
+        { label: "放置すると", text: "通勤や外出がつらくなるなど、生活の質を下げてしまいます", emphasis: true },
+        { label: "当院でできること", text: "<em>大腸カメラ</em>で他の病気を除外し、食事・生活の工夫とお薬で治療します" }
       ],
-      cta: "お一人で抱え込まずにご相談ください"
+      cta: "IBS専門外来でご相談ください"
     })
   },
   {
@@ -676,13 +678,13 @@ const SLIDES = [
     duration: 11,
     render: () => diseaseCard({
       kicker: "健診で貧血を指摘された方へ",
-      headline: "だるさ・立ちくらみが続く方へ",
+      headline: "健診の「貧血」、そのままにしていませんか？",
       rows: [
-        { label: "症状", text: "だるさ・立ちくらみ・息切れ" },
-        { label: "検査", text: "血液検査に加え、<em>胃カメラ・大腸カメラ</em>で出血源を確認することも" },
-        { label: "治療", text: "原因に応じた治療を行います" }
+        { label: "健診で", text: "貧血の指摘・だるさ・立ちくらみ・息切れ" },
+        { label: "放置すると", text: "胃や大腸からの出血が隠れていることがあります", emphasis: true },
+        { label: "当院でできること", text: "血液検査に加え、<em>内視鏡</em>で出血源を確認し原因から治療します" }
       ],
-      cta: "健診で指摘された方はご相談を"
+      cta: "指摘を受けた方は一度ご相談を"
     })
   },
   {
@@ -694,11 +696,11 @@ const SLIDES = [
     image: "images/ji.jpg",
     render: () => diseaseCard({
       kicker: "痔のお悩み",
-      headline: "いぼ痔・切れ痔でお悩みの方へ",
+      headline: "おしりの悩み、我慢していませんか？",
       rows: [
-        { label: "症状", text: "出血・痛み・かゆみ・脱出感" },
-        { label: "検査", text: "診察のほか、血便は<em>大腸カメラ</em>での確認も" },
-        { label: "治療", text: "お薬による治療から対応します" }
+        { label: "こんな症状", text: "出血・痛み・かゆみ・脱出感" },
+        { label: "放置すると", text: "悪化して治療が大変になるほか、大腸の病気が隠れていることも", emphasis: true },
+        { label: "当院でできること", text: "診察とお薬による治療から。血便は<em>大腸カメラ</em>で確認します" }
       ],
       cta: "恥ずかしがらずに肛門内科へ"
     })
@@ -758,13 +760,13 @@ const SLIDES = [
     image: "images/seikatsu.jpg",
     render: () => diseaseCard({
       kicker: "健診で指摘された方へ",
-      headline: "血圧が気になる方へ",
+      headline: "健診の「血圧高め」、そのままにしていませんか？",
       rows: [
-        { label: "症状", text: "自覚症状がほとんどありません" },
-        { label: "検査", text: "健診・<em>血液検査</em>で状態を確認します" },
-        { label: "治療", text: "生活習慣の見直しと、必要に応じたお薬で管理します" }
+        { label: "健診で", text: "血圧の指摘。自覚症状はほとんどありません" },
+        { label: "放置すると", text: "<em>脳卒中</em>や心臓病のリスクが高まるとされています", emphasis: true },
+        { label: "当院でできること", text: "生活習慣の見直しと、必要に応じたお薬で管理します" }
       ],
-      cta: "生活習慣病外来で継続的にサポートいたします"
+      cta: "生活習慣病外来で一緒に管理していきましょう"
     })
   },
   {
@@ -777,13 +779,13 @@ const SLIDES = [
     imageReverse: true,
     render: () => diseaseCard({
       kicker: "健診で指摘された方へ",
-      headline: "血糖値・HbA1cが気になる方へ",
+      headline: "血糖値・HbA1c、指摘されていませんか？",
       rows: [
-        { label: "症状", text: "自覚症状がほとんどありません" },
-        { label: "検査", text: "健診・<em>血液検査</em>で状態を確認します" },
-        { label: "治療", text: "生活習慣の見直しと、必要に応じたお薬で管理します" }
+        { label: "健診で", text: "血糖値・HbA1cの指摘。自覚症状はほとんどありません" },
+        { label: "放置すると", text: "腎臓・目・神経などの<em>合併症</em>につながることがあります", emphasis: true },
+        { label: "当院でできること", text: "生活習慣の見直しと、必要に応じたお薬で管理します" }
       ],
-      cta: "気になる方は生活習慣病外来へ"
+      cta: "早めの対策が肝心です。生活習慣病外来へ"
     })
   },
   {
@@ -795,13 +797,13 @@ const SLIDES = [
     image: "images/seikatsu.jpg",
     render: () => diseaseCard({
       kicker: "健診で指摘された方へ",
-      headline: "コレステロール・中性脂肪が気になる方へ",
+      headline: "コレステロール、指摘されていませんか？",
       rows: [
-        { label: "症状", text: "自覚症状がほとんどありません" },
-        { label: "検査", text: "健診・<em>血液検査</em>で状態を確認します" },
-        { label: "治療", text: "生活習慣の見直しと、必要に応じたお薬で管理します" }
+        { label: "健診で", text: "コレステロール・中性脂肪の指摘。自覚症状はほとんどありません" },
+        { label: "放置すると", text: "<em>動脈硬化</em>が進み、心筋梗塞などにつながることがあります", emphasis: true },
+        { label: "当院でできること", text: "生活習慣の見直しと、必要に応じたお薬で管理します" }
       ],
-      cta: "生活習慣病外来で経過を見ていきます"
+      cta: "数値が気になったら生活習慣病外来へ"
     })
   },
   {

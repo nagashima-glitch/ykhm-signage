@@ -198,7 +198,7 @@
     margin-top:calc(3vh * var(--fit)); font-size:calc(3.2vh * var(--fit)); color:var(--accent); font-weight:700; letter-spacing:0.08em;
   }
 
-  /* ---------- 疾患解説カード（v15: 症状→検査→治療→CTAの3段構成） ---------- */
+  /* ---------- 疾患解説カード（v15: 症状→検査→治療→CTA。v16: 行数可変・強調タグ対応） ---------- */
   .disease-card{
     margin-top:calc(3.2vh * var(--fit));
     display:flex; flex-direction:column; gap:calc(2vh * var(--fit));
@@ -212,6 +212,15 @@
     font-size:calc(1.9vh * var(--fit)); font-weight:700; letter-spacing:0.06em;
     color:var(--accent2); border:1px solid var(--accent2); border-radius:0;
     padding:calc(0.4vh * var(--fit)) calc(0.3vw * var(--fit));
+  }
+  /* v16: 「放置すると」等の1行だけ塗り＝アクセント色地に白抜きでメリハリを付ける（赤・警告色は使わない） */
+  .dc-tag--filled{
+    background:var(--accent2); color:#fff; border-color:var(--accent2);
+  }
+  /* bold/poster（濃色背景）ではaccent2が淡色のため白文字だとコントラスト不足になる。
+     既存のem強調と同じ考え方（白地＋tone-dark文字）に切り替えてコントラストを確保する。 */
+  .slide.theme-bold .dc-tag--filled, .slide.has-poster .dc-tag--filled{
+    background:#fff; color:var(--tone-dark, #333); border-color:#fff;
   }
   .dc-text{
     font-size:calc(3.6vh * var(--fit)); color:var(--text); font-weight:500; line-height:1.5;
@@ -759,12 +768,13 @@ function seriesBadge(label){
   return `<div class="series-badge"><span class="series-ghost">${num}</span><span class="series-label">${label}</span></div>`;
 }
 
-// ---------- 疾患解説カード（v15: 症状→検査→治療→CTAの3段構成） ----------
-// o = { kicker, headline, rows:[{label,text}, ...], cta }
+// ---------- 疾患解説カード（v15: 3段構成 → v16: 行数可変・強調タグ対応） ----------
+// o = { kicker, headline, rows:[{label,text,emphasis?}, ...], cta }
+// rows は3〜4行など可変。emphasis:true の行だけタグを塗り（.dc-tag--filled）にしてメリハリを付ける。
 // 画像つきスライド（image/imageReverse）はこの戻り値がそのまま .img-text-col の中身になる。
 function diseaseCard(o){
   const rows = o.rows.map(r => `
-    <div class="dc-row"><span class="dc-tag">${r.label}</span><div class="dc-text">${r.text}</div></div>
+    <div class="dc-row"><span class="dc-tag${r.emphasis ? " dc-tag--filled" : ""}">${r.label}</span><div class="dc-text">${r.text}</div></div>
   `).join("");
   return `
     <div class="kicker">${o.kicker}</div>
