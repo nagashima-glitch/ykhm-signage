@@ -768,19 +768,21 @@ function seriesBadge(label){
   return `<div class="series-badge"><span class="series-ghost">${num}</span><span class="series-label">${label}</span></div>`;
 }
 
-// ---------- 疾患解説カード（v15: 3段構成 → v16: 行数可変・強調タグ対応） ----------
-// o = { kicker, headline, rows:[{label,text,emphasis?}, ...], cta }
+// ---------- 疾患解説カード（v15: 3段構成 → v16: 行数可変・強調タグ対応 → v17: cta省略可） ----------
+// o = { kicker, headline, rows:[{label,text,emphasis?}, ...], cta? }
 // rows は3〜4行など可変。emphasis:true の行だけタグを塗り（.dc-tag--filled）にしてメリハリを付ける。
+// cta は省略可（シリーズ物の中間スライドなど、結びの1行が不要なときはキーを渡さなければ表示されない）。
 // 画像つきスライド（image/imageReverse）はこの戻り値がそのまま .img-text-col の中身になる。
 function diseaseCard(o){
   const rows = o.rows.map(r => `
     <div class="dc-row"><span class="dc-tag${r.emphasis ? " dc-tag--filled" : ""}">${r.label}</span><div class="dc-text">${r.text}</div></div>
   `).join("");
+  const ctaHtml = o.cta ? `<div class="dc-cta">${o.cta}</div>` : "";
   return `
     <div class="kicker">${o.kicker}</div>
     <div class="headline small">${o.headline}</div>
     <div class="disease-card">${rows}</div>
-    <div class="dc-cta">${o.cta}</div>
+    ${ctaHtml}
   `;
 }
 
