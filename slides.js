@@ -246,7 +246,7 @@ const SLIDES = [
   },
   {
     id: "tokushu-kounenki-1",
-    title: "更年期特集 1/2（こんな症状はありませんか）",
+    title: "更年期特集 1/5（こんな症状はありませんか）",
     category: "series",
     months: "all",
     duration: 12,
@@ -254,7 +254,7 @@ const SLIDES = [
     poster: "posters/poster_kounenki.jpg",
     posterTextSide: "left",
     render: () => `
-      ${seriesBadge("更年期特集 1/2")}
+      ${seriesBadge("更年期特集 1/5")}
       <div class="kicker">こんな症状はありませんか</div>
       <div class="headline small"><em>更年期</em>のサインかもしれません</div>
       <div class="point-list">
@@ -267,31 +267,76 @@ const SLIDES = [
   },
   {
     id: "tokushu-kounenki-2",
-    title: "更年期特集 2/2（我慢しないでご相談を）",
+    title: "更年期特集 2/5（更年期のサイン）",
     category: "series",
     months: "all",
     duration: 11,
     image: "images/kounenki.jpg",
-    imageReverse: true,
-    theme: "bold",
     tone: "rose",
     render: () => `
-      ${seriesBadge("更年期特集 2/2")}
-      ${diseaseCard({
-        kicker: "更年期の症状について",
-        headline: "その不調、我慢し続けなくていいんです",
-        rows: [
-          { label: "こんな症状", text: "ほてり・不眠・イライラなど、感じ方は人それぞれ" },
-          { label: "我慢すると", text: "日々のつらさが続き、生活の質を下げてしまいます", emphasis: true },
-          { label: "当院でできること", text: "問診やホルモン状態の確認、お薬や<em>漢方薬</em>などの選択肢があります" }
-        ],
-        cta: "女性医師がお話を伺います"
-      })}
+      ${seriesBadge("更年期特集 2/5")}
+      <div class="kicker">更年期特集</div>
+      <div class="headline small">それ、更年期のサインかもしれません</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>女性ホルモンの変化により、心とからだにさまざまな症状が現れます</div>
+        <div class="point"><span class="dot"></span>症状の感じ方は人それぞれです</div>
+      </div>
+    `
+  },
+  {
+    id: "tokushu-kounenki-3",
+    title: "更年期特集 3/5（状態を知る）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    tone: "rose",
+    render: () => `
+      ${seriesBadge("更年期特集 3/5")}
+      <div class="kicker">更年期特集</div>
+      <div class="headline small">まずは、状態を知ることから</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>問診や、ホルモンの状態の確認などを行います</div>
+      </div>
+    `
+  },
+  {
+    id: "tokushu-kounenki-4",
+    title: "更年期特集 4/5（治療の選択肢）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    tone: "rose",
+    render: () => `
+      ${seriesBadge("更年期特集 4/5")}
+      <div class="kicker">更年期特集</div>
+      <div class="headline small">治療の選択肢があります</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>お薬や漢方薬など、症状やご希望に合わせて選べます</div>
+        <div class="point"><span class="dot"></span>「年齢のせい」と我慢する必要はありません</div>
+      </div>
+    `
+  },
+  {
+    id: "tokushu-kounenki-5",
+    title: "更年期特集 5/5（女性医師がお話を伺います）",
+    category: "series",
+    months: "all",
+    duration: 11,
+    image: "photos/photo_gyn_shinsatsu.jpg",
+    tone: "rose",
+    render: () => `
+      ${seriesBadge("更年期特集 5/5")}
+      <div class="kicker">更年期特集</div>
+      <div class="headline small">女性医師がお話を伺います</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>待合室は内科と分けています。安心してご来院ください</div>
+      </div>
+      <div class="dc-cta">婦人科へお気軽にご相談を</div>
     `
   },
   {
     id: "tokushu-pill-1",
-    title: "ピル外来特集 1/2（相談できること）",
+    title: "ピル特集 1/11（女性の味方）",
     category: "series",
     months: "all",
     duration: 12,
@@ -299,35 +344,171 @@ const SLIDES = [
     poster: "posters/poster_pill.jpg",
     posterTextSide: "left",
     render: () => `
-      ${seriesBadge("ピル外来特集 1/2")}
-      <div class="kicker"><em>ピル外来</em>で相談できること</div>
-      <div class="headline small">こんなことも相談できます</div>
-      <div class="point-list">
-        <div class="point"><span class="dot"></span>生理痛がつらい</div>
-        <div class="point"><span class="dot"></span>PMS（月経前のこころ・からだの不調）</div>
-        <div class="point"><span class="dot"></span>生理日の移動・緊急避妊</div>
-      </div>
+      ${seriesBadge("ピル特集 1/11")}
+      <div class="kicker">ピル特集</div>
+      <div class="headline small">ピルは、女性の味方です</div>
+      <div class="sub">妊娠や月経と上手に付き合うための、選択肢のひとつです</div>
     `
   },
   {
     id: "tokushu-pill-2",
-    title: "ピル外来特集 2/2（受診はお気軽に）",
+    title: "ピル特集 2/11（章扉：ピルはこんな目的で使われます）",
+    category: "series",
+    months: "all",
+    duration: 5,
+    theme: "bold",
+    tone: "rose",
+    centered: true,
+    render: () => chapterSlide("ピル特集", "ピルはこんな目的で使われます")
+  },
+  {
+    id: "tokushu-pill-3",
+    title: "ピル特集 3/11（女性ならではのお悩みに）",
     category: "series",
     months: "all",
     duration: 11,
     image: "images/pill.jpg",
-    imageReverse: true,
+    tone: "rose",
+    render: () => `
+      ${seriesBadge("ピル特集 3/11")}
+      <div class="kicker">ピル特集</div>
+      <div class="headline small">女性ならではのお悩みに</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>月経困難症の治療</div>
+        <div class="point"><span class="dot"></span>子宮内膜症の治療</div>
+        <div class="point"><span class="dot"></span>避妊</div>
+        <div class="point"><span class="dot"></span>生理日の移動</div>
+        <div class="point"><span class="dot"></span>緊急避妊</div>
+      </div>
+    `
+  },
+  {
+    id: "tokushu-pill-4",
+    title: "ピル特集 4/11（章扉：ピルの仕組み）",
+    category: "series",
+    months: "all",
+    duration: 5,
+    theme: "bold",
+    tone: "rose",
+    centered: true,
+    render: () => chapterSlide("ピル特集", "ピルの仕組み")
+  },
+  {
+    id: "tokushu-pill-5",
+    title: "ピル特集 5/11（ピルの仕組み）",
+    category: "series",
+    months: "all",
+    duration: 11,
+    image: "images/pill_hormone.jpg",
+    tone: "rose",
+    render: () => `
+      ${seriesBadge("ピル特集 5/11")}
+      <div class="kicker">ピル特集</div>
+      <div class="headline small">2つのホルモンのはたらきで、排卵を抑えます</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>卵胞ホルモンと黄体ホルモンを含むお薬です</div>
+        <div class="point"><span class="dot"></span>これにより月経のリズムをコントロールします</div>
+      </div>
+    `
+  },
+  {
+    id: "tokushu-pill-6",
+    title: "ピル特集 6/11（章扉：低用量ピル）",
+    category: "series",
+    months: "all",
+    duration: 5,
+    theme: "bold",
+    tone: "rose",
+    centered: true,
+    render: () => chapterSlide("ピル特集", "低用量ピル")
+  },
+  {
+    id: "tokushu-pill-7",
+    title: "ピル特集 7/11（つらい生理の症状）",
+    category: "series",
+    months: "all",
+    duration: 11,
+    image: "images/step_hari.jpg",
+    tone: "rose",
+    render: () => `
+      ${seriesBadge("ピル特集 7/11")}
+      <div class="kicker">低用量ピル</div>
+      <div class="headline small">つらい生理の症状をやわらげます</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>腹痛・腰痛・頭痛、吐き気、気分の落ち込みなど</div>
+        <div class="point"><span class="dot"></span>月経困難症・子宮内膜症の治療に使われます</div>
+      </div>
+    `
+  },
+  {
+    id: "tokushu-pill-8",
+    title: "ピル特集 8/11（報告されている効果）",
+    category: "series",
+    months: "all",
+    duration: 11,
     theme: "bold",
     tone: "rose",
     render: () => `
-      ${seriesBadge("ピル外来特集 2/2")}
-      <div class="kicker">受診はお気軽に</div>
-      <div class="headline small">まずは<em>ご相談</em>ください</div>
+      ${seriesBadge("ピル特集 8/11")}
+      <div class="kicker">低用量ピル</div>
+      <div class="headline small">こんな効果も報告されています</div>
       <div class="point-list">
-        <div class="point"><span class="dot"></span>女性医師（産婦人科専門医）が担当いたします</div>
-        <div class="point"><span class="dot"></span>待合室は内科と分けております</div>
-        <div class="point"><span class="dot"></span>ピルは正しく理解して使うことが大切です</div>
+        <div class="point"><span class="dot"></span>生理不順や経血量の改善、ニキビの改善など</div>
+        <div class="point"><span class="dot"></span>排卵を抑えるため、避妊にも有効です（理想的な使用での妊娠率は0.3％と報告されています）</div>
       </div>
+    `
+  },
+  {
+    id: "tokushu-pill-9",
+    title: "ピル特集 9/11（中用量ピル）",
+    category: "series",
+    months: "all",
+    duration: 11,
+    image: "images/pill_calendar.jpg",
+    tone: "rose",
+    render: () => `
+      ${seriesBadge("ピル特集 9/11")}
+      <div class="kicker">中用量ピル</div>
+      <div class="headline small">大切な予定に、生理日を合わせる</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>旅行・試合・結婚式などの予定に合わせ、あらかじめ服用して生理日をずらすことができます</div>
+      </div>
+    `
+  },
+  {
+    id: "tokushu-pill-10",
+    title: "ピル特集 10/11（アフターピル）",
+    category: "series",
+    months: "all",
+    duration: 11,
+    image: "images/pill_ec_clock.jpg",
+    tone: "rose",
+    render: () => `
+      ${seriesBadge("ピル特集 10/11")}
+      <div class="kicker">ピル特集</div>
+      <div class="headline small">もしもの時は、72時間以内に</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>避妊がうまくいかなかった際、72時間以内の服用で望まない妊娠を避けるお薬があります（アフターピル）</div>
+      </div>
+    `
+  },
+  {
+    id: "tokushu-pill-11",
+    title: "ピル特集 11/11（正しく使えば、心強い選択肢）",
+    category: "series",
+    months: "all",
+    duration: 11,
+    image: "photos/photo_gyn_shinsatsu.jpg",
+    tone: "rose",
+    render: () => `
+      ${seriesBadge("ピル特集 11/11")}
+      <div class="kicker">ピル特集</div>
+      <div class="headline small">正しく使えば、心強い選択肢です</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>人によって処方できない場合や、注意が必要な場合があります</div>
+        <div class="point"><span class="dot"></span>用法・用量を守って正しく使いましょう</div>
+      </div>
+      <div class="dc-cta">女性医師が診療しています。まずはご相談ください</div>
     `
   },
   {
