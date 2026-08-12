@@ -245,6 +245,34 @@
   .slide.theme-bold .dc-step, .slide.has-poster .dc-step{
     background:#fff; color:var(--tone-dark, #333);
   }
+  .single-step{
+    margin-top:calc(3vh * var(--fit));
+    display:grid; grid-template-columns:auto minmax(0, 1fr); align-items:center;
+    column-gap:calc(2.4vw * var(--fit));
+  }
+  .single-step .step-big{
+    width:calc(12vh * var(--fit)); height:calc(12vh * var(--fit)); border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    background:#fff; color:var(--tone-dark, #333);
+    font-size:calc(6.6vh * var(--fit)); font-weight:900; line-height:1;
+    box-shadow:0 1vh 2.4vh rgba(0,0,0,0.18);
+    font-variant-numeric:tabular-nums;
+  }
+  .single-step .step-text{
+    font-size:calc(4.2vh * var(--fit)); line-height:1.42; font-weight:700; color:var(--text);
+  }
+  .number-callout{
+    margin-top:calc(2.6vh * var(--fit));
+    display:flex; align-items:baseline; gap:1.4vw; flex-wrap:wrap;
+  }
+  .number-callout .num{
+    font-size:calc(14vh * var(--fit)); line-height:0.95; font-weight:900;
+    color:var(--accent2); letter-spacing:0;
+  }
+  .number-callout .label{
+    font-size:calc(4.4vh * var(--fit)); line-height:1.2; font-weight:700;
+    color:var(--text);
+  }
 
   /* ---------- ビルドアップアニメ（v18: スライドがactiveになったら .dc-row／.point が0.4秒間隔で順にフェードイン） ---------- */
   .disease-card .dc-row,
@@ -280,6 +308,20 @@
     content:""; position:absolute; left:50%; bottom:0; transform:translateX(-50%);
     width:7vh; height:0.6vh; border-radius:999px; background:var(--accent);
   }
+  .chapter-visual{
+    width:100%; display:flex; align-items:center; justify-content:center; gap:4vw;
+  }
+  .chapter-icon{
+    width:24vh; height:24vh; border-radius:50%; overflow:hidden;
+    border:0.5vh solid rgba(255,255,255,0.75);
+    box-shadow:0 1.2vh 3vh rgba(0,0,0,0.18);
+    flex:none;
+  }
+  .chapter-icon img{
+    display:block; width:100%; height:100%; object-fit:cover;
+  }
+  .chapter-copy{ display:flex; flex-direction:column; align-items:flex-start; text-align:left; }
+  .chapter-copy .chapter-title::after{ left:0; transform:none; }
 
   /* ---------- 診療時間表 ---------- */
   .hours-wrap{ width:100%; max-width:88vw; }
@@ -332,6 +374,15 @@
   .point-list .point .dot{
     position:absolute; left:0; top:0.55em;
     width:calc(1vh * var(--fit)); height:calc(1vh * var(--fit)); border-radius:0; background:var(--accent);
+  }
+  .point-list:has(.point:nth-child(4)){
+    gap:calc(1.8vh * var(--fit));
+  }
+  .point-list:has(.point:nth-child(4)) .point{
+    padding-left:0;
+  }
+  .point-list:has(.point:nth-child(4)) .point .dot{
+    display:none;
   }
 
   /* ---------- 2カラムレイアウト（access等） ---------- */

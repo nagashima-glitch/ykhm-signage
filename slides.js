@@ -112,6 +112,29 @@ const NOTICE = {
 };
 // ▲▲▲ NOTICE ここまで ▲▲▲
 
+function chapterSlideWithIcon(seriesLabel, title, imageSrc){
+  return `
+    <div class="chapter-visual">
+      <div class="chapter-icon"><img src="${imageSrc}" alt=""></div>
+      <div class="chapter-copy">
+        <div class="kicker">${seriesLabel}</div>
+        <div class="headline chapter-title">${title}</div>
+      </div>
+    </div>
+  `;
+}
+
+function singleStepSlide(seriesLabel, badgeLabel, step, text){
+  return `
+    ${seriesBadge(badgeLabel)}
+    <div class="kicker">${seriesLabel}</div>
+    <div class="single-step">
+      <span class="step-big">${step}</span>
+      <div class="step-text">${text}</div>
+    </div>
+  `;
+}
+
 // ▼▼▼ ここから SLIDES（スライド本体） ▼▼▼
 // months: "all" または [表示したい月の配列]（例: [6,7,8,9]）
 // duration: 表示秒数（通常は12でOK）
@@ -379,7 +402,7 @@ const SLIDES = [
   },
   {
     id: "gastro-series-1",
-    title: "胃カメラ特集 1/8（こんな症状ありませんか）",
+    title: "胃カメラ特集 1/11（こんな症状ありませんか）",
     category: "series",
     months: "all",
     duration: 10,
@@ -387,7 +410,7 @@ const SLIDES = [
     poster: "posters/poster_gastro.jpg",
     posterTextSide: "right",
     render: () => `
-      ${seriesBadge("胃カメラ特集 1/8")}
+      ${seriesBadge("胃カメラ特集 1/11")}
       <div class="kicker">胃カメラ特集</div>
       <div class="headline small">こんな症状、ありませんか？</div>
       <div class="point-list">
@@ -400,18 +423,18 @@ const SLIDES = [
   },
   {
     id: "gastro-series-2",
-    title: "胃カメラ特集 2/8（章扉：胃カメラとは）",
+    title: "胃カメラ特集 2/11（章扉：胃カメラとは）",
     category: "series",
     months: "all",
     duration: 5,
     theme: "bold",
     tone: "green",
     centered: true,
-    render: () => chapterSlide("胃カメラ特集", "胃カメラとは")
+    render: () => chapterSlideWithIcon("胃カメラ特集", "胃カメラとは", "images/chapter_gastro.jpg")
   },
   {
     id: "gastro-series-3",
-    title: "胃カメラ特集 3/8（胃カメラとは：直接確認する検査）",
+    title: "胃カメラ特集 3/11（胃カメラとは：直接確認する検査）",
     category: "series",
     months: "all",
     duration: 10,
@@ -419,7 +442,7 @@ const SLIDES = [
     theme: "bold",
     tone: "green",
     render: () => `
-      ${seriesBadge("胃カメラ特集 3/8")}
+      ${seriesBadge("胃カメラ特集 3/11")}
       <div class="kicker">胃カメラ特集</div>
       <div class="headline small">食道・胃・十二指腸を、直接確認する検査です</div>
       <div class="point-list">
@@ -430,7 +453,7 @@ const SLIDES = [
   },
   {
     id: "gastro-series-4",
-    title: "胃カメラ特集 4/8（章扉：検査の目的）",
+    title: "胃カメラ特集 4/11（章扉：検査の目的）",
     category: "series",
     months: "all",
     duration: 5,
@@ -441,14 +464,15 @@ const SLIDES = [
   },
   {
     id: "gastro-series-5",
-    title: "胃カメラ特集 5/8（調べる・見つける）",
+    title: "胃カメラ特集 5/11（調べる・見つける）",
     category: "series",
     months: "all",
     duration: 10,
     theme: "bold",
     tone: "green",
+    image: "images/naishikyo.jpg",
     render: () => `
-      ${seriesBadge("胃カメラ特集 5/8")}
+      ${seriesBadge("胃カメラ特集 5/11")}
       ${diseaseCard({
         kicker: "胃カメラ特集",
         rows: [
@@ -461,34 +485,74 @@ const SLIDES = [
   },
   {
     id: "gastro-series-6",
-    title: "胃カメラ特集 6/8（検査の流れ：ステップ①〜③）",
+    title: "胃カメラ特集 6/11（章扉：検査の流れ）",
     category: "series",
     months: "all",
-    duration: 10,
+    duration: 5,
     theme: "bold",
     tone: "green",
-    render: () => `
-      ${seriesBadge("胃カメラ特集 6/8")}
-      ${diseaseCard({
-        kicker: "検査の流れ",
-        rows: [
-          { step: 1, text: "検査前の飲食はお控えいただきます（ご予約時に詳しくご案内します）" },
-          { step: 2, text: "経鼻・経口、鎮静剤の使用をお選びいただけます" },
-          { step: 3, text: "観察後はリカバリールームで休憩し、結果のご説明を聞いてご帰宅です" }
-        ]
-      })}
-    `
+    centered: true,
+    render: () => chapterSlide("胃カメラ特集", "検査の流れ")
   },
   {
     id: "gastro-series-7",
-    title: "胃カメラ特集 7/8（検査の注意点）",
+    title: "胃カメラ特集 7/11（検査の流れ：ステップ①）",
     category: "series",
     months: "all",
     duration: 10,
     theme: "bold",
     tone: "green",
+    image: "images/zesshoku.jpg",
+    render: () => singleStepSlide(
+      "胃カメラ特集",
+      "胃カメラ特集 7/11",
+      1,
+      "検査前の飲食はお控えいただきます（ご予約時に詳しくご案内します）"
+    )
+  },
+  {
+    id: "gastro-series-8",
+    title: "胃カメラ特集 8/11（検査の流れ：ステップ②）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    theme: "bold",
+    tone: "green",
+    image: "images/keibi_keiko.jpg",
+    render: () => singleStepSlide(
+      "胃カメラ特集",
+      "胃カメラ特集 8/11",
+      2,
+      "経鼻・経口、鎮静剤の使用をお選びいただけます"
+    )
+  },
+  {
+    id: "gastro-series-9",
+    title: "胃カメラ特集 9/11（検査の流れ：ステップ③）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    theme: "bold",
+    tone: "green",
+    image: "images/step_recovery.jpg",
+    render: () => singleStepSlide(
+      "胃カメラ特集",
+      "胃カメラ特集 9/11",
+      3,
+      "観察後はリカバリールームで休憩し、結果のご説明を聞いてご帰宅です"
+    )
+  },
+  {
+    id: "gastro-series-10",
+    title: "胃カメラ特集 10/11（検査の注意点）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    theme: "bold",
+    tone: "green",
+    image: "images/step_unten.jpg",
     render: () => `
-      ${seriesBadge("胃カメラ特集 7/8")}
+      ${seriesBadge("胃カメラ特集 10/11")}
       <div class="kicker">検査の注意点</div>
       <div class="point-list">
         <div class="point"><span class="dot"></span>鎮静剤を使用した場合、当日はお車の運転はできません</div>
@@ -497,15 +561,15 @@ const SLIDES = [
     `
   },
   {
-    id: "gastro-series-8",
-    title: "胃カメラ特集 8/8（思い立った日が検査日和・CTA）",
+    id: "gastro-series-11",
+    title: "胃カメラ特集 11/11（思い立った日が検査日和・CTA）",
     category: "series",
     months: "all",
     duration: 10,
     theme: "bold",
     tone: "green",
     render: () => `
-      ${seriesBadge("胃カメラ特集 8/8")}
+      ${seriesBadge("胃カメラ特集 11/11")}
       <div class="kicker">胃カメラ特集</div>
       <div class="headline small">思い立った日が、検査日和</div>
       <div class="sub">当日検査のご相談もできます。土曜午後も内視鏡検査を行っています</div>
@@ -548,7 +612,7 @@ const SLIDES = [
   },
   {
     id: "colono-series-1",
-    title: "大腸カメラ特集 1/10（こんなサインありませんか）",
+    title: "大腸カメラ特集 1/13（こんなサインありませんか）",
     category: "series",
     months: "all",
     duration: 10,
@@ -556,7 +620,7 @@ const SLIDES = [
     poster: "posters/poster_colono.jpg",
     posterTextSide: "left",
     render: () => `
-      ${seriesBadge("大腸カメラ特集 1/10")}
+      ${seriesBadge("大腸カメラ特集 1/13")}
       <div class="kicker">大腸カメラ特集</div>
       <div class="headline small">こんなサイン、ありませんか？</div>
       <div class="point-list">
@@ -570,18 +634,18 @@ const SLIDES = [
   },
   {
     id: "colono-series-2",
-    title: "大腸カメラ特集 2/10（章扉：大腸カメラとは）",
+    title: "大腸カメラ特集 2/13（章扉：大腸カメラとは）",
     category: "series",
     months: "all",
     duration: 5,
     theme: "bold",
     tone: "green",
     centered: true,
-    render: () => chapterSlide("大腸カメラ特集", "大腸カメラとは")
+    render: () => chapterSlideWithIcon("大腸カメラ特集", "大腸カメラとは", "images/chapter_colono.jpg")
   },
   {
     id: "colono-series-3",
-    title: "大腸カメラ特集 3/10（大腸カメラとは：直接確認する検査）",
+    title: "大腸カメラ特集 3/13（大腸カメラとは：直接確認する検査）",
     category: "series",
     months: "all",
     duration: 10,
@@ -589,7 +653,7 @@ const SLIDES = [
     theme: "bold",
     tone: "green",
     render: () => `
-      ${seriesBadge("大腸カメラ特集 3/10")}
+      ${seriesBadge("大腸カメラ特集 3/13")}
       <div class="kicker">大腸カメラ特集</div>
       <div class="headline small">大腸の中を、直接確認する検査です</div>
       <div class="point-list">
@@ -600,7 +664,7 @@ const SLIDES = [
   },
   {
     id: "colono-series-4",
-    title: "大腸カメラ特集 4/10（章扉：検査の目的）",
+    title: "大腸カメラ特集 4/13（章扉：検査の目的）",
     category: "series",
     months: "all",
     duration: 5,
@@ -611,17 +675,17 @@ const SLIDES = [
   },
   {
     id: "colono-series-5",
-    title: "大腸カメラ特集 5/10（調べる・見つける・治す）",
+    title: "大腸カメラ特集 5/13（調べる・見つける・治す）",
     category: "series",
     months: "all",
     duration: 10,
     theme: "bold",
     tone: "green",
+    image: "images/mokuteki_shiraberu.jpg",
     render: () => `
-      ${seriesBadge("大腸カメラ特集 5/10")}
+      ${seriesBadge("大腸カメラ特集 5/13")}
       ${diseaseCard({
         kicker: "大腸カメラ特集",
-        headline: "調べる・見つける・その場で治す",
         rows: [
           { label: "調べる", text: "大腸に病変がないかを確認します" },
           { label: "見つける", text: "必要に応じて組織を採取し、詳しく調べます" },
@@ -633,7 +697,7 @@ const SLIDES = [
   },
   {
     id: "colono-series-6",
-    title: "大腸カメラ特集 6/10（章扉：検査の流れ）",
+    title: "大腸カメラ特集 6/13（章扉：検査の流れ）",
     category: "series",
     months: "all",
     duration: 5,
@@ -644,53 +708,95 @@ const SLIDES = [
   },
   {
     id: "colono-series-7",
-    title: "大腸カメラ特集 7/10（検査の流れ：ステップ①②）",
+    title: "大腸カメラ特集 7/13（検査の流れ：ステップ①）",
     category: "series",
     months: "all",
     duration: 10,
     theme: "bold",
     tone: "green",
-    render: () => `
-      ${seriesBadge("大腸カメラ特集 7/10")}
-      ${diseaseCard({
-        kicker: "大腸カメラ特集",
-        rows: [
-          { step: 1, text: "事前外来で、症状やお薬を確認し検査のご説明をします" },
-          { step: 2, text: "検査当日、腸管洗浄液で大腸をきれいにします（ご自宅・院内から選べます）" }
-        ]
-      })}
-    `
+    image: "images/step_jizen.jpg",
+    render: () => singleStepSlide(
+      "大腸カメラ特集",
+      "大腸カメラ特集 7/13",
+      1,
+      "事前外来で、症状やお薬を確認し検査のご説明をします"
+    )
   },
   {
     id: "colono-series-8",
-    title: "大腸カメラ特集 8/10（検査の流れ：ステップ③④⑤）",
+    title: "大腸カメラ特集 8/13（検査の流れ：ステップ②）",
     category: "series",
     months: "all",
     duration: 10,
     theme: "bold",
     tone: "green",
-    render: () => `
-      ${seriesBadge("大腸カメラ特集 8/10")}
-      ${diseaseCard({
-        kicker: "大腸カメラ特集",
-        rows: [
-          { step: 3, text: "ご希望に応じて、鎮静剤を使ってうとうとしている間に検査します" },
-          { step: 4, text: "ポリープが見つかれば、その場で切除します" },
-          { step: 5, text: "リカバリールームで休憩し、結果のご説明を聞いてご帰宅です" }
-        ]
-      })}
-    `
+    image: "images/step_senjo.jpg",
+    render: () => singleStepSlide(
+      "大腸カメラ特集",
+      "大腸カメラ特集 8/13",
+      2,
+      "検査当日、腸管洗浄液で大腸をきれいにします（ご自宅・院内から選べます）"
+    )
   },
   {
     id: "colono-series-9",
-    title: "大腸カメラ特集 9/10（検査の注意点）",
+    title: "大腸カメラ特集 9/13（検査の流れ：ステップ③）",
     category: "series",
     months: "all",
     duration: 10,
     theme: "bold",
     tone: "green",
+    image: "images/step_chinsei.jpg",
+    render: () => singleStepSlide(
+      "大腸カメラ特集",
+      "大腸カメラ特集 9/13",
+      3,
+      "ご希望に応じて、鎮静剤を使ってうとうとしている間に検査します"
+    )
+  },
+  {
+    id: "colono-series-10",
+    title: "大腸カメラ特集 10/13（検査の流れ：ステップ④）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    theme: "bold",
+    tone: "green",
+    image: "images/step_setsujo.jpg",
+    render: () => singleStepSlide(
+      "大腸カメラ特集",
+      "大腸カメラ特集 10/13",
+      4,
+      "ポリープが見つかれば、その場で切除します"
+    )
+  },
+  {
+    id: "colono-series-11",
+    title: "大腸カメラ特集 11/13（検査の流れ：ステップ⑤）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    theme: "bold",
+    tone: "green",
+    image: "images/step_recovery.jpg",
+    render: () => singleStepSlide(
+      "大腸カメラ特集",
+      "大腸カメラ特集 11/13",
+      5,
+      "リカバリールームで休憩し、結果のご説明を聞いてご帰宅です"
+    )
+  },
+  {
+    id: "colono-series-12",
+    title: "大腸カメラ特集 12/13（検査の注意点）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    theme: "bold",
+    tone: "green",
+    image: "images/step_unten.jpg",
     render: () => `
-      ${seriesBadge("大腸カメラ特集 9/10")}
+      ${seriesBadge("大腸カメラ特集 12/13")}
       <div class="kicker">検査の注意点</div>
       <div class="point-list">
         <div class="point"><span class="dot"></span>検査前は食事の注意があります（事前外来で詳しくご案内します）</div>
@@ -700,17 +806,19 @@ const SLIDES = [
     `
   },
   {
-    id: "colono-series-10",
-    title: "大腸カメラ特集 10/10（早期発見・CTA）",
+    id: "colono-series-13",
+    title: "大腸カメラ特集 13/13（早期発見・CTA）",
     category: "series",
     months: "all",
     duration: 10,
     theme: "bold",
     tone: "green",
+    image: "images/step_kitaku.jpg",
     render: () => `
-      ${seriesBadge("大腸カメラ特集 10/10")}
+      ${seriesBadge("大腸カメラ特集 13/13")}
       <div class="kicker">大腸カメラ特集</div>
       <div class="headline small">大腸カメラは、大腸がんの早期発見に役立ちます</div>
+      <div class="number-callout"><span class="num">35歳</span><span class="label">を過ぎた方も</span></div>
       <div class="sub">血便がある方・便潜血陽性の方・35歳を過ぎた方は、一度ご相談ください</div>
       <div class="dc-cta">当院で行っています。ご予約は受付・WEBで</div>
     `
