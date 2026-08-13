@@ -1375,14 +1375,14 @@ const SLIDES = [
   },
   {
     id: "seikatsu-series-1",
-    title: "生活習慣病特集 1/8（健診の数値チェック）",
+    title: "生活習慣病特集 1/14（健診の数値チェック）",
     category: "series",
     months: "all",
     duration: 10,
     theme: "bold",
     tone: "navy",
     render: () => `
-      ${seriesBadge("生活習慣病特集 1/8")}
+      ${seriesBadge("生活習慣病特集 1/14")}
       <div class="kicker">生活習慣病特集</div>
       <div class="headline small">健診の数値、見なかったことにしていませんか？</div>
       <div class="point-list">
@@ -1394,7 +1394,7 @@ const SLIDES = [
   },
   {
     id: "seikatsu-series-2",
-    title: "生活習慣病特集 2/8（章扉：生活習慣病とは）",
+    title: "生活習慣病特集 2/14（章扉：生活習慣病とは）",
     category: "series",
     months: "all",
     duration: 5,
@@ -1405,13 +1405,13 @@ const SLIDES = [
   },
   {
     id: "seikatsu-series-3",
-    title: "生活習慣病特集 3/8（サイレントキラー）",
+    title: "生活習慣病特集 3/14（サイレントキラー）",
     category: "series",
     months: "all",
     duration: 10,
     tone: "navy",
     render: () => `
-      ${seriesBadge("生活習慣病特集 3/8")}
+      ${seriesBadge("生活習慣病特集 3/14")}
       <div class="kicker">生活習慣病特集</div>
       <div class="headline small">生活習慣病は「サイレントキラー」とも呼ばれます</div>
       <div class="point-list">
@@ -1421,65 +1421,134 @@ const SLIDES = [
   },
   {
     id: "seikatsu-series-4",
-    title: "生活習慣病特集 4/8（血圧）",
+    title: "生活習慣病特集 4/14（章扉：高血圧）",
     category: "series",
     months: "all",
-    duration: 10,
-    image: "images/seikatsu.jpg",
+    duration: 5,
+    theme: "bold",
     tone: "navy",
-    render: () => `
-      ${seriesBadge("生活習慣病特集 4/8")}
-      <div class="kicker">血圧</div>
-      <div class="headline small">健診で血圧を指摘された方へ</div>
-      <div class="point-list">
-        <div class="point"><span class="dot"></span>自覚症状がほとんどありません</div>
-        <div class="point"><span class="dot"></span>生活習慣の見直しと、必要に応じたお薬で管理します</div>
-      </div>
-    `
+    centered: true,
+    render: () => chapterSlide("生活習慣病特集", "高血圧")
   },
   {
     id: "seikatsu-series-5",
-    title: "生活習慣病特集 5/8（血糖値）",
+    title: "生活習慣病特集 5/14（高血圧とは）",
     category: "series",
     months: "all",
     duration: 10,
+    image: "images/kouketsuatsu_cuff.jpg",
     tone: "navy",
     render: () => `
-      ${seriesBadge("生活習慣病特集 5/8")}
-      <div class="kicker">血糖値</div>
-      <div class="headline small">血糖値・HbA1cが気になる方へ</div>
+      ${seriesBadge("生活習慣病特集 5/14")}
+      <div class="kicker">高血圧</div>
+      <div class="headline small">血管に、常に高い圧力がかかる状態です</div>
       <div class="point-list">
-        <div class="point"><span class="dot"></span>のどが渇く・疲れやすいなどのサインが出ることもあります</div>
-        <div class="point"><span class="dot"></span>早めの対策で合併症を防ぐことが大切です</div>
+        <div class="point"><span class="dot"></span>血管が傷つきやすくなり、動脈硬化が進む原因になります</div>
+        <div class="point"><span class="dot"></span>自覚症状はほとんどありません</div>
       </div>
     `
   },
   {
     id: "seikatsu-series-6",
-    title: "生活習慣病特集 6/8（コレステロール）",
+    title: "生活習慣病特集 6/14（高血圧の管理）",
     category: "series",
     months: "all",
     duration: 10,
     tone: "navy",
     render: () => `
-      ${seriesBadge("生活習慣病特集 6/8")}
-      <div class="kicker">コレステロール</div>
-      <div class="headline small">コレステロール・中性脂肪が気になる方へ</div>
+      ${seriesBadge("生活習慣病特集 6/14")}
+      <div class="kicker">高血圧</div>
+      <div class="headline small">減塩・運動・体重管理が基本です</div>
       <div class="point-list">
-        <div class="point"><span class="dot"></span>血管の中で、静かに動脈硬化が進むことがあります</div>
+        <div class="point"><span class="dot"></span>必要に応じてお薬で管理します</div>
+        <div class="point"><span class="dot"></span>ご家庭での血圧測定も大切です</div>
       </div>
     `
   },
   {
     id: "seikatsu-series-7",
-    title: "生活習慣病特集 7/8（そのままにしておくと）",
+    title: "生活習慣病特集 7/14（章扉：糖尿病）",
+    category: "series",
+    months: "all",
+    duration: 5,
+    theme: "bold",
+    tone: "navy",
+    centered: true,
+    render: () => chapterSlide("生活習慣病特集", "糖尿病")
+  },
+  {
+    id: "seikatsu-series-8",
+    title: "生活習慣病特集 8/14（糖尿病とは）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    image: "images/tounyou_sugar.jpg",
+    tone: "navy",
+    render: () => `
+      ${seriesBadge("生活習慣病特集 8/14")}
+      <div class="kicker">糖尿病</div>
+      <div class="headline small">血糖を下げるホルモンの働きが弱くなる病気です</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>のどが渇く・疲れやすいなどのサインが出ることもあります</div>
+      </div>
+    `
+  },
+  {
+    id: "seikatsu-series-9",
+    title: "生活習慣病特集 9/14（糖尿病の合併症）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    theme: "bold",
+    tone: "navy",
+    render: () => `
+      ${seriesBadge("生活習慣病特集 9/14")}
+      <div class="kicker">糖尿病</div>
+      <div class="headline small">こわいのは、合併症です</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>【放置すると】目・腎臓・神経などに合併症が起こることがあります</div>
+        <div class="point"><span class="dot"></span>早めの管理で防ぐことが大切です</div>
+      </div>
+    `
+  },
+  {
+    id: "seikatsu-series-10",
+    title: "生活習慣病特集 10/14（章扉：脂質異常症）",
+    category: "series",
+    months: "all",
+    duration: 5,
+    theme: "bold",
+    tone: "navy",
+    centered: true,
+    render: () => chapterSlide("生活習慣病特集", "脂質異常症")
+  },
+  {
+    id: "seikatsu-series-11",
+    title: "生活習慣病特集 11/14（脂質異常症とは）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    image: "images/shishitsu_vessel.jpg",
+    tone: "navy",
+    render: () => `
+      ${seriesBadge("生活習慣病特集 11/14")}
+      <div class="kicker">脂質異常症</div>
+      <div class="headline small">コレステロールや中性脂肪のバランスの乱れです</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>自覚症状のないまま、血管の中で動脈硬化が進むことがあります</div>
+      </div>
+    `
+  },
+  {
+    id: "seikatsu-series-12",
+    title: "生活習慣病特集 12/14（そのままにしておくと）",
     category: "series",
     months: "all",
     duration: 10,
     image: "images/seikatsu_kessen.jpg",
     tone: "navy",
     render: () => `
-      ${seriesBadge("生活習慣病特集 7/8")}
+      ${seriesBadge("生活習慣病特集 12/14")}
       <div class="kicker">生活習慣病特集</div>
       <div class="headline small">そのままにしておくと…</div>
       <div class="point-list">
@@ -1488,22 +1557,170 @@ const SLIDES = [
     `
   },
   {
-    id: "seikatsu-series-8",
-    title: "生活習慣病特集 8/8（数値は変えていける）",
+    id: "seikatsu-series-13",
+    title: "生活習慣病特集 13/14（数値は変えていける）",
     category: "series",
     months: "all",
     duration: 10,
     theme: "bold",
     tone: "navy",
     render: () => `
-      ${seriesBadge("生活習慣病特集 8/8")}
+      ${seriesBadge("生活習慣病特集 13/14")}
       <div class="kicker">生活習慣病特集</div>
       <div class="headline small">数値は、変えていけます</div>
       <div class="point-list">
         <div class="point"><span class="dot"></span>生活習慣の見直しと、必要に応じたお薬で管理します</div>
         <div class="point"><span class="dot"></span>療養計画書で治療目標を一緒に決めます</div>
       </div>
+    `
+  },
+  {
+    id: "seikatsu-series-14",
+    title: "生活習慣病特集 14/14（まとめ）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    theme: "bold",
+    tone: "navy",
+    render: () => `
+      ${seriesBadge("生活習慣病特集 14/14")}
+      <div class="kicker">生活習慣病特集</div>
+      <div class="headline small">健診の数値が気になったら</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>「まだ大丈夫」のうちが、始めどきです</div>
+      </div>
       <div class="dc-cta">生活習慣病外来で継続サポート</div>
+    `
+  },
+  {
+    id: "shikyu-series-1",
+    title: "子宮頸がん検診特集 1/5（最後に受けたのはいつですか）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    image: "images/gyn.jpg",
+    tone: "rose",
+    render: () => `
+      ${seriesBadge("子宮頸がん検診特集 1/5")}
+      <div class="kicker">子宮頸がん検診特集</div>
+      <div class="headline small">最後に子宮頸がん検診を受けたのは、いつですか？</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>20歳から、2年に1回の検診がすすめられています</div>
+      </div>
+    `
+  },
+  {
+    id: "shikyu-series-2",
+    title: "子宮頸がん検診特集 2/5（章扉：子宮頸がん検診とは）",
+    category: "series",
+    months: "all",
+    duration: 5,
+    theme: "bold",
+    tone: "rose",
+    centered: true,
+    render: () => chapterSlide("子宮頸がん検診特集", "子宮頸がん検診とは")
+  },
+  {
+    id: "shikyu-series-3",
+    title: "子宮頸がん検診特集 3/5（検査内容）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    image: "images/shikyu_kenshin.jpg",
+    tone: "rose",
+    render: () => `
+      ${seriesBadge("子宮頸がん検診特集 3/5")}
+      <div class="kicker">子宮頸がん検診特集</div>
+      <div class="headline small">子宮の入り口の細胞を調べる検査です</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>検査そのものは数分で終わります</div>
+        <div class="point"><span class="dot"></span>早期には自覚症状がほとんどありません</div>
+      </div>
+    `
+  },
+  {
+    id: "shikyu-series-4",
+    title: "子宮頸がん検診特集 4/5（女性医師が行います）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    tone: "rose",
+    render: () => `
+      ${seriesBadge("子宮頸がん検診特集 4/5")}
+      <div class="kicker">子宮頸がん検診特集</div>
+      <div class="headline small">当院では、女性医師が行います</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>横浜市の検診にも対応しています</div>
+        <div class="point"><span class="dot"></span>痛みや不安に配慮して行います</div>
+      </div>
+    `
+  },
+  {
+    id: "shikyu-series-5",
+    title: "子宮頸がん検診特集 5/5（まとめ）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    image: "photos/photo_gyn_room.jpg",
+    tone: "rose",
+    render: () => `
+      ${seriesBadge("子宮頸がん検診特集 5/5")}
+      <div class="kicker">子宮頸がん検診特集</div>
+      <div class="headline small">次の検診、そろそろかも</div>
+      <div class="dc-cta">婦人科検診のご予約は受付・WEBで</div>
+    `
+  },
+  {
+    id: "josei-series-1",
+    title: "女性のからだ相談 1/3（がまんしていませんか）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    tone: "rose",
+    render: () => `
+      ${seriesBadge("女性のからだ相談 1/3")}
+      <div class="kicker">女性のからだ相談</div>
+      <div class="headline small">がまんして、いませんか？</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>不正出血がある</div>
+        <div class="point"><span class="dot"></span>おりものの変化が気になる</div>
+        <div class="point"><span class="dot"></span>デリケートゾーンのかゆみ・痛み</div>
+      </div>
+    `
+  },
+  {
+    id: "josei-series-2",
+    title: "女性のからだ相談 2/3（放置しないで）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    theme: "bold",
+    tone: "rose",
+    render: () => `
+      ${seriesBadge("女性のからだ相談 2/3")}
+      <div class="kicker">女性のからだ相談</div>
+      <div class="headline small">「よくあること」と、放置しないで</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>特に不正出血は、一度婦人科での確認をおすすめします</div>
+      </div>
+    `
+  },
+  {
+    id: "josei-series-3",
+    title: "女性のからだ相談 3/3（まとめ）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    image: "images/josei_soudan.jpg",
+    tone: "rose",
+    render: () => `
+      ${seriesBadge("女性のからだ相談 3/3")}
+      <div class="kicker">女性のからだ相談</div>
+      <div class="headline small">女性医師が、お話を伺います</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>待合室は内科と分けています</div>
+      </div>
+      <div class="dc-cta">婦人科へお気軽にご相談を</div>
     `
   },
   {
