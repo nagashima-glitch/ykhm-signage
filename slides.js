@@ -759,6 +759,168 @@ const SLIDES = [
     `
   },
   {
+    id: "gerd-series-1",
+    title: "逆流性食道炎特集 1/5（胸やけ、くり返していませんか）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    tone: "green",
+    render: () => `
+      ${seriesBadge("逆流性食道炎特集 1/5")}
+      <div class="kicker">逆流性食道炎特集</div>
+      <div class="headline small">胸やけ、くり返していませんか？</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>胸やけ・げっぷが続く</div>
+        <div class="point"><span class="dot"></span>酸っぱいものが上がってくる</div>
+        <div class="point"><span class="dot"></span>のどの違和感・咳が続く</div>
+      </div>
+    `
+  },
+  {
+    id: "gerd-series-2",
+    title: "逆流性食道炎特集 2/5（章扉：逆流性食道炎とは）",
+    category: "series",
+    months: "all",
+    duration: 5,
+    theme: "bold",
+    tone: "green",
+    centered: true,
+    render: () => chapterSlide("逆流性食道炎特集", "逆流性食道炎とは")
+  },
+  {
+    id: "gerd-series-3",
+    title: "逆流性食道炎特集 3/5（逆流性食道炎とは）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    image: "images/gerd_stomach.jpg",
+    tone: "green",
+    render: () => `
+      ${seriesBadge("逆流性食道炎特集 3/5")}
+      <div class="kicker">逆流性食道炎特集</div>
+      <div class="headline small">胃酸が食道に逆流して、炎症を起こす病気です</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>食道は胃酸に弱く、粘膜が荒れてしまいます</div>
+      </div>
+    `
+  },
+  {
+    id: "gerd-series-4",
+    title: "逆流性食道炎特集 4/5（生活習慣）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    tone: "green",
+    render: () => `
+      ${seriesBadge("逆流性食道炎特集 4/5")}
+      <div class="kicker">逆流性食道炎特集</div>
+      <div class="headline small">生活習慣も、関係しています</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>食べてすぐ横になる</div>
+        <div class="point"><span class="dot"></span>脂っこい食事・食べすぎ</div>
+        <div class="point"><span class="dot"></span>前かがみの姿勢や、おなかの締めつけ</div>
+      </div>
+    `
+  },
+  {
+    id: "gerd-series-5",
+    title: "逆流性食道炎特集 5/5（まとめ）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    image: "images/gastro.jpg",
+    tone: "green",
+    render: () => `
+      ${seriesBadge("逆流性食道炎特集 5/5")}
+      <div class="kicker">逆流性食道炎特集</div>
+      <div class="headline small">胃カメラで、食道の状態を確認できます</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>お薬と生活習慣の工夫で改善を目指します</div>
+      </div>
+      <div class="dc-cta">つらい胸やけは、消化器内科へ</div>
+    `
+  },
+  {
+    id: "pylori-series-1",
+    title: "ピロリ菌特集 1/5（調べたことはありますか）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    image: "images/pylori_char.jpg",
+    tone: "green",
+    render: () => `
+      ${seriesBadge("ピロリ菌特集 1/5")}
+      <div class="kicker">ピロリ菌特集</div>
+      <div class="headline small">ピロリ菌、調べたことはありますか？</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>胃の中にすみつく細菌です。多くは子どもの頃に感染するとされています</div>
+      </div>
+    `
+  },
+  {
+    id: "pylori-series-2",
+    title: "ピロリ菌特集 2/5（章扉：ピロリ菌のリスク）",
+    category: "series",
+    months: "all",
+    duration: 5,
+    theme: "bold",
+    tone: "green",
+    centered: true,
+    render: () => chapterSlide("ピロリ菌特集", "ピロリ菌のリスク")
+  },
+  {
+    id: "pylori-series-3",
+    title: "ピロリ菌特集 3/5（かくれた原因）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    theme: "bold",
+    tone: "green",
+    render: () => `
+      ${seriesBadge("ピロリ菌特集 3/5")}
+      <div class="kicker">ピロリ菌特集</div>
+      <div class="headline small">胃の病気の、かくれた原因です</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>【放置すると】慢性胃炎・胃潰瘍の原因になります</div>
+        <div class="point"><span class="dot"></span>【放置すると】胃がんのリスク要因とされています</div>
+      </div>
+    `
+  },
+  {
+    id: "pylori-series-4",
+    title: "ピロリ菌特集 4/5（検査と除菌）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    tone: "green",
+    render: () => `
+      ${seriesBadge("ピロリ菌特集 4/5")}
+      <div class="kicker">ピロリ菌特集</div>
+      <div class="headline small">検査も除菌も、できます</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>検査で感染の有無を調べられます</div>
+        <div class="point"><span class="dot"></span>除菌は約1週間、お薬を飲む治療です</div>
+      </div>
+    `
+  },
+  {
+    id: "pylori-series-5",
+    title: "ピロリ菌特集 5/5（まとめ）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    tone: "green",
+    render: () => `
+      ${seriesBadge("ピロリ菌特集 5/5")}
+      <div class="kicker">ピロリ菌特集</div>
+      <div class="headline small">除菌して終わり、ではありません</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>除菌後も、定期的な胃カメラでの経過観察がすすめられています</div>
+      </div>
+      <div class="dc-cta">胃の健康が気になる方は、ご相談を</div>
+    `
+  },
+  {
     id: "colono",
     title: "大腸カメラのご案内",
     category: "all",
@@ -1217,21 +1379,55 @@ const SLIDES = [
     `
   },
   {
-    id: "hinketsu",
-    title: "健診で貧血を指摘された方へ",
-    category: "all",
+    id: "hinketsu-series-1",
+    title: "貧血ミニ特集 1/3（そのだるさ、貧血かもしれません）",
+    category: "series",
     months: "all",
-    duration: 11,
-    render: () => diseaseCard({
-      kicker: "健診で貧血を指摘された方へ",
-      headline: "健診の「貧血」、そのままにしていませんか？",
-      rows: [
-        { label: "健診で", text: "貧血の指摘・だるさ・立ちくらみ・息切れ" },
-        { label: "放置すると", text: "胃や大腸からの出血が隠れていることがあります", emphasis: true },
-        { label: "当院でできること", text: "血液検査に加え、<em>内視鏡</em>で出血源を確認し原因から治療します" }
-      ],
-      cta: "指摘を受けた方は一度ご相談を"
-    })
+    duration: 10,
+    image: "images/hinketsu_fura.jpg",
+    tone: "green",
+    render: () => `
+      ${seriesBadge("貧血ミニ特集 1/3")}
+      <div class="kicker">貧血ミニ特集</div>
+      <div class="headline small">そのだるさ、貧血かもしれません</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>だるい・疲れやすい</div>
+        <div class="point"><span class="dot"></span>立ちくらみ・息切れ</div>
+        <div class="point"><span class="dot"></span>健診で貧血を指摘された</div>
+      </div>
+    `
+  },
+  {
+    id: "hinketsu-series-2",
+    title: "貧血ミニ特集 2/3（出血がかくれていることも）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    theme: "bold",
+    tone: "green",
+    render: () => `
+      ${seriesBadge("貧血ミニ特集 2/3")}
+      <div class="kicker">貧血ミニ特集</div>
+      <div class="headline small">貧血の陰に、出血がかくれていることも</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>胃や大腸からの出血が原因のことがあります</div>
+        <div class="point"><span class="dot"></span>特に男性の貧血は、一度検査での確認をおすすめします</div>
+      </div>
+    `
+  },
+  {
+    id: "hinketsu-series-3",
+    title: "貧血ミニ特集 3/3（まとめ）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    tone: "green",
+    render: () => `
+      ${seriesBadge("貧血ミニ特集 3/3")}
+      <div class="kicker">貧血ミニ特集</div>
+      <div class="headline small">血液検査と内視鏡で、原因を調べられます</div>
+      <div class="dc-cta">健診で指摘された方は、お早めに</div>
+    `
   },
   {
     id: "ji-series-1",
@@ -1341,6 +1537,83 @@ const SLIDES = [
         <div class="point"><span class="dot"></span>胃カメラ・大腸カメラを組み合わせた人間ドックを実施しています</div>
         <div class="point"><span class="dot"></span>詳しくは受付、または当院ホームページをご覧ください</div>
       </div>
+    `
+  },
+  {
+    id: "dock-series-1",
+    title: "人間ドック特集 1/5（からだの総点検）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    tone: "navy",
+    render: () => `
+      ${seriesBadge("人間ドック特集 1/5")}
+      <div class="kicker">人間ドック特集</div>
+      <div class="headline small">からだの総点検、していますか？</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>症状が出る前に見つける。それが人間ドックの役割です</div>
+      </div>
+    `
+  },
+  {
+    id: "dock-series-2",
+    title: "人間ドック特集 2/5（章扉：当院の人間ドック）",
+    category: "series",
+    months: "all",
+    duration: 5,
+    theme: "bold",
+    tone: "navy",
+    centered: true,
+    render: () => chapterSlide("人間ドック特集", "当院の人間ドック")
+  },
+  {
+    id: "dock-series-3",
+    title: "人間ドック特集 3/5（胃カメラ・大腸カメラ）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    image: "images/naishikyo.jpg",
+    tone: "navy",
+    render: () => `
+      ${seriesBadge("人間ドック特集 3/5")}
+      <div class="kicker">人間ドック特集</div>
+      <div class="headline small">胃カメラ・大腸カメラを組み合わせられます</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>内視鏡専門医＋AI支援の検査を、ドックでも</div>
+      </div>
+    `
+  },
+  {
+    id: "dock-series-4",
+    title: "人間ドック特集 4/5（おすすめの方）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    tone: "navy",
+    render: () => `
+      ${seriesBadge("人間ドック特集 4/5")}
+      <div class="kicker">人間ドック特集</div>
+      <div class="headline small">こんな方に、おすすめです</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>35歳を過ぎて、内視鏡を受けたことがない</div>
+        <div class="point"><span class="dot"></span>ご家族に胃がん・大腸がんの方がいる</div>
+        <div class="point"><span class="dot"></span>健診の結果が気になっている</div>
+      </div>
+    `
+  },
+  {
+    id: "dock-series-5",
+    title: "人間ドック特集 5/5（まとめ）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    image: "photos/photo_echo.jpg",
+    tone: "navy",
+    render: () => `
+      ${seriesBadge("人間ドック特集 5/5")}
+      <div class="kicker">人間ドック特集</div>
+      <div class="headline small">年に1度の、からだへの投資です</div>
+      <div class="dc-cta">詳しくは受付・当院ホームページへ</div>
     `
   },
   {
@@ -1870,21 +2143,56 @@ const SLIDES = [
     `
   },
   {
-    id: "heatstroke",
-    title: "熱中症",
+    id: "necchusho-series-1",
+    title: "熱中症ミニ番組 1/3（そのめまい、熱中症かも）",
     category: "seasonal",
     months: [6, 7, 8, 9],
-    duration: 11,
+    duration: 10,
     tone: "summer",
     poster: "posters/poster_heatstroke.jpg",
     posterTextSide: "left",
     render: () => `
-      <div class="kicker">季節のお知らせ</div>
-      <div class="headline small">熱中症にご注意ください</div>
+      ${seriesBadge("熱中症ミニ番組 1/3")}
+      <div class="kicker">熱中症ミニ番組</div>
+      <div class="headline small">そのめまい、熱中症かも</div>
       <div class="point-list">
-        <div class="point"><span class="dot"></span>こまめな<em>水分補給</em>を心がけましょう</div>
-        <div class="point"><span class="dot"></span>室内でも冷房を上手にご利用ください</div>
-        <div class="point"><span class="dot"></span>ご高齢の方は特にご注意ください</div>
+        <div class="point"><span class="dot"></span>めまい・頭痛・だるさは、熱中症のサインのことがあります</div>
+      </div>
+    `
+  },
+  {
+    id: "necchusho-series-2",
+    title: "熱中症ミニ番組 2/3（水分と塩分）",
+    category: "seasonal",
+    months: [6, 7, 8, 9],
+    duration: 10,
+    theme: "bold",
+    tone: "summer",
+    render: () => `
+      ${seriesBadge("熱中症ミニ番組 2/3")}
+      <div class="kicker">熱中症ミニ番組</div>
+      <div class="headline small">まずは、涼しい場所で水分と塩分を</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>こまめな水分補給と、涼しい環境が第一です</div>
+        <div class="point"><span class="dot"></span>室内でも油断せず、冷房を上手に使いましょう</div>
+      </div>
+    `
+  },
+  {
+    id: "necchusho-series-3",
+    title: "熱中症ミニ番組 3/3（受診・救急要請）",
+    category: "seasonal",
+    months: [6, 7, 8, 9],
+    duration: 10,
+    theme: "bold",
+    tone: "summer",
+    render: () => `
+      ${seriesBadge("熱中症ミニ番組 3/3")}
+      <div class="kicker">熱中症ミニ番組</div>
+      <div class="headline small">こんな時は、ためらわず受診を</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>水分がとれない・ぐったりしている・意識がおかしい</div>
+        <div class="point"><span class="dot"></span>重い症状のときは、ためらわず救急要請（119番）を</div>
       </div>
     `
   },
