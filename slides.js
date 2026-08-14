@@ -1362,6 +1362,152 @@ const SLIDES = [
     `
   },
   {
+    id: "fd-series-1",
+    title: "機能性ディスペプシア（FD）特集 1/4（胃もたれ・すぐ満腹）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    image: "images/fd_stomach.jpg",
+    tone: "green",
+    render: () => `
+      ${seriesBadge("機能性ディスペプシア（FD）特集 1/4")}
+      <div class="kicker">機能性ディスペプシア（FD）特集</div>
+      <div class="headline small">胃もたれ・すぐ満腹。でも「異常なし」？</div>
+      <div class="sub">検査では異常がないのに、胃の不調が続く状態です</div>
+    `
+  },
+  {
+    id: "fd-series-2",
+    title: "機能性ディスペプシア（FD）特集 2/4（章扉：機能性ディスペプシア（FD）とは）",
+    category: "series",
+    months: "all",
+    duration: 5,
+    theme: "bold",
+    tone: "green",
+    centered: true,
+    render: () => chapterSlide("機能性ディスペプシア（FD）特集", "機能性ディスペプシア（FD）とは")
+  },
+  {
+    id: "fd-series-3",
+    title: "機能性ディスペプシア（FD）特集 3/4（胃の働きの問題）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    tone: "green",
+    render: () => `
+      ${seriesBadge("機能性ディスペプシア（FD）特集 3/4")}
+      <div class="kicker">機能性ディスペプシア（FD）特集</div>
+      <div class="headline small">胃の「働き」の問題で起こる不調です</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>胃の動きや知覚が敏感になることで起こると考えられています</div>
+        <div class="point"><span class="dot"></span>ストレスや生活リズムとも関わりがあります</div>
+      </div>
+    `
+  },
+  {
+    id: "fd-series-4",
+    title: "機能性ディスペプシア（FD）特集 4/4（まとめ）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    image: "images/gastro.jpg",
+    tone: "green",
+    render: () => `
+      ${seriesBadge("機能性ディスペプシア（FD）特集 4/4")}
+      <div class="kicker">機能性ディスペプシア（FD）特集</div>
+      <div class="headline small">まずは胃カメラで、ほかの病気がないかを確認</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>そのうえで、お薬や生活の工夫で改善を目指します</div>
+      </div>
+      <div class="dc-cta">IBS・FD専門外来へご相談を</div>
+    `
+  },
+  {
+    id: "sign-series-1",
+    title: "からだからのサイン特集 1/5（見逃していませんか）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    tone: "navy",
+    render: () => `
+      ${seriesBadge("からだからのサイン特集 1/5")}
+      <div class="kicker">からだからのサイン特集</div>
+      <div class="headline small">からだからのサイン、見逃していませんか？</div>
+      <div class="sub">痛みだけが、受診のきっかけではありません</div>
+    `
+  },
+  {
+    id: "sign-series-2",
+    title: "からだからのサイン特集 2/5（黒い便）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    theme: "bold",
+    tone: "navy",
+    render: () => `
+      ${seriesBadge("からだからのサイン特集 2/5")}
+      <div class="kicker">からだからのサイン特集</div>
+      <div class="headline small">黒い便が、出た</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>胃や十二指腸からの出血で、便が黒くなることがあります</div>
+        <div class="point"><span class="dot"></span>一度、胃カメラでの確認をおすすめします</div>
+      </div>
+    `
+  },
+  {
+    id: "sign-series-3",
+    title: "からだからのサイン特集 3/5（体重が減る）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    image: "images/sign_taiju.jpg",
+    tone: "navy",
+    render: () => `
+      ${seriesBadge("からだからのサイン特集 3/5")}
+      <div class="kicker">からだからのサイン特集</div>
+      <div class="headline small">ダイエットしていないのに、体重が減る</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>消化器の病気がかくれていることがあります</div>
+        <div class="point"><span class="dot"></span>気になる減り方は、ご相談ください</div>
+      </div>
+    `
+  },
+  {
+    id: "sign-series-4",
+    title: "からだからのサイン特集 4/5（家族歴）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    image: "images/sign_family.jpg",
+    tone: "navy",
+    render: () => `
+      ${seriesBadge("からだからのサイン特集 4/5")}
+      <div class="kicker">からだからのサイン特集</div>
+      <div class="headline small">ご家族に、胃がん・大腸がんの方がいる</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>ご家族に病歴のある方は、リスクが高いとされています</div>
+        <div class="point"><span class="dot"></span>症状がなくても、内視鏡検査を検討しましょう</div>
+      </div>
+    `
+  },
+  {
+    id: "sign-series-5",
+    title: "からだからのサイン特集 5/5（まとめ）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    tone: "navy",
+    render: () => `
+      ${seriesBadge("からだからのサイン特集 5/5")}
+      <div class="kicker">からだからのサイン特集</div>
+      <div class="headline small">サインに気づいたら、内視鏡で確認を</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>当日の胃カメラ相談・毎日の血便相談に対応しています</div>
+      </div>
+      <div class="dc-cta">消化器内科へお気軽にどうぞ</div>
+    `
+  },
+  {
     id: "geri-suibun",
     title: "嘔吐・下痢のときの水分補給",
     category: "all",
@@ -1994,6 +2140,184 @@ const SLIDES = [
         <div class="point"><span class="dot"></span>待合室は内科と分けています</div>
       </div>
       <div class="dc-cta">婦人科へお気軽にご相談を</div>
+    `
+  },
+  {
+    id: "seiritsu-series-1",
+    title: "生理痛特集 1/4（寝込むのは当たり前ではありません）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    image: "images/seiri_pain.jpg",
+    tone: "rose",
+    render: () => `
+      ${seriesBadge("生理痛特集 1/4")}
+      <div class="kicker">生理痛特集</div>
+      <div class="headline small">生理痛で寝込むのは、「当たり前」ではありません</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>毎月、痛み止めが手放せない</div>
+        <div class="point"><span class="dot"></span>学校や仕事を休むことがある</div>
+      </div>
+    `
+  },
+  {
+    id: "seiritsu-series-2",
+    title: "生理痛特集 2/4（章扉：月経困難症）",
+    category: "series",
+    months: "all",
+    duration: 5,
+    theme: "bold",
+    tone: "rose",
+    centered: true,
+    render: () => chapterSlide("生理痛特集", "月経困難症")
+  },
+  {
+    id: "seiritsu-series-3",
+    title: "生理痛特集 3/4（治療できる症状）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    theme: "bold",
+    tone: "rose",
+    render: () => `
+      ${seriesBadge("生理痛特集 3/4")}
+      <div class="kicker">生理痛特集</div>
+      <div class="headline small">それは、治療できる症状です</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>日常生活にさしつかえる生理痛は「月経困難症」と呼ばれます</div>
+        <div class="point"><span class="dot"></span>【放置すると】背景に子宮内膜症などがかくれていることがあります</div>
+      </div>
+    `
+  },
+  {
+    id: "seiritsu-series-4",
+    title: "生理痛特集 4/4（まとめ）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    tone: "rose",
+    render: () => `
+      ${seriesBadge("生理痛特集 4/4")}
+      <div class="kicker">生理痛特集</div>
+      <div class="headline small">がまんしないで、相談してください</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>痛み止めの使い方や、ピルなどの選択肢があります</div>
+      </div>
+      <div class="dc-cta">女性医師が診療しています</div>
+    `
+  },
+  {
+    id: "pms-series-1",
+    title: "PMS特集 1/4（自分じゃないみたい）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    image: "images/pms_mood.jpg",
+    tone: "rose",
+    render: () => `
+      ${seriesBadge("PMS特集 1/4")}
+      <div class="kicker">PMS特集</div>
+      <div class="headline small">生理前になると、自分じゃないみたい</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>イライラする・涙もろくなる</div>
+        <div class="point"><span class="dot"></span>からだが重い・眠くてたまらない</div>
+      </div>
+    `
+  },
+  {
+    id: "pms-series-2",
+    title: "PMS特集 2/4（章扉：PMS（月経前症候群）とは）",
+    category: "series",
+    months: "all",
+    duration: 5,
+    theme: "bold",
+    tone: "rose",
+    centered: true,
+    render: () => chapterSlide("PMS特集", "PMS（月経前症候群）とは")
+  },
+  {
+    id: "pms-series-3",
+    title: "PMS特集 3/4（こころとからだの不調）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    tone: "rose",
+    render: () => `
+      ${seriesBadge("PMS特集 3/4")}
+      <div class="kicker">PMS特集</div>
+      <div class="headline small">ホルモンの変動で起こる、こころとからだの不調です</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>生理の3〜10日ほど前から始まり、生理が来るとやわらぐのが特徴です</div>
+        <div class="point"><span class="dot"></span>「性格のせい」ではありません</div>
+      </div>
+    `
+  },
+  {
+    id: "pms-series-4",
+    title: "PMS特集 4/4（まとめ）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    tone: "rose",
+    render: () => `
+      ${seriesBadge("PMS特集 4/4")}
+      <div class="kicker">PMS特集</div>
+      <div class="headline small">つらさは、やわらげられます</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>生活の工夫や、お薬・ピルなどの選択肢があります</div>
+      </div>
+      <div class="dc-cta">お一人で抱え込まず、婦人科へ</div>
+    `
+  },
+  {
+    id: "keiketsu-series-1",
+    title: "経血量が多い方へ 1/3（多いかも）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    image: "images/kata_geketsu.jpg",
+    tone: "rose",
+    render: () => `
+      ${seriesBadge("経血量が多い方へ 1/3")}
+      <div class="kicker">経血量が多い方へ</div>
+      <div class="headline small">経血の量、多いかも？と思ったら</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>昼でも夜用が手放せない</div>
+        <div class="point"><span class="dot"></span>1時間ごとに交換が必要</div>
+        <div class="point"><span class="dot"></span>レバーのようなかたまりが出る</div>
+      </div>
+    `
+  },
+  {
+    id: "keiketsu-series-2",
+    title: "経血量が多い方へ 2/3（体質と思い込まないで）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    theme: "bold",
+    tone: "rose",
+    render: () => `
+      ${seriesBadge("経血量が多い方へ 2/3")}
+      <div class="kicker">経血量が多い方へ</div>
+      <div class="headline small">「体質」と思い込まないでください</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>貧血の原因になります</div>
+        <div class="point"><span class="dot"></span>【放置すると】子宮筋腫などの病気がかくれていることがあります</div>
+      </div>
+    `
+  },
+  {
+    id: "keiketsu-series-3",
+    title: "経血量が多い方へ 3/3（まとめ）",
+    category: "series",
+    months: "all",
+    duration: 10,
+    tone: "rose",
+    render: () => `
+      ${seriesBadge("経血量が多い方へ 3/3")}
+      <div class="kicker">経血量が多い方へ</div>
+      <div class="headline small">婦人科で、原因を調べられます</div>
+      <div class="dc-cta">女性医師がお話を伺います。お気軽にどうぞ</div>
     `
   },
   {
