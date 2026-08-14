@@ -2575,48 +2575,176 @@ const SLIDES = [
     `
   },
   {
-    id: "flu-vaccine",
-    title: "インフルエンザワクチン",
+    id: "flu-series-1",
+    title: "インフルエンザ特集 1/4（季節が近づいています）",
     category: "seasonal",
     months: [10, 11, 12],
-    duration: 12,
-    tone: "winter",
+    duration: 10,
+    tone: "autumn",
     poster: "posters/poster_flu.jpg",
     posterTextSide: "left",
     render: () => `
-      <div class="kicker">季節のお知らせ</div>
-      <div class="headline small">インフルエンザワクチンのご案内</div>
+      ${seriesBadge("インフルエンザ特集 1/4")}
+      <div class="kicker">インフルエンザ特集</div>
+      <div class="headline small">今年も、インフルエンザの季節が近づいています</div>
       <div class="point-list">
-        <div class="point"><span class="dot"></span>10月ごろから<em>接種</em>を開始しています</div>
-        <div class="point"><span class="dot"></span>ご予約・当日の接種については受付までお尋ねください</div>
-        <div class="point"><span class="dot"></span>手洗い・うがいも引き続き心がけましょう</div>
+        <div class="point"><span class="dot"></span>接種は10月ごろから始まります</div>
       </div>
     `
   },
   {
-    id: "kafun",
-    title: "花粉症・アレルギー",
+    id: "flu-series-2",
+    title: "インフルエンザ特集 2/4（接種のタイミング）",
     category: "seasonal",
-    months: [2, 3, 4],
-    duration: 11,
-    image: "images/kafun.jpg",
+    months: [10, 11, 12],
+    duration: 10,
+    theme: "bold",
+    tone: "autumn",
     render: () => `
-      <div class="kicker">季節のお知らせ</div>
-      <div class="headline small"><em>花粉症</em>・アレルギーのご相談</div>
-      <div class="sub">つらくなる前に、お早めにご相談ください。</div>
+      ${seriesBadge("インフルエンザ特集 2/4")}
+      <div class="kicker">インフルエンザ特集</div>
+      <div class="headline small">接種のタイミング、逃さないで</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>効果が出るまで2週間ほどかかるとされています</div>
+        <div class="point"><span class="dot"></span>流行が本格化する前の接種がすすめられています</div>
+      </div>
     `
   },
   {
-    id: "norovirus",
-    title: "感染性胃腸炎",
+    id: "flu-series-3",
+    title: "インフルエンザ特集 3/4（予約・当日接種）",
+    category: "seasonal",
+    months: [10, 11, 12],
+    duration: 10,
+    theme: "bold",
+    tone: "autumn",
+    render: () => `
+      ${seriesBadge("インフルエンザ特集 3/4")}
+      <div class="kicker">インフルエンザ特集</div>
+      <div class="headline small">予約・当日接種については、受付へ</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>ご家族での接種も、ご相談ください</div>
+      </div>
+    `
+  },
+  {
+    id: "flu-series-4",
+    title: "インフルエンザ特集 4/4（手洗い・うがい・マスク）",
+    category: "seasonal",
+    months: [10, 11, 12],
+    duration: 10,
+    theme: "bold",
+    tone: "autumn",
+    render: () => `
+      ${seriesBadge("インフルエンザ特集 4/4")}
+      <div class="kicker">インフルエンザ特集</div>
+      <div class="headline small">手洗い・うがい・マスクも、引き続き有効です</div>
+      <div class="sub">詳しくは受付・スタッフまで</div>
+    `
+  },
+  {
+    id: "ichoen-series-1",
+    title: "感染性胃腸炎特集 1/3（冬の嘔吐・下痢）",
     category: "seasonal",
     months: [11, 12, 1, 2],
-    duration: 11,
+    duration: 10,
+    theme: "bold",
+    tone: "winter",
+    render: () => `
+      ${seriesBadge("感染性胃腸炎特集 1/3")}
+      <div class="kicker">感染性胃腸炎特集</div>
+      <div class="headline small">冬の嘔吐・下痢、あわてないで</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>ノロウイルスなどの感染性胃腸炎が流行する季節です</div>
+      </div>
+    `
+  },
+  {
+    id: "ichoen-series-2",
+    title: "感染性胃腸炎特集 2/3（脱水と感染の広がり）",
+    category: "seasonal",
+    months: [11, 12, 1, 2],
+    duration: 10,
+    theme: "bold",
+    tone: "winter",
+    image: "images/suibun.jpg",
+    render: () => `
+      ${seriesBadge("感染性胃腸炎特集 2/3")}
+      <div class="kicker">感染性胃腸炎特集</div>
+      <div class="headline small">ご家庭では、脱水と感染の広がりに注意</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>少量ずつ、こまめな水分補給を</div>
+        <div class="point"><span class="dot"></span>調理や看病のあとは、せっけんでの手洗いを</div>
+      </div>
+    `
+  },
+  {
+    id: "ichoen-series-3",
+    title: "感染性胃腸炎特集 3/3（水分がとれないとき）",
+    category: "seasonal",
+    months: [11, 12, 1, 2],
+    duration: 10,
+    theme: "bold",
+    tone: "winter",
     image: "images/tearai.jpg",
     render: () => `
-      <div class="kicker">季節のお知らせ</div>
-      <div class="headline small"><em>感染性胃腸炎</em>にご注意ください</div>
-      <div class="sub">こまめな手洗いにご協力をお願いいたします。</div>
+      ${seriesBadge("感染性胃腸炎特集 3/3")}
+      <div class="kicker">感染性胃腸炎特集</div>
+      <div class="headline small">水分がとれないときは、受診を</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>ぐったりしている・尿が少ないときは、早めにご相談ください</div>
+      </div>
+    `
+  },
+  {
+    id: "kafun-series-1",
+    title: "花粉症特集 1/3（早めの対策）",
+    category: "seasonal",
+    months: [1, 2, 3, 4],
+    duration: 10,
+    theme: "bold",
+    tone: "spring",
+    image: "images/kafun.jpg",
+    render: () => `
+      ${seriesBadge("花粉症特集 1/3")}
+      <div class="kicker">花粉症特集</div>
+      <div class="headline small">今年の花粉、早めの対策を</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>症状が出る前からの治療開始がすすめられています</div>
+      </div>
+    `
+  },
+  {
+    id: "kafun-series-2",
+    title: "花粉症特集 2/3（症状に合わせた選択肢）",
+    category: "seasonal",
+    months: [1, 2, 3, 4],
+    duration: 10,
+    theme: "bold",
+    tone: "spring",
+    render: () => `
+      ${seriesBadge("花粉症特集 2/3")}
+      <div class="kicker">花粉症特集</div>
+      <div class="headline small">つらさを抑える、選択肢があります</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>飲み薬・点鼻薬・点眼薬など、症状に合わせて選べます</div>
+        <div class="point"><span class="dot"></span>眠くなりにくいお薬もあります</div>
+      </div>
+    `
+  },
+  {
+    id: "kafun-series-3",
+    title: "花粉症特集 3/3（毎年つらい方へ）",
+    category: "seasonal",
+    months: [1, 2, 3, 4],
+    duration: 10,
+    theme: "bold",
+    tone: "spring",
+    render: () => `
+      ${seriesBadge("花粉症特集 3/3")}
+      <div class="kicker">花粉症特集</div>
+      <div class="headline small">毎年つらい方こそ、ご相談ください</div>
+      <div class="sub">内科でご相談いただけます</div>
     `
   },
   {
@@ -2686,15 +2814,56 @@ const SLIDES = [
     `
   },
   {
-    id: "fever",
-    title: "発熱外来",
+    id: "kaze-series-1",
+    title: "かぜ・発熱ミニ特集 1/3（長引くかぜ）",
     category: "institutional",
     months: "all",
-    duration: 11,
+    duration: 10,
+    theme: "bold",
+    tone: "green",
     render: () => `
-      <div class="kicker">発熱外来</div>
-      <div class="headline small"><em>発熱</em>・かぜ症状の方もご相談ください</div>
-      <div class="sub">院内ではマスクの着用をお願いしております。</div>
+      ${seriesBadge("かぜ・発熱ミニ特集 1/3")}
+      <div class="kicker">かぜ・発熱ミニ特集</div>
+      <div class="headline small">そのかぜ、長引いていませんか？</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>せき・のどの痛み・発熱が続くときは、ご相談ください</div>
+      </div>
+    `
+  },
+  {
+    id: "kaze-series-2",
+    title: "かぜ・発熱ミニ特集 2/3（発熱のある方）",
+    category: "institutional",
+    months: "all",
+    duration: 10,
+    theme: "bold",
+    tone: "green",
+    render: () => `
+      ${seriesBadge("かぜ・発熱ミニ特集 2/3")}
+      <div class="kicker">かぜ・発熱ミニ特集</div>
+      <div class="headline small">発熱のある方も、受け入れています</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>院内ではマスクの着用をお願いします</div>
+        <div class="point"><span class="dot"></span>発熱のある方は、受付にお申し出ください</div>
+      </div>
+    `
+  },
+  {
+    id: "kaze-series-3",
+    title: "かぜ・発熱ミニ特集 3/3（2週間以上続くせき）",
+    category: "institutional",
+    months: "all",
+    duration: 10,
+    theme: "bold",
+    tone: "green",
+    render: () => `
+      ${seriesBadge("かぜ・発熱ミニ特集 3/3")}
+      <div class="kicker">かぜ・発熱ミニ特集</div>
+      <div class="headline small">「ただのかぜ」と思っても</div>
+      <div class="point-list">
+        <div class="point"><span class="dot"></span>2週間以上続くせきは、一度ご相談を</div>
+      </div>
+      <div class="sub">内科・発熱外来へ</div>
     `
   },
   {
