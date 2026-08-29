@@ -666,7 +666,7 @@
   body.waiting-visible #slides{ bottom:calc(8vh + var(--waiting-bar-height)); }
   #waiting-bar{
     position:absolute; left:0; right:0; bottom:8vh; height:var(--waiting-bar-height); z-index:3;
-    display:grid; grid-template-columns:1fr 1fr;
+    display:none; grid-template-columns:1fr 1fr;
     background:#fff;
     border-top:0.15vh solid rgba(44,42,38,0.22);
     color:#26231f;
@@ -675,6 +675,7 @@
     pointer-events:none;
   }
   body.waiting-visible #waiting-bar{
+    display:grid;
     opacity:1; visibility:visible; transform:translateY(0);
     transition:opacity 0.35s ease, transform 0.35s ease, visibility 0s linear 0s;
   }
@@ -1210,6 +1211,19 @@ const waitingDeptEls = {
 let waitingState = null;
 let waitingVisible = false;
 
+function hasWaitingDepartmentShape(dept){
+  return Boolean(dept && typeof dept === "object" && Array.isArray(dept.now) && Array.isArray(dept.next));
+}
+
+function hasValidWaitingPayload(data){
+  return Boolean(
+    data &&
+    typeof data === "object" &&
+    hasWaitingDepartmentShape(data.naika) &&
+    hasWaitingDepartmentShape(data.fujinka)
+  );
+}
+
 function normalizeWaitingNumbers(values){
   if (!Array.isArray(values)) return [];
   return values
@@ -1243,19 +1257,24 @@ function fillWaitingNumbers(root, field, numbers){
   });
 }
 
-function renderWaitingDepartment(name, dept){
+function renderWaitingDepartment(name, dept, showEmptyMessage){
   const root = waitingDeptEls[name];
   if (!root) return;
   const now = normalizeWaitingNumbers(dept && dept.now);
   const next = normalizeWaitingNumbers(dept && dept.next);
   fillWaitingNumbers(root, "now", now);
   fillWaitingNumbers(root, "next", next);
-  root.classList.toggle("is-empty", now.length === 0 && next.length === 0);
+  root.classList.toggle("is-empty", Boolean(showEmptyMessage));
 }
 
 function renderWaitingState(state){
-  renderWaitingDepartment("naika", state ? state.naika : null);
-  renderWaitingDepartment("fujinka", state ? state.fujinka : null);
+  const naikaNow = normalizeWaitingNumbers(state.naika.now);
+  const naikaNext = normalizeWaitingNumbers(state.naika.next);
+  const fujinkaNow = normalizeWaitingNumbers(state.fujinka.now);
+  const fujinkaNext = normalizeWaitingNumbers(state.fujinka.next);
+  const allEmpty = naikaNow.length === 0 && naikaNext.length === 0 && fujinkaNow.length === 0 && fujinkaNext.length === 0;
+  renderWaitingDepartment("naika", state.naika, allEmpty);
+  renderWaitingDepartment("fujinka", state.fujinka, allEmpty);
 }
 
 function waitingUpdatedAtMs(state){
@@ -1296,13 +1315,14 @@ function updateWaitingVisibility(){
 async function fetchWaitingState(){
   try {
     const res = await fetch("/api/waiting", {cache:"no-store"});
-    if (!res.ok){
+    const contentType = res.headers.get("Content-Type") || "";
+    if (!res.ok || !contentType.toLowerCase().includes("application/json")){
       waitingState = null;
       updateWaitingVisibility();
       return;
     }
     const data = await res.json();
-    if (!data || typeof data !== "object"){
+    if (!hasValidWaitingPayload(data)){
       waitingState = null;
       updateWaitingVisibility();
       return;
