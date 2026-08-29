@@ -126,6 +126,7 @@
   /* ---------- スライド共通（v14: 脱・中央揃え／左揃え非対称グリッド） ---------- */
   #slides{
     position:absolute; inset:0; top:0; bottom:8vh; z-index:1;
+    transition:bottom 0.35s ease;
   }
   .slide{
     --fit:1; /* オートフィット倍率（JSが内容量に応じて調整。既定は等倍） */
@@ -659,6 +660,60 @@
   }
   #progress.counter-mode #dots{ display:none; }
   #progress.counter-mode #progress-counter{ display:inline-block; }
+
+  /* ---------- 待合状況帯（院内LANローカル配信時のみ表示） ---------- */
+  :root{ --waiting-bar-height:9vh; }
+  body.waiting-visible #slides{ bottom:calc(8vh + var(--waiting-bar-height)); }
+  #waiting-bar{
+    position:absolute; left:0; right:0; bottom:8vh; height:var(--waiting-bar-height); z-index:3;
+    display:grid; grid-template-columns:1fr 1fr;
+    background:#fff;
+    border-top:0.15vh solid rgba(44,42,38,0.22);
+    color:#26231f;
+    opacity:0; visibility:hidden; transform:translateY(1vh);
+    transition:opacity 0.35s ease, transform 0.35s ease, visibility 0s linear 0.35s;
+    pointer-events:none;
+  }
+  body.waiting-visible #waiting-bar{
+    opacity:1; visibility:visible; transform:translateY(0);
+    transition:opacity 0.35s ease, transform 0.35s ease, visibility 0s linear 0s;
+  }
+  .waiting-dept{
+    min-width:0;
+    display:grid; grid-template-columns:minmax(15vw,0.92fr) minmax(0,1.1fr) minmax(0,1fr);
+    align-items:center; column-gap:1.7vw;
+    padding:0.85vh 2.5vw;
+  }
+  .waiting-dept + .waiting-dept{ border-left:0.15vh solid rgba(44,42,38,0.16); }
+  .waiting-title{ min-width:0; line-height:1.15; }
+  .waiting-title b{ display:block; font-size:2.45vh; font-weight:900; letter-spacing:0; }
+  .waiting-title span{ display:block; margin-top:0.35vh; font-size:1.35vh; font-weight:700; color:#706a60; letter-spacing:0; }
+  .waiting-call{ min-width:0; display:flex; align-items:baseline; gap:0.7vw; white-space:nowrap; }
+  .waiting-label{ font-size:1.55vh; font-weight:700; color:#706a60; flex:none; }
+  .waiting-numbers{
+    min-width:0;
+    display:flex; align-items:baseline; gap:0.6vw; overflow:hidden;
+    font-size:2.9vh; font-weight:900; line-height:1;
+    font-feature-settings:"tnum" 1; font-variant-numeric:tabular-nums;
+  }
+  .waiting-current .waiting-numbers{ font-size:5.1vh; color:#2b3a5c; }
+  .waiting-number{ display:inline-block; letter-spacing:0; }
+  .waiting-sep{ color:#aaa198; font-size:0.7em; font-weight:700; }
+  .waiting-empty{
+    display:none; grid-column:2 / 4;
+    font-size:1.9vh; font-weight:700; color:#706a60; line-height:1.35;
+  }
+  .waiting-dept.is-empty .waiting-call{ display:none; }
+  .waiting-dept.is-empty .waiting-empty{ display:block; }
+  @media (max-width:900px){
+    .waiting-dept{ grid-template-columns:minmax(0,1fr) minmax(0,1fr); row-gap:0.4vh; column-gap:1vw; padding:0.8vh 1.6vw; }
+    .waiting-title{ grid-column:1 / 3; }
+    .waiting-title b{ font-size:2vh; }
+    .waiting-title span{ font-size:1.15vh; }
+    .waiting-current .waiting-numbers{ font-size:3.4vh; }
+    .waiting-numbers{ font-size:2.2vh; }
+    .waiting-empty{ grid-column:1 / 3; font-size:1.55vh; }
+  }
 </style>
 </head>
 <body>
@@ -668,6 +723,38 @@
   <div id="sunday-banner">本日は休診日です</div>
   <div id="slides"></div>
   <div id="night-screen"></div>
+  <div id="waiting-bar" aria-live="polite" aria-hidden="true">
+    <section class="waiting-dept" data-waiting-dept="naika">
+      <div class="waiting-title">
+        <b>内科</b>
+        <span>受付 左側からお呼びします</span>
+      </div>
+      <div class="waiting-call waiting-current">
+        <span class="waiting-label">診察中</span>
+        <span class="waiting-numbers" data-waiting-field="now"></span>
+      </div>
+      <div class="waiting-call">
+        <span class="waiting-label">次の方</span>
+        <span class="waiting-numbers" data-waiting-field="next"></span>
+      </div>
+      <div class="waiting-empty">ただいま呼び出し中の方はいません</div>
+    </section>
+    <section class="waiting-dept" data-waiting-dept="fujinka">
+      <div class="waiting-title">
+        <b>産婦人科</b>
+        <span>受付 右側からお呼びします</span>
+      </div>
+      <div class="waiting-call waiting-current">
+        <span class="waiting-label">診察中</span>
+        <span class="waiting-numbers" data-waiting-field="now"></span>
+      </div>
+      <div class="waiting-call">
+        <span class="waiting-label">次の方</span>
+        <span class="waiting-numbers" data-waiting-field="next"></span>
+      </div>
+      <div class="waiting-empty">ただいま呼び出し中の方はいません</div>
+    </section>
+  </div>
   <footer id="footer">
     <div class="footer-left">
       <span class="clinic-name" id="footer-name"></span>
@@ -840,6 +927,7 @@ const activeSlides = buildWeightedRotation(filterSlides(effectiveMonth));
 const slidesRoot = document.getElementById("slides");
 const dotsRoot = document.getElementById("dots");
 const slideEls = [];
+const slideFitSelectors = [];
 
 const BG_PATTERNS = ["bg-pattern-a", "bg-pattern-b", "bg-pattern-c"];
 
@@ -1038,6 +1126,7 @@ activeSlides.forEach((s, i) => {
   }
   slidesRoot.appendChild(el);
   const colSelector = s.poster ? ".poster-text-col" : (s.image ? ".img-text-col" : null);
+  slideFitSelectors.push(colSelector);
   applyAutoFit(el, colSelector);
   slideEls.push(el);
 
@@ -1110,6 +1199,123 @@ function tick(){
 
 showSlide(currentIndex);
 
+// ---------- 待合状況帯（院内LANローカル配信時のみ表示） ----------
+const WAITING_REFRESH_MS = 30 * 1000;
+const WAITING_STALE_MS = 10 * 60 * 1000;
+const waitingBarEl = document.getElementById("waiting-bar");
+const waitingDeptEls = {
+  naika: waitingBarEl ? waitingBarEl.querySelector('[data-waiting-dept="naika"]') : null,
+  fujinka: waitingBarEl ? waitingBarEl.querySelector('[data-waiting-dept="fujinka"]') : null
+};
+let waitingState = null;
+let waitingVisible = false;
+
+function normalizeWaitingNumbers(values){
+  if (!Array.isArray(values)) return [];
+  return values
+    .map(v => String(v).trim())
+    .filter(v => /^[0-9]{1,4}$/.test(v))
+    .slice(0, 12);
+}
+
+function fillWaitingNumbers(root, field, numbers){
+  const target = root.querySelector(`[data-waiting-field="${field}"]`);
+  if (!target) return;
+  target.textContent = "";
+  if (numbers.length === 0){
+    const empty = document.createElement("span");
+    empty.className = "waiting-number";
+    empty.textContent = "なし";
+    target.appendChild(empty);
+    return;
+  }
+  numbers.forEach((num, index) => {
+    if (index > 0){
+      const sep = document.createElement("span");
+      sep.className = "waiting-sep";
+      sep.textContent = "・";
+      target.appendChild(sep);
+    }
+    const el = document.createElement("span");
+    el.className = "waiting-number";
+    el.textContent = num + "番";
+    target.appendChild(el);
+  });
+}
+
+function renderWaitingDepartment(name, dept){
+  const root = waitingDeptEls[name];
+  if (!root) return;
+  const now = normalizeWaitingNumbers(dept && dept.now);
+  const next = normalizeWaitingNumbers(dept && dept.next);
+  fillWaitingNumbers(root, "now", now);
+  fillWaitingNumbers(root, "next", next);
+  root.classList.toggle("is-empty", now.length === 0 && next.length === 0);
+}
+
+function renderWaitingState(state){
+  renderWaitingDepartment("naika", state ? state.naika : null);
+  renderWaitingDepartment("fujinka", state ? state.fujinka : null);
+}
+
+function waitingUpdatedAtMs(state){
+  if (!state) return null;
+  if (typeof state.updated_at === "number") return state.updated_at * 1000;
+  if (typeof state.updated_at_iso === "string"){
+    const parsed = Date.parse(state.updated_at_iso);
+    return Number.isFinite(parsed) ? parsed : null;
+  }
+  return null;
+}
+
+function isWaitingFresh(state){
+  if (!state || state.stale === true) return false;
+  const updatedAt = waitingUpdatedAtMs(state);
+  if (!updatedAt) return false;
+  return Date.now() - updatedAt <= WAITING_STALE_MS;
+}
+
+function refitSlidesAfterWaitingChange(){
+  requestAnimationFrame(() => {
+    slideEls.forEach((el, index) => {
+      applyAutoFit(el, slideFitSelectors[index] || null);
+    });
+  });
+}
+
+function updateWaitingVisibility(){
+  const shouldShow = Boolean(waitingBarEl && isWaitingFresh(waitingState) && !inNightMode);
+  document.body.classList.toggle("waiting-visible", shouldShow);
+  if (waitingBarEl) waitingBarEl.setAttribute("aria-hidden", shouldShow ? "false" : "true");
+  if (waitingVisible !== shouldShow){
+    waitingVisible = shouldShow;
+    refitSlidesAfterWaitingChange();
+  }
+}
+
+async function fetchWaitingState(){
+  try {
+    const res = await fetch("/api/waiting", {cache:"no-store"});
+    if (!res.ok){
+      waitingState = null;
+      updateWaitingVisibility();
+      return;
+    }
+    const data = await res.json();
+    if (!data || typeof data !== "object"){
+      waitingState = null;
+      updateWaitingVisibility();
+      return;
+    }
+    waitingState = data;
+    renderWaitingState(waitingState);
+    updateWaitingVisibility();
+  } catch (_err) {
+    waitingState = null;
+    updateWaitingVisibility();
+  }
+}
+
 // ---------- 夜間モード／日曜帯 ----------
 const nightScreenEl = document.getElementById("night-screen");
 const sundayBannerEl = document.getElementById("sunday-banner");
@@ -1145,6 +1351,7 @@ function setNightMode(on){
     slidesRoot.style.display = "";
     dotsRoot.style.visibility = "";
   }
+  updateWaitingVisibility();
 }
 
 function applyDayNightMode(){
@@ -1172,6 +1379,9 @@ if (!inNightMode){
   scheduleNext(); // 起動時が通常モードならローテーションを開始
 }
 setInterval(applyDayNightMode, 60 * 1000); // 1分おきに境界時刻をチェック
+fetchWaitingState();
+setInterval(fetchWaitingState, WAITING_REFRESH_MS);
+setInterval(updateWaitingVisibility, WAITING_REFRESH_MS);
 
 // ---------- フッター／夜間画面のライブ時計 ----------
 function updateClock(){
