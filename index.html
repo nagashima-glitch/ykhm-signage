@@ -663,21 +663,32 @@
 
   /* ---------- 待合状況帯（院内LANローカル配信時のみ表示） ---------- */
   :root{ --waiting-bar-height:9vh; }
-  body.waiting-visible #slides{ bottom:calc(8vh + var(--waiting-bar-height)); }
+  body.waiting-visible #slides{
+    bottom:17vh;
+    bottom:calc(8vh + var(--waiting-bar-height));
+  }
   #waiting-bar{
-    position:absolute; left:0; right:0; bottom:8vh; height:var(--waiting-bar-height); z-index:3;
+    position:absolute; left:0; right:0; bottom:8vh; height:0; min-height:0; max-height:0; z-index:3;
     display:none; grid-template-columns:1fr 1fr;
     background:#fff;
     border-top:0.15vh solid rgba(44,42,38,0.22);
     color:#26231f;
     opacity:0; visibility:hidden; transform:translateY(1vh);
     transition:opacity 0.35s ease, transform 0.35s ease, visibility 0s linear 0.35s;
+    overflow:hidden;
     pointer-events:none;
   }
   body.waiting-visible #waiting-bar{
     display:grid;
+    height:9vh;
+    height:var(--waiting-bar-height);
+    min-height:9vh;
+    min-height:var(--waiting-bar-height);
+    max-height:9vh;
+    max-height:var(--waiting-bar-height);
     opacity:1; visibility:visible; transform:translateY(0);
     transition:opacity 0.35s ease, transform 0.35s ease, visibility 0s linear 0s;
+    overflow:visible;
   }
   .waiting-dept{
     min-width:0;
@@ -1203,6 +1214,8 @@ showSlide(currentIndex);
 // ---------- 待合状況帯（院内LANローカル配信時のみ表示） ----------
 const WAITING_REFRESH_MS = 30 * 1000;
 const WAITING_STALE_MS = 10 * 60 * 1000;
+const WAITING_BAR_HEIGHT_CSS = "9vh";
+const WAITING_SLIDES_BOTTOM_CSS = "17vh";
 const waitingBarEl = document.getElementById("waiting-bar");
 const waitingDeptEls = {
   naika: waitingBarEl ? waitingBarEl.querySelector('[data-waiting-dept="naika"]') : null,
@@ -1302,8 +1315,20 @@ function refitSlidesAfterWaitingChange(){
   });
 }
 
+function applyWaitingLayout(shouldShow){
+  if (waitingBarEl){
+    waitingBarEl.style.display = shouldShow ? "grid" : "none";
+    waitingBarEl.style.height = shouldShow ? WAITING_BAR_HEIGHT_CSS : "0";
+    waitingBarEl.style.minHeight = shouldShow ? WAITING_BAR_HEIGHT_CSS : "0";
+    waitingBarEl.style.maxHeight = shouldShow ? WAITING_BAR_HEIGHT_CSS : "0";
+    waitingBarEl.style.overflow = shouldShow ? "visible" : "hidden";
+  }
+  slidesRoot.style.bottom = shouldShow ? WAITING_SLIDES_BOTTOM_CSS : "";
+}
+
 function updateWaitingVisibility(){
   const shouldShow = Boolean(waitingBarEl && isWaitingFresh(waitingState) && !inNightMode);
+  applyWaitingLayout(shouldShow);
   document.body.classList.toggle("waiting-visible", shouldShow);
   if (waitingBarEl) waitingBarEl.setAttribute("aria-hidden", shouldShow ? "false" : "true");
   if (waitingVisible !== shouldShow){
