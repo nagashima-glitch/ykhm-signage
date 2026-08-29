@@ -661,11 +661,128 @@
   #progress.counter-mode #dots{ display:none; }
   #progress.counter-mode #progress-counter{ display:inline-block; }
 
-  /* ---------- 待合状況帯（院内LANローカル配信時のみ表示） ---------- */
+  /* ---------- 待合状況（院内LANローカル配信時のみ表示） ---------- */
   :root{ --waiting-bar-height:9vh; }
   body.waiting-visible #slides{
     bottom:17vh;
     bottom:calc(8vh + var(--waiting-bar-height));
+  }
+  #waiting-mega{
+    position:absolute; left:0; right:0; top:0; bottom:8vh; z-index:2;
+    display:grid; grid-template-columns:1fr 1fr;
+    background:#f7f2ea;
+    visibility:hidden; transform:scaleY(0.04);
+    transform-origin:center bottom;
+    transition:transform 0.5s cubic-bezier(0.18, 0.84, 0.26, 1), visibility 0s linear 0.5s;
+    pointer-events:none; overflow:hidden;
+  }
+  body.waiting-mega-active #slides{
+    opacity:0; visibility:hidden; pointer-events:none;
+  }
+  #waiting-mega::before{
+    content:""; position:absolute; top:5vh; bottom:5vh; left:50%; z-index:2;
+    width:0.15vh; background:rgba(255,255,255,0.44); transform:translateX(-50%);
+  }
+  body.waiting-mega-active #waiting-mega{
+    visibility:visible; transform:scaleY(1);
+    transition:transform 0.5s cubic-bezier(0.18, 0.84, 0.26, 1), visibility 0s linear 0s;
+    pointer-events:auto;
+  }
+  .waiting-mega-panel{
+    min-width:0; position:relative;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    padding:6vh 4.8vw; text-align:center; overflow:hidden;
+    color:#f9f5ed;
+  }
+  .waiting-mega-panel::after{
+    content:""; position:absolute; inset:4vh 3.2vw;
+    border:0.16vh solid rgba(255,255,255,0.24);
+    pointer-events:none;
+  }
+  .waiting-mega-panel.naika{
+    background:#2c5f4a;
+  }
+  .waiting-mega-panel.fujinka{
+    background:#7d4460;
+  }
+  .waiting-mega-stagger{
+    opacity:0; transform:translateY(2.2vh);
+    transition:opacity 0.42s ease, transform 0.42s ease;
+    transition-delay:calc(var(--stagger, 0) * 0.15s + 0.08s);
+  }
+  body.waiting-mega-active .waiting-mega-stagger{
+    opacity:1; transform:translateY(0);
+  }
+  .waiting-mega-title{
+    font-size:5.4vh; font-weight:900; line-height:1.1; letter-spacing:0.08em;
+  }
+  .waiting-mega-route{
+    margin-top:1.5vh; font-size:2.35vh; font-weight:700; line-height:1.45;
+    color:#f4eee6; letter-spacing:0.04em;
+  }
+  .waiting-mega-current{
+    margin-top:5vh; width:100%; display:flex; flex-direction:column; align-items:center;
+  }
+  .waiting-mega-current-label{
+    font-size:2.6vh; font-weight:700; color:#f4eee6;
+    letter-spacing:0.18em;
+  }
+  .waiting-mega-current-numbers{
+    margin-top:1.2vh; display:flex; align-items:baseline; justify-content:center;
+    gap:2.4vw; flex-wrap:wrap; width:100%;
+    font-feature-settings:"tnum" 1; font-variant-numeric:tabular-nums;
+  }
+  .waiting-mega-current-item{
+    display:inline-flex; align-items:baseline; justify-content:center; min-width:0;
+  }
+  .waiting-mega-num{
+    font-size:25vh; font-weight:900; line-height:0.86; letter-spacing:0;
+  }
+  .waiting-mega-unit{
+    margin-left:0.5vw; font-size:6vh; font-weight:900; line-height:1;
+  }
+  .waiting-mega-current-numbers.is-multi .waiting-mega-num{ font-size:18vh; }
+  .waiting-mega-current-numbers.is-many .waiting-mega-num{ font-size:13vh; }
+  .waiting-mega-current-none{
+    font-size:10vh; font-weight:900; line-height:1; color:#fffaf2;
+  }
+  .waiting-mega-next{
+    margin-top:4.2vh; min-height:5.4vh;
+    display:flex; align-items:baseline; justify-content:center; gap:1.2vw; flex-wrap:wrap;
+    font-size:4.2vh; font-weight:900; line-height:1.25;
+  }
+  .waiting-mega-next-label{
+    font-size:2.5vh; font-weight:700; color:#f4eee6;
+  }
+  .waiting-mega-next-list{
+    display:inline-flex; align-items:baseline; justify-content:center; gap:0.7vw; flex-wrap:wrap;
+    font-feature-settings:"tnum" 1; font-variant-numeric:tabular-nums;
+  }
+  .waiting-mega-next-item{ display:inline-block; }
+  .waiting-mega-sep{
+    color:rgba(255,255,255,0.52); font-size:0.78em; font-weight:700;
+  }
+  .waiting-mega-empty{
+    margin-top:5vh; max-width:38vw;
+    font-size:4.8vh; font-weight:900; line-height:1.35; color:#fffaf2;
+  }
+  @media (max-width:900px){
+    #waiting-mega{ grid-template-columns:1fr; }
+    #waiting-mega::before{ top:50%; bottom:auto; left:5vw; right:5vw; width:auto; height:0.15vh; transform:none; }
+    .waiting-mega-panel{ padding:4vh 6vw; }
+    .waiting-mega-panel::after{ inset:2vh 4vw; }
+    .waiting-mega-title{ font-size:4.2vh; }
+    .waiting-mega-route{ margin-top:0.8vh; font-size:1.9vh; }
+    .waiting-mega-current{ margin-top:2.4vh; }
+    .waiting-mega-current-label{ font-size:2vh; }
+    .waiting-mega-num{ font-size:13vh; }
+    .waiting-mega-unit{ font-size:4vh; }
+    .waiting-mega-current-numbers.is-multi .waiting-mega-num{ font-size:10vh; }
+    .waiting-mega-current-numbers.is-many .waiting-mega-num{ font-size:8vh; }
+    .waiting-mega-current-none{ font-size:6vh; }
+    .waiting-mega-next{ margin-top:2vh; font-size:3vh; }
+    .waiting-mega-next-label{ font-size:1.9vh; }
+    .waiting-mega-empty{ margin-top:3vh; max-width:82vw; font-size:3.4vh; }
   }
   #waiting-bar{
     position:absolute; left:0; right:0; bottom:8vh; height:0; min-height:0; max-height:0; z-index:3;
@@ -726,6 +843,14 @@
     .waiting-numbers{ font-size:2.2vh; }
     .waiting-empty{ grid-column:1 / 3; font-size:1.55vh; }
   }
+  @media (prefers-reduced-motion: reduce){
+    #waiting-mega, .waiting-mega-stagger{
+      transform:none !important; transition:none !important;
+    }
+    .waiting-mega-stagger{ opacity:1 !important; }
+    #waiting-mega{ visibility:hidden; }
+    body.waiting-mega-active #waiting-mega{ visibility:visible; }
+  }
 </style>
 </head>
 <body>
@@ -735,6 +860,7 @@
   <div id="sunday-banner">本日は休診日です</div>
   <div id="slides"></div>
   <div id="night-screen"></div>
+  <div id="waiting-mega" aria-live="polite" aria-hidden="true"></div>
   <div id="waiting-bar" aria-live="polite" aria-hidden="true">
     <section class="waiting-dept" data-waiting-dept="naika">
       <div class="waiting-title">
@@ -800,6 +926,9 @@
    以下はエンジン部分です。通常は編集不要です。
    ===================================================================== */
 
+// 待合番号の全画面スライド設定。every=0で無効・1で毎枚後・2で2枚ごと、duration=表示秒数。
+const WAITING_MEGA = { every: 1, duration: 6 };
+
 // ---------- ユーティリティ ----------
 function formatNum(n){
   return Number(n).toLocaleString("ja-JP");
@@ -859,6 +988,7 @@ const speedParam = parseFloat(params.get("speed")) || 1;
 const startSlideParam = params.get("slide");
 const freezeParam = params.get("freeze") === "1"; // プレビュー用：指定スライドのままローテーションを止める
 const forceNoticeParam = params.get("forcenotice") === "1"; // プレビュー用：NOTICE.enabled=falseでも notice スライドを表示する
+const waitingMegaParam = params.get("mega") === "1"; // 待合番号メガスライドの単体固定表示（検証用）
 
 // 整数のみ許可（小数不可）のURLパラメータを読む。範囲外・小数・非数値は null（＝実際の値を使う）
 function parseIntParamStrict(name, min, max){
@@ -1180,6 +1310,15 @@ if (startSlideParam){
 }
 
 let rotationTimer = null;
+let rotationTimerGeneration = 0;
+
+function clearRotationTimer(){
+  if (rotationTimer){
+    clearTimeout(rotationTimer);
+    rotationTimer = null;
+  }
+  rotationTimerGeneration++;
+}
 
 function showSlide(index){
   slideEls.forEach((el, i) => el.classList.toggle("active", i === index));
@@ -1188,7 +1327,8 @@ function showSlide(index){
 }
 
 function scheduleNext(){
-  if (freezeParam) return; // プレビュー用：ローテーションを開始/再開しない
+  if (freezeParam || waitingMegaParam || waitingMegaActive) return; // プレビュー停止・メガ単体ではローテーションを開始/再開しない
+  clearRotationTimer();
   let durSec = 12;
   try {
     durSec = activeSlides[currentIndex].duration || 12;
@@ -1196,17 +1336,29 @@ function scheduleNext(){
     console.error("duration取得エラー:", e);
   }
   const ms = Math.max(2000, (durSec * 1000) / speedParam);
-  rotationTimer = setTimeout(tick, ms);
+  const generation = rotationTimerGeneration;
+  rotationTimer = setTimeout(() => tick(generation), ms);
 }
 
-function tick(){
+function advanceToNextSlide(){
+  currentIndex = (currentIndex + 1) % Math.max(activeSlides.length, 1);
+  showSlide(currentIndex);
+  scheduleNext();
+}
+
+function tick(generation){
+  if (generation !== rotationTimerGeneration) return;
+  rotationTimer = null;
+  if (waitingMegaActive) return;
   try {
-    currentIndex = (currentIndex + 1) % Math.max(activeSlides.length, 1);
-    showSlide(currentIndex);
+    if (maybeShowWaitingMegaAfterSlide()){
+      return;
+    }
+    advanceToNextSlide();
   } catch (e){
     console.error("ローテーションエラー:", e);
+    scheduleNext();
   }
-  scheduleNext();
 }
 
 showSlide(currentIndex);
@@ -1216,13 +1368,21 @@ const WAITING_REFRESH_MS = 30 * 1000;
 const WAITING_STALE_MS = 10 * 60 * 1000;
 const WAITING_BAR_HEIGHT_CSS = "9vh";
 const WAITING_SLIDES_BOTTOM_CSS = "17vh";
+const WAITING_MEGA_EMPTY_STATE = {
+  naika: {now: [], next: []},
+  fujinka: {now: [], next: []}
+};
 const waitingBarEl = document.getElementById("waiting-bar");
+const waitingMegaEl = document.getElementById("waiting-mega");
 const waitingDeptEls = {
   naika: waitingBarEl ? waitingBarEl.querySelector('[data-waiting-dept="naika"]') : null,
   fujinka: waitingBarEl ? waitingBarEl.querySelector('[data-waiting-dept="fujinka"]') : null
 };
 let waitingState = null;
 let waitingVisible = false;
+let waitingMegaActive = false;
+let waitingMegaTimer = null;
+let slidesSinceWaitingMega = 0;
 
 function hasWaitingDepartmentShape(dept){
   return Boolean(dept && typeof dept === "object" && Array.isArray(dept.now) && Array.isArray(dept.next));
@@ -1268,6 +1428,140 @@ function fillWaitingNumbers(root, field, numbers){
     el.textContent = num + "番";
     target.appendChild(el);
   });
+}
+
+function buildWaitingMegaNumberItem(num, stagger){
+  return `<span class="waiting-mega-current-item waiting-mega-stagger" style="--stagger:${stagger}"><span class="waiting-mega-num">${num}</span><span class="waiting-mega-unit">番</span></span>`;
+}
+
+function buildWaitingMegaNextList(numbers, startStagger){
+  if (numbers.length === 0) return `<span class="waiting-mega-next-item waiting-mega-stagger" style="--stagger:${startStagger}">なし</span>`;
+  return numbers.map((num, index) => {
+    const sep = index > 0 ? `<span class="waiting-mega-sep">・</span>` : "";
+    return sep + `<span class="waiting-mega-next-item waiting-mega-stagger" style="--stagger:${startStagger + index}">${num}番</span>`;
+  }).join("");
+}
+
+function buildWaitingMegaDepartment(name, label, route, dept){
+  const now = normalizeWaitingNumbers(dept && dept.now);
+  const next = normalizeWaitingNumbers(dept && dept.next);
+  const empty = now.length === 0 && next.length === 0;
+  const currentClass = now.length >= 3 ? " is-many" : (now.length >= 2 ? " is-multi" : "");
+  const currentHtml = now.length === 0
+    ? `<span class="waiting-mega-current-none waiting-mega-stagger" style="--stagger:3">なし</span>`
+    : now.map((num, index) => buildWaitingMegaNumberItem(num, 3 + index)).join("");
+  const nextLabelStagger = 4 + Math.max(now.length, 1);
+  const bodyHtml = empty ? `
+      <div class="waiting-mega-empty waiting-mega-stagger" style="--stagger:2">ただいま呼び出し中の方はいません</div>
+    ` : `
+      <div class="waiting-mega-current">
+        <div class="waiting-mega-current-label waiting-mega-stagger" style="--stagger:2">診察中</div>
+        <div class="waiting-mega-current-numbers${currentClass}">${currentHtml}</div>
+      </div>
+      <div class="waiting-mega-next">
+        <span class="waiting-mega-next-label waiting-mega-stagger" style="--stagger:${nextLabelStagger}">次の方</span>
+        <span class="waiting-mega-next-list">${buildWaitingMegaNextList(next, nextLabelStagger + 1)}</span>
+      </div>
+    `;
+
+  return `
+    <section class="waiting-mega-panel ${name}">
+      <div class="waiting-mega-title waiting-mega-stagger" style="--stagger:0">${label}</div>
+      <div class="waiting-mega-route waiting-mega-stagger" style="--stagger:1">${route}</div>
+      ${bodyHtml}
+    </section>
+  `;
+}
+
+function renderWaitingMega(state){
+  if (!waitingMegaEl) return;
+  const source = hasValidWaitingPayload(state) ? state : WAITING_MEGA_EMPTY_STATE;
+  waitingMegaEl.innerHTML =
+    buildWaitingMegaDepartment("naika", "内科", "受付 左側からお呼びします", source.naika) +
+    buildWaitingMegaDepartment("fujinka", "産婦人科", "受付 右側からお呼びします", source.fujinka);
+}
+
+function waitingMegaEvery(){
+  const every = Math.floor(Number(WAITING_MEGA && WAITING_MEGA.every));
+  return Number.isFinite(every) ? Math.max(0, every) : 0;
+}
+
+function waitingMegaDurationMs(){
+  const duration = Number(WAITING_MEGA && WAITING_MEGA.duration);
+  const seconds = Number.isFinite(duration) && duration > 0 ? duration : 6;
+  const speed = Number.isFinite(speedParam) && speedParam > 0 ? speedParam : 1;
+  return Math.max(1000, (seconds * 1000) / speed);
+}
+
+function canShowWaitingMegaInRotation(){
+  return Boolean(
+    waitingMegaEl &&
+    !waitingMegaParam &&
+    !freezeParam &&
+    !startSlideParam &&
+    !inNightMode &&
+    isWaitingFresh(waitingState)
+  );
+}
+
+function clearWaitingMegaTimer(){
+  if (waitingMegaTimer){
+    clearTimeout(waitingMegaTimer);
+    waitingMegaTimer = null;
+  }
+}
+
+function setWaitingMegaActive(on){
+  if (!waitingMegaEl) return;
+  waitingMegaActive = on;
+  waitingMegaEl.setAttribute("aria-hidden", on ? "false" : "true");
+  if (on){
+    document.body.classList.remove("waiting-mega-active");
+    void waitingMegaEl.offsetHeight;
+    document.body.classList.add("waiting-mega-active");
+  } else {
+    document.body.classList.remove("waiting-mega-active");
+  }
+  updateWaitingVisibility();
+}
+
+function hideWaitingMega(){
+  clearWaitingMegaTimer();
+  setWaitingMegaActive(false);
+}
+
+function showWaitingMegaFixed(){
+  renderWaitingMega(waitingState);
+  clearWaitingMegaTimer();
+  setWaitingMegaActive(true);
+}
+
+function showWaitingMegaForRotation(){
+  clearRotationTimer();
+  clearWaitingMegaTimer();
+  renderWaitingMega(waitingState);
+  setWaitingMegaActive(true);
+  waitingMegaTimer = setTimeout(() => {
+    waitingMegaTimer = null;
+    setWaitingMegaActive(false);
+    if (!inNightMode && !freezeParam && !waitingMegaParam){
+      advanceToNextSlide();
+    }
+  }, waitingMegaDurationMs());
+}
+
+function maybeShowWaitingMegaAfterSlide(){
+  const every = waitingMegaEvery();
+  if (every <= 0 || waitingMegaParam || freezeParam || startSlideParam) return false;
+
+  slidesSinceWaitingMega += 1;
+  if (slidesSinceWaitingMega < every) return false;
+
+  slidesSinceWaitingMega = 0;
+  if (!canShowWaitingMegaInRotation()) return false;
+
+  showWaitingMegaForRotation();
+  return true;
 }
 
 function renderWaitingDepartment(name, dept, showEmptyMessage){
@@ -1327,7 +1621,7 @@ function applyWaitingLayout(shouldShow){
 }
 
 function updateWaitingVisibility(){
-  const shouldShow = Boolean(waitingBarEl && isWaitingFresh(waitingState) && !inNightMode);
+  const shouldShow = Boolean(waitingBarEl && isWaitingFresh(waitingState) && !inNightMode && !waitingMegaActive);
   applyWaitingLayout(shouldShow);
   document.body.classList.toggle("waiting-visible", shouldShow);
   if (waitingBarEl) waitingBarEl.setAttribute("aria-hidden", shouldShow ? "false" : "true");
@@ -1344,20 +1638,24 @@ async function fetchWaitingState(){
     if (!res.ok || !contentType.toLowerCase().includes("application/json")){
       waitingState = null;
       updateWaitingVisibility();
+      if (waitingMegaParam) showWaitingMegaFixed();
       return;
     }
     const data = await res.json();
     if (!hasValidWaitingPayload(data)){
       waitingState = null;
       updateWaitingVisibility();
+      if (waitingMegaParam) showWaitingMegaFixed();
       return;
     }
     waitingState = data;
     renderWaitingState(waitingState);
     updateWaitingVisibility();
+    if (waitingMegaParam) showWaitingMegaFixed();
   } catch (_err) {
     waitingState = null;
     updateWaitingVisibility();
+    if (waitingMegaParam) showWaitingMegaFixed();
   }
 }
 
@@ -1387,7 +1685,8 @@ let inNightMode = null; // null = 未確定（起動直後の1回目で必ず反
 function setNightMode(on){
   inNightMode = on;
   if (on){
-    if (rotationTimer) clearTimeout(rotationTimer);
+    clearRotationTimer();
+    if (!waitingMegaParam) hideWaitingMega();
     slidesRoot.style.display = "none";
     nightScreenEl.classList.add("active");
     dotsRoot.style.visibility = "hidden";
@@ -1420,6 +1719,9 @@ function applyDayNightMode(){
 }
 
 applyDayNightMode();
+if (waitingMegaParam){
+  showWaitingMegaFixed();
+}
 if (!inNightMode){
   scheduleNext(); // 起動時が通常モードならローテーションを開始
 }
