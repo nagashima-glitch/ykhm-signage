@@ -58,11 +58,11 @@ const CLINIC = {
   // 産婦人科の診療時間
   hoursGyn: {
     days: ["月", "火", "水", "木", "金", "土", "日"],
-    am: [true, true, false, true, false, false, false],
+    am: [true, true, false, true, true, false, false],
     pm: [true, true, false, true, false, false, false],
     amTime: "9:00-12:00",
     pmTime: "13:00-17:00",
-    closedLabel: "休診：水・金・土・日・祝",
+    closedLabel: "休診：水・土・日・祝／金曜午後",
     note1: "女性医師（産婦人科専門医）が診療いたします",
     note2: "待合室は内科と分けております"
   },
